@@ -37,6 +37,15 @@ img {
     display: block;
 }
 
+.card-thumb img,
+.portfolio-thumb img,
+.featured-card-thumb img,
+.work-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* ==========================================
    Layout
    ========================================== */

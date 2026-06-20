@@ -1,0 +1,659 @@
+/* ==========================================
+   Andrew Shanley Portfolio - Stylesheet
+   ========================================== */
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ==========================================
+   Layout
+   ========================================== */
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+}
+
+/* ==========================================
+   Navigation
+   ========================================== */
+
+.nav {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    border-bottom: 1px solid #ebebeb;
+    z-index: 100;
+}
+
+.nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #1a1a1a;
+}
+
+.nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+}
+
+.nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    transition: color 0.15s ease;
+    letter-spacing: 0.01em;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #1a1a1a;
+}
+
+/* ==========================================
+   Hero Section
+   ========================================== */
+
+.hero {
+    padding: 96px 0 80px;
+}
+
+.hero-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.hero-tagline {
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #1a1a1a;
+    margin-bottom: 28px;
+}
+
+.hero-bio {
+    font-size: 18px;
+    color: #555;
+    max-width: 640px;
+    line-height: 1.75;
+    margin-bottom: 36px;
+    font-weight: 300;
+}
+
+.career-timeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 6px;
+    align-items: center;
+    font-size: 13px;
+    color: #999;
+    line-height: 1.5;
+}
+
+.career-current {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.career-dot {
+    color: #ccc;
+    font-size: 10px;
+}
+
+/* ==========================================
+   Section Shared
+   ========================================== */
+
+.section {
+    padding: 80px 0;
+}
+
+.section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 36px;
+}
+
+/* ==========================================
+   Featured Case Studies
+   ========================================== */
+
+.case-studies {
+    border-top: 1px solid #ebebeb;
+}
+
+.case-studies-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.case-study-card {
+    display: block;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.case-study-card:hover {
+    opacity: 0.78;
+}
+
+.card-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+.card-meta {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.card-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+/* ==========================================
+   Placeholder Image Colors
+   ========================================== */
+
+.ph-blue-gray  { background-color: #b8cfe0; }
+.ph-warm-sand  { background-color: #ddd0b8; }
+.ph-sage       { background-color: #b8d4c0; }
+.ph-rose       { background-color: #ddb8c4; }
+.ph-periwinkle { background-color: #c4b8dd; }
+.ph-gold       { background-color: #ddd8b8; }
+.ph-teal       { background-color: #b8d4d4; }
+.ph-blush      { background-color: #ddbbb8; }
+.ph-silver     { background-color: #cccccc; }
+.ph-lavender   { background-color: #c8b8dd; }
+.ph-mint       { background-color: #b8ddc8; }
+.ph-peach      { background-color: #ddcab8; }
+.ph-sky        { background-color: #b8d8e8; }
+.ph-lemon      { background-color: #ddddb8; }
+.ph-slate      { background-color: #b8bedd; }
+
+/* ==========================================
+   Services Section
+   ========================================== */
+
+.services {
+    background: #f7f7f7;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+}
+
+.service-item {
+    /* each service */
+}
+
+.service-icon {
+    font-size: 26px;
+    margin-bottom: 14px;
+    line-height: 1;
+}
+
+.service-item h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    letter-spacing: 0.01em;
+}
+
+.service-item p {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.65;
+}
+
+/* ==========================================
+   Portfolio Grid (Home)
+   ========================================== */
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.portfolio-card {
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.portfolio-card:hover {
+    opacity: 0.78;
+}
+
+.portfolio-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.portfolio-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 3px;
+}
+
+.portfolio-card span {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.4;
+    display: block;
+}
+
+/* ==========================================
+   Writing & Speaking
+   ========================================== */
+
+.writing {
+    border-top: 1px solid #ebebeb;
+}
+
+.writing-list {
+    border-top: 1px solid #ebebeb;
+}
+
+.writing-item {
+    display: flex;
+    align-items: baseline;
+    gap: 28px;
+    padding: 20px 0;
+    border-bottom: 1px solid #ebebeb;
+    transition: background 0.15s ease;
+}
+
+.writing-item:hover .writing-title {
+    color: #000;
+}
+
+.writing-year {
+    font-size: 12px;
+    font-weight: 600;
+    color: #bbb;
+    min-width: 36px;
+    letter-spacing: 0.04em;
+}
+
+.writing-title {
+    font-size: 15px;
+    color: #333;
+    transition: color 0.15s ease;
+    flex: 1;
+}
+
+.writing-pub {
+    font-size: 12px;
+    color: #bbb;
+    text-align: right;
+    min-width: 100px;
+}
+
+/* ==========================================
+   Contact Section
+   ========================================== */
+
+.contact {
+    background: #111;
+    color: #fff;
+    text-align: center;
+}
+
+.contact .section-label {
+    color: #555;
+}
+
+.contact-heading {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.contact-sub {
+    font-size: 17px;
+    color: #888;
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.65;
+    font-weight: 300;
+}
+
+.contact-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+}
+
+.btn-outline {
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+}
+
+.btn-outline:hover {
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.07);
+}
+
+/* ==========================================
+   Footer
+   ========================================== */
+
+.footer {
+    padding: 28px 0;
+    border-top: 1px solid #1f1f1f;
+    background: #111;
+    text-align: center;
+}
+
+.footer p {
+    font-size: 12px;
+    color: #444;
+    letter-spacing: 0.02em;
+}
+
+/* ==========================================
+   Work Page
+   ========================================== */
+
+.page-hero {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.page-hero h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+}
+
+.page-hero p {
+    font-size: 16px;
+    color: #888;
+    margin-top: 12px;
+    font-weight: 300;
+}
+
+.featured-section {
+    padding: 72px 0 0;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.featured-card {
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.featured-card:hover {
+    opacity: 0.78;
+}
+
+.featured-card-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+.featured-card-meta {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.featured-card-title {
+    font-size: 19px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.all-work-section {
+    padding: 72px 0;
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+.work-card {
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.work-card:hover {
+    opacity: 0.78;
+}
+
+.work-card-thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.work-card-date {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 4px;
+}
+
+.work-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 3px;
+}
+
+.work-card p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+}
+
+.work-card-tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #bbb;
+    border: 1px solid #e0e0e0;
+    padding: 2px 7px;
+    border-radius: 2px;
+}
+
+/* ==========================================
+   Responsive
+   ========================================== */
+
+@media (max-width: 1024px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 36px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 28px;
+    }
+
+    .nav-inner {
+        padding: 0 28px;
+    }
+
+    .hero {
+        padding: 64px 0 56px;
+    }
+
+    .hero-tagline {
+        font-size: 36px;
+    }
+
+    .hero-bio {
+        font-size: 16px;
+    }
+
+    .section {
+        padding: 60px 0;
+    }
+
+    .case-studies-grid,
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .work-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 540px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .nav-inner {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        gap: 20px;
+    }
+
+    .hero-tagline {
+        font-size: 28px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .work-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-heading {
+        font-size: 28px;
+    }
+}

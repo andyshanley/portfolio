@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sky News for iPad — Andrew Shanley. An award-winning news streaming iPad app.">
+    <title>Sky News for iPad — Andrew Shanley</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Case study page styles */
+        .case-hero {
+            padding: 80px 0 60px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .case-hero-meta {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 16px;
+        }
+
+        .case-hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .case-hero-subtitle {
+            font-size: 18px;
+            color: #555;
+            max-width: 640px;
+            line-height: 1.6;
+        }
+
+        /* Slideshow gallery — static grid */
+        .case-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 60px 0;
+        }
+
+        .case-gallery img {
+            width: 100%;
+            aspect-ratio: 9 / 7;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        /* Case study sections */
+        .case-section {
+            padding: 64px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .case-section:first-of-type {
+            border-top: none;
+        }
+
+        .case-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 24px;
+        }
+
+        .case-section h2 {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .case-section p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #444;
+            max-width: 720px;
+            margin-bottom: 16px;
+        }
+
+        .case-section p em {
+            font-style: italic;
+        }
+
+        .case-section p strong {
+            color: #111;
+            font-weight: 600;
+        }
+
+        /* Video embed */
+        .video-wrap {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 6px;
+            margin: 40px 0;
+        }
+
+        .video-wrap iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 0;
+        }
+
+        /* Three column methods grid */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .method-card img {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .method-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .method-card p {
+            font-size: 14px;
+            line-height: 1.65;
+            color: #555;
+            max-width: none;
+        }
+
+        /* Full-width image */
+        .case-full-img {
+            width: 100%;
+            border-radius: 6px;
+            margin: 32px 0;
+        }
+
+        /* Process image grid */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 32px 0;
+        }
+
+        .process-grid img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .process-grid img.wide {
+            grid-column: span 2;
+            aspect-ratio: 16 / 7;
+        }
+
+        /* Result section */
+        .result-img {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 6px;
+            margin: 32px auto;
+            display: block;
+        }
+
+        /* Back link */
+        .case-nav-bar {
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .case-nav-bar a {
+            font-size: 13px;
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .case-nav-bar a:hover {
+            color: #111;
+        }
+
+        @media (max-width: 768px) {
+            .case-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+            .process-grid img.wide {
+                grid-column: span 1;
+                aspect-ratio: 4 / 3;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Andrew Shanley</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html" class="active">Work</a></li>
+                <li><a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a></li>
+                <li><a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back breadcrumb -->
+    <div class="case-nav-bar">
+        <div class="container">
+            <a href="work.html">← Work</a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="case-hero">
+        <div class="container">
+            <p class="case-hero-meta">Sky · iPad App · 2010–2011</p>
+            <h1>Sky News for iPad</h1>
+            <p class="case-hero-subtitle">An award-winning news streaming app that put breaking news in your hands — launched shortly after the original iPad in March 2011.</p>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <div class="container">
+        <div class="case-gallery">
+            <img src="images/sky-news/sky1.jpg" alt="Sky News for iPad screenshot 1">
+            <img src="images/sky-news/sky2.jpg" alt="Sky News for iPad screenshot 2">
+            <img src="images/sky-news/sky3.jpg" alt="Sky News for iPad screenshot 3">
+            <img src="images/sky-news/sky4.jpg" alt="Sky News for iPad screenshot 4">
+            <img src="images/sky-news/sky5.jpg" alt="Sky News for iPad screenshot 5">
+            <img src="images/sky-news/sky6.jpg" alt="Sky News for iPad screenshot 6">
+            <img src="images/sky-news/sky7.jpg" alt="Sky News for iPad screenshot 7">
+            <img src="images/sky-news/sky8.jpg" alt="Sky News for iPad screenshot 8">
+            <img src="images/sky-news/sky9.jpg" alt="Sky News for iPad screenshot 9">
+        </div>
+    </div>
+
+    <!-- Intro -->
+    <section class="case-section">
+        <div class="container">
+            <p class="case-section-label">Overview</p>
+            <h2>In 2010–11, I designed an award-winning app that put breaking news in your hands</h2>
+            <p>I was responsible for designing the interaction and navigational models surrounding three key content consumption methods: <strong>Top Story Timeline</strong>, <strong>Immersive Stories</strong>, and <strong>Live TV Second Screening</strong>.</p>
+            <p>For this project, I created journeys, screens, states and transitions (communicated using storyboards and animated using Keynote), interface wireframes (focus panel tested), as well as final UI designs.</p>
+
+            <!-- YouTube embed -->
+            <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/BequFb-RXwc?wmode=opaque" allowfullscreen title="Sky News for iPad demo video"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Key Methods -->
+    <section class="case-section">
+        <div class="container">
+            <p class="case-section-label">Design</p>
+            <h2>Three key content consumption methods</h2>
+            <p>Sky News for iPad was revolutionary for its time due to its immersive, non-linear UI allowing for a completely new way of experiencing breaking news and live video:</p>
+
+            <div class="methods-grid">
+                <div class="method-card">
+                    <img src="images/sky-news/col-timeline.jpg" alt="Top Story Timeline">
+                    <h3>Top Story Timeline</h3>
+                    <p>Stories are syndicated to the app in real time, meaning Sky customers are able to follow the day's news as each individual story unfolds. Users also have the option to curate their own reading experience by prioritising subjects by topic and importance.</p>
+                </div>
+                <div class="method-card">
+                    <img src="images/sky-news/col-immersive.jpg" alt="Immersive Stories">
+                    <h3>Immersive Stories</h3>
+                    <p>Sky customers were able to unravel key moments from the last 24 hours by 'jumping' through to key events as they broke. From there, users are able to serendipitously pivot to related stories based on topics.</p>
+                </div>
+                <div class="method-card">
+                    <img src="images/sky-news/col-live-tv.jpg" alt="Live TV Second Screening">
+                    <h3>Live TV Second Screening</h3>
+                    <p>Sky customers could watch live news directly within the Sky News app — in 2011, Sky was first to launch this feature. An intuitive picture-in-picture floating live stream was also designed specifically for customers wanting a lean-back, "second-screen" experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Journey -->
+    <section class="case-section">
+        <div class="container">
+            <p class="case-section-label">Process</p>
+            <h2>High-level system journey</h2>
+            <img src="images/sky-news/system-journey.png" alt="High-level system journey diagram" class="case-full-img">
+        </div>
+    </section>
+
+    <!-- Interactive Prototyping -->
+    <section class="case-section">
+        <div class="container">
+            <h2>Interactive prototyping: not just the look, but the feel</h2>
+            <p>Many of the screens, states, components and their intended interactions were mimicked using prototyping software (including Apple Keynote's transition tools) in order to gather rapid feedback from a panel of Sky News end-users. This allowed me to quickly finesse animations, keyframes, speed and timing.</p>
+
+            <div class="process-grid">
+                <img src="images/sky-news/process1.jpg" alt="Prototyping process">
+                <img src="images/sky-news/process2.jpg" alt="Prototyping process">
+                <img src="images/sky-news/process3.jpg" alt="Prototyping process">
+                <img src="images/sky-news/process4.jpg" alt="Prototyping process">
+            </div>
+        </div>
+    </section>
+
+    <!-- Shared Space -->
+    <section class="case-section">
+        <div class="container">
+            <h2>Shared space; shared mindsets</h2>
+            <p>The Sky News for iPad team's war room was made up of Product Managers, Engineers, and Designers, with daily access to stakeholders across the Sky News org. I plastered our walls full of initial sketches, wires, storyboards and test results for daily, constructive reviews.</p>
+            <p><strong>Desirable, viable and feasible.</strong> Many of our best ideas came about due to gaining rapid consensus between those within our shared space. This ensured that what we were shipping was: a) viable — it hit the objectives outlined on our roadmap; b) technically feasible — as engineers and developers were a constant part of my design process; and c) desirable — it tested positively with users. Working lean made the entire process of design inclusive, tactile and progressive.</p>
+
+            <div class="process-grid">
+                <img src="images/sky-news/process5.png" alt="War room / shared workspace" class="wide">
+                <img src="images/sky-news/process6.jpg" alt="Sketches and wireframes">
+                <img src="images/sky-news/process7.jpg" alt="Storyboards and test results">
+            </div>
+        </div>
+    </section>
+
+    <!-- The Result -->
+    <section class="case-section">
+        <div class="container">
+            <p class="case-section-label">Outcome</p>
+            <h2>The result: a 5-star chart-topping, award-winning launch</h2>
+            <img src="images/sky-news/result.jpg" alt="Sky News for iPad launch result" class="result-img">
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact">
+        <div class="container">
+            <p class="section-label">Get in touch</p>
+            <h2 class="contact-heading">Say hello!</h2>
+            <p class="contact-sub">I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+            <div class="contact-actions">
+                <a href="mailto:andy@andrewshanley.co.uk" class="btn btn-outline">andy@andrewshanley.co.uk</a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="btn btn-outline">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Andrew Shanley. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

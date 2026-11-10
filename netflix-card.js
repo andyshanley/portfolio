@@ -8,7 +8,7 @@
   if (!slot) return;
   var card = slot.querySelector('.drop');
   var MESSAGE = 'No case studies here. My Netflix story stays behind the scenes!';
-  var timer = null;
+  var timer = null, fadeTimer = null;
 
   function release() {
     if (slot.classList.contains('is-open')) return;
@@ -17,13 +17,15 @@
     card.classList.add('is-dropping');
     var live = document.getElementById('netflix-live');   /* looked up now, so it does not matter where it sits in the page */
     if (live) { live.textContent = ''; setTimeout(function () { live.textContent = MESSAGE; }, 30); }
+    slot.classList.remove('is-fading');
+    fadeTimer = setTimeout(function () { slot.classList.add('is-fading'); }, 4900);   /* message fades out just before the card returns */
     timer = setTimeout(function () {
       card.classList.remove('is-dropping');
       void card.offsetWidth;
       card.classList.add('is-back');
-      slot.classList.remove('is-open');
+      slot.classList.remove('is-open', 'is-fading');
       setTimeout(function () { card.classList.remove('is-back'); }, 700);
-    }, 4600);
+    }, 5600);
   }
 
   card.addEventListener('click', function (e) { e.preventDefault(); release(); });

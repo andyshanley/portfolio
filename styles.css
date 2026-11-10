@@ -456,8 +456,9 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
     height: 100%; display: grid; place-items: center; padding: 0.75rem; text-align: center; border-radius: 3px;
     border: none;
 }
-.slot .ghost-msg { rotate: -2deg; display: flex; flex-direction: column; align-items: center; gap: 0.55rem; max-width: 100%; opacity: 0; transition: opacity 0.4s ease 0.35s; }
-.slot.is-open .ghost-msg { opacity: 1; }
+.slot .ghost-msg { rotate: -2deg; display: flex; flex-direction: column; align-items: center; gap: 0.55rem; max-width: 100%; opacity: 0; transition: opacity 0.5s ease; }
+.slot.is-open .ghost-msg { opacity: 1; transition-duration: 0.7s; transition-delay: 0.7s; }
+.slot.is-open.is-fading .ghost-msg { opacity: 0; transition-duration: 0.6s; transition-delay: 0s; }
 .slot .ghost-big { font-family: var(--fn-font-hand); font-size: 2.05rem; line-height: 1; color: var(--fn-pencil); filter: url(#fn-crayon); text-wrap: balance; }
 .slot .ghost-small { font-family: var(--fn-font-hand); font-size: 1.4rem; line-height: 1.1; color: var(--fn-ink-2); text-wrap: balance; }
 
@@ -783,6 +784,11 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
     opacity: .8;
     transform: scale(1.05) rotate(3deg);
     animation: card-liquid-swell 4s ease-in-out infinite;
+}
+/* Just before the card returns, fade the grey out slowly (the shape keeps moving until it is invisible). */
+#netflix-slot.is-open.is-fading::before {
+    opacity: 0;
+    transition: opacity .7s ease;
 }
 /* Fade the card's red swell away during its drop instead of hiding abruptly. */
 .card-grid #netflix-slot.is-open > .fn-card::after {
@@ -1390,4 +1396,167 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
     .hero-copy.hero-color-intro a.link-mark,
     .hero-copy.hero-color-intro.is-color-visible a.link-mark,
     .hero-copy.hero-color-intro.is-color-visible a.link-mark:is(:hover, :focus-visible) { transition: none; }
+}
+
+/* Hover/focus border around the card image, in the same colour as the card's year tag. */
+.card-grid a.fn-card .card-thumb {
+    outline: 5px solid transparent;
+    outline-offset: 0;
+    transition: border-radius .3s ease, outline-color .3s ease;
+}
+@media (prefers-reduced-motion: reduce) { .card-grid a.fn-card .card-thumb { transition: none; } }
+.card-grid a.fn-card:is(:hover, :focus-visible) .card-thumb {
+    outline-color: color-mix(in srgb, var(--tape, var(--fn-hl-yellow)) 94%, var(--fn-ink) 6%);
+}
+
+/* Same 5px hover border around the hero photo, in the photo's accent colour. */
+.hero-gallery .hero-fan .print {
+    outline: 5px solid transparent;
+    outline-offset: 0;
+    transition: opacity .18s ease, outline-color .3s ease, border-radius .3s ease;
+}
+.hero-gallery:is(:hover, :focus-within) .hero-fan .print.top {
+    outline-color: color-mix(in srgb, var(--hero-accent, var(--fn-hl-yellow)) 94%, var(--fn-ink) 6%);
+}
+@media (prefers-reduced-motion: reduce) { .hero-gallery .hero-fan .print { transition: none; } }
+
+/* While the hero photo is hovered, the "Next photo" ticket takes the photo's border colour, and stays that colour when the ticket itself is hovered. */
+.hero-gallery:is(:hover, :focus-within) .hero-next-ticket,
+.hero-gallery:is(:hover, :focus-within) .hero-next-ticket:is(:hover, :focus-visible) {
+    background-color: color-mix(in srgb, var(--hero-accent, var(--fn-hl-yellow)) 94%, var(--fn-ink) 6%);
+}
+
+/* Work page header uses the homepage hero sheet, with the same title spacing. */
+.fn-hero.page-head h1 { margin: 1.1rem 0 1.5rem; }
+
+/* The contact buttons keep the compact, evenly rounded ends of the intro highlights. Percentage radii
+   stretched into long ovals on wide buttons, so these use fixed pixel radii, at rest and while swelling. */
+.contact-actions .fn-btn,
+.contact-actions .fn-btn::before { border-radius: 14px 12px 14px 11px / 13px 15px 12px 14px; }
+@keyframes button-highlight-swell {
+    0%, 100% {
+        transform: scale(1, 1) rotate(-.3deg);
+        border-radius: 14px 12px 14px 11px / 13px 15px 12px 14px;
+    }
+    50% {
+        transform: scale(1.025, 1.08) rotate(.3deg);
+        border-radius: 12px 14px 11px 14px / 15px 13px 14px 12px;
+    }
+}
+.contact-actions .fn-btn:is(:hover, :focus-visible)::before { animation-name: button-highlight-swell; }
+
+/* Match the intro highlights: the buttons' colour keeps the same slow, uneven morph at rest (not only on hover).
+   Same swell and tilt as the highlights; corner radii are the highlights' proportions (about 0.3-0.45 of the
+   box height) scaled to the buttons' 58px height. */
+@keyframes button-highlight-swell {
+    0%, 100% {
+        transform: scale(1, 1) rotate(-.3deg);
+        border-radius: 22px 18px 23px 16px / 16px 19px 15px 17px;
+    }
+    50% {
+        transform: scale(1.025, 1.08) rotate(.3deg);
+        border-radius: 17px 23px 15px 22px / 19px 15px 18px 16px;
+    }
+}
+.contact-actions .fn-btn::before { animation: button-highlight-swell 4.5s ease-in-out infinite; }
+.contact-actions .fn-btn:is(:hover, :focus-visible)::before { animation-name: button-highlight-swell; }
+@media (prefers-reduced-motion: reduce) {
+    .contact-actions .fn-btn::before { animation: none !important; }
+}
+
+/* "Next photo" ticket: same slowly morphing colour as the highlights and contact buttons. The colour moves to
+   a ::before so the text stays still. Corner radii are the highlights' proportions scaled to the ticket's height (~47px). */
+.hero-gallery .hero-next-ticket {
+    isolation: isolate;
+    background: transparent !important;
+    border-radius: 18px 15px 19px 13px / 13px 15px 12px 14px;
+}
+.hero-gallery .hero-next-ticket::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--hero-accent, var(--fn-hl-yellow));
+    border-radius: inherit;
+    transform-origin: center;
+    transition: background-color .35s ease-in-out;
+    animation: ticket-highlight-swell 4.5s ease-in-out infinite;
+}
+.hero-gallery:is(:hover, :focus-within) .hero-next-ticket::before {
+    background-color: color-mix(in srgb, var(--hero-accent, var(--fn-hl-yellow)) 94%, var(--fn-ink) 6%);
+}
+@keyframes ticket-highlight-swell {
+    0%, 100% {
+        transform: scale(1, 1) rotate(-.3deg);
+        border-radius: 18px 15px 19px 13px / 13px 15px 12px 14px;
+    }
+    50% {
+        transform: scale(1.025, 1.08) rotate(.3deg);
+        border-radius: 14px 19px 12px 18px / 15px 12px 15px 13px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-gallery .hero-next-ticket::before { animation: none; transition: none; }
+}
+
+/* Netflix is no longer a link: its plain red highlight keeps the dark red ink and the same entrance timing. */
+.hero-copy mark.fn-hl-red { color: #8c2926; }
+.hero-copy.hero-color-intro mark.fn-hl-red {
+    color: var(--fn-text-soft);
+    transition: color .35s ease-in-out;
+}
+.hero-copy.hero-color-intro.is-color-visible mark.fn-hl-red {
+    color: #8c2926;
+    transition-delay: 1.35s;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro mark.fn-hl-red { color: #8c2926; transition: none; }
+}
+
+/* "All Work →" link: sits at the right end of the section title row, above the fourth card. */
+.fn-sec-head.sec-head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: none;
+}
+.sec-head-row .fn-label { margin: 0; }
+.section-link {
+    --link-bg: var(--fn-paper-3, #e5e5e5);
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 9px 16px;
+    font: 500 12px/1.5 var(--fn-font-mono);
+    letter-spacing: .04em;
+    color: var(--fn-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: translate .25s ease;
+}
+.section-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: #e5e5e5;
+    border-radius: 14px 11px 15px 10px / 10px 12px 9px 11px;
+    transform-origin: center;
+    animation: link-highlight-swell 4.5s ease-in-out infinite;
+}
+@keyframes link-highlight-swell {
+    0%, 100% { transform: scale(1, 1) rotate(-.3deg); border-radius: 14px 11px 15px 10px / 10px 12px 9px 11px; }
+    50% { transform: scale(1.025, 1.08) rotate(.3deg); border-radius: 11px 15px 10px 14px / 12px 9px 12px 10px; }
+}
+.section-link:is(:hover, :focus-visible) { translate: 0 -3px; }
+.section-link:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+    .section-link { transition: none; }
+    .section-link::before { animation: none; }
+    .section-link:is(:hover, :focus-visible) { translate: none; }
 }

@@ -4,10 +4,25 @@
    Everything here uses the --fn-* tokens; no raw colours.
    ========================================== */
 
+/* White page and white cards: only the paper surfaces change, so the tape, tilt,
+   shadows and type stay pure Footnote. Delete this block to return to stock cream. */
+:root {
+    --fn-paper: #FFFFFF;
+    --fn-sheet: #FFFFFF;
+    --fn-grain-page: none;
+    /* a touch more lift than stock, since white cards sit on a white page */
+    --fn-shadow-card: 0 1px 0 var(--fn-paper-3), 0 1px 3px rgba(16, 15, 15, 0.1), 0 18px 30px -18px rgba(16, 15, 15, 0.55);
+    --fn-shadow-sheet: 0 1px 0 var(--fn-paper-3), 0 1px 3px rgba(16, 15, 15, 0.1), 0 22px 42px -26px rgba(16, 15, 15, 0.5);
+    --fn-shadow-lift: 0 1px 0 var(--fn-paper-3), 0 2px 5px rgba(16, 15, 15, 0.1), 0 22px 32px -18px rgba(16, 15, 15, 0.55);
+}
+/* enough crease that the cards read as paper, not flat boxes */
+.fn-paper::before { opacity: 0.45; }
+
 html { scroll-behavior: smooth; }
 .fn img { max-width: 100%; display: block; }
 .fn-prose a, .hero-copy a { color: var(--fn-print); text-underline-offset: 3px; }
-.fn-prose a:hover, .hero-copy a:hover { color: var(--fn-ink); }
+.fn-prose a:hover, .hero-copy a:hover,
+.fn-prose a:focus-visible, .hero-copy a:focus-visible { color: var(--fn-ink); }
 
 /* ---------- Header ---------- */
 .fn-nav a[aria-current="page"] {
@@ -26,9 +41,24 @@ html { scroll-behavior: smooth; }
 }
 
 /* ---------- Hero ---------- */
+/* The bullets in the title are set as small, mid-height dots in a quiet tone, so they
+   punctuate the words instead of competing with them. */
+.fn-hero h1 { margin-bottom: 2.25rem; }
+.title-dot {
+    display: inline-block;
+    font-size: 0.55em;
+    vertical-align: 0.3em;
+    color: var(--fn-ink-3);
+    margin: 0 0.06em;
+}
+/* when the title wraps on a phone a dot would strand at a line end, so drop them there */
+@media (max-width: 600px) {
+    .title-dot { display: none; }
+}
+
 .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
     gap: clamp(2rem, 5vw, 4rem);
     align-items: start;
 }
@@ -36,48 +66,92 @@ html { scroll-behavior: smooth; }
 .hero-copy p { color: var(--fn-text-soft); }
 .hero-copy p + p { margin-top: 1rem; }
 .hero-copy .fn-lede { font-size: var(--fn-step-1); }
+/* Footnote rounds the bottom-right corner of every highlighter stroke quite hard (20px by 30px).
+   A tighter radius keeps the hand-drawn feel but leaves the stroke's end much squarer. */
+.fn mark::before {
+    /* Footnote runs the stroke a full character past the text; that overlaps (and fades) whatever
+       follows, so it now overhangs only a little on the right. */
+    width: calc(100% + 0.6ch);
+    border-bottom-right-radius: 5px 9px;
+    /* the darker shading down the right edge, eased from 20 to 5 points darker than the colour,
+       and narrower, so it is only a hint of where the pen lifted */
+    box-shadow:
+        inset -1px 0 1px hsl(from var(--color) h s calc(l - 5)),
+        inset -3px 0 4px hsl(from var(--color) h s calc(l - 5));
+}
+/* and the pen blob at the end of the stroke, much fainter */
+.fn mark::after { opacity: 0.1; }
+
+/* line-by-line highlights (highlight-lines.js): a stroke never breaks mid-line */
+.fn-lines mark { white-space: nowrap; }
+
+/* A highlighted link (Netflix): a very dark red (the Footnote pencil red mixed toward ink) instead of link
+   blue, so the text reads clearly on the marker, and a little space either side so the pen stroke doesn't
+   touch the neighbouring words. The same space on both sides. It keeps the underline the other links have,
+   in the same dark red. */
+.hero-copy a.link-mark { --link-ink: color-mix(in srgb, var(--fn-pencil) 45%, var(--fn-ink)); color: var(--link-ink); margin: 0 0.2em; }
+/* like the other links, it goes to the page's black ink on hover and keyboard focus */
+.hero-copy a.link-mark:hover,
+.hero-copy a.link-mark:focus-visible { color: var(--fn-ink); }
+/* the red highlight deepens a little on hover and keyboard focus: 8 points darker, switching instantly */
+.hero-copy a.link-mark:hover mark,
+.hero-copy a.link-mark:focus-visible mark { --color: hsl(from var(--fn-hl-red) h s calc(l - 8)); }
+/* the highlight is an inline-block, and a link's underline doesn't reach into one, so draw it on the word */
+.hero-copy a.link-mark mark { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; }
 
 .hero-photo-col { margin-bottom: 2.25rem; }
-.hero-photo.fn-card { padding: 0.9rem 0.9rem 1.1rem; --r: 0.8deg; --tr: -4deg; }
-.hero-photo-frame {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    border-radius: 2px;
-    background: var(--fn-paper-2);
+@media (min-width: 901px) {
+    .hero-photo-col { margin-top: 2.5rem; }
 }
-.hero-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-.photo-prev,
-.photo-next {
-    position: absolute;
-    top: 50%;
-    translate: 0 -50%;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--fn-font-mono);
-    font-size: 1.1rem;
-    line-height: 1;
-    background: color-mix(in srgb, var(--fn-paper) 90%, transparent);
-    border: 1px solid var(--fn-ink);
-    border-radius: var(--fn-radius-sm);
-    transition: background var(--fn-dur-press) ease;
+.hero-photo-col { position: relative; }
+
+/* Hero photos: a stack of prints, pushed sideways like a deck across a desk. The top print is the
+   one stuck down with tape, so it never moves on hover; only the prints behind it slide out to the
+   right, each at its own slightly different angle and distance. Clicking sends the top print to the
+   back. The spread for each position is set in hero-photos.js, since it follows the order of the stack. */
+.hero-fan { position: relative; width: min(21rem, 78%); aspect-ratio: 4 / 3.5; cursor: pointer; }
+.hero-fan:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 8px; }
+.hero-fan .print {
+    --sr: 0deg; --sx: 0px; --sy: 0px;
+    --ha: 0deg; --hx: 0px; --hy: 0px;
+    --r: 0deg; --tr: -4deg; --tw: 104px;
+    position: absolute; inset: 0; display: flex; flex-direction: column; padding: 0.8rem 0.8rem 1rem;
+    rotate: 0deg; z-index: 1;
+    transform: rotate(var(--sr)) translate(var(--sx), var(--sy));
+    /* a light shadow at rest, since eleven stacked prints would otherwise pile their shadows up */
+    box-shadow: 0 1px 0 var(--fn-paper-3), 0 1px 2px rgb(16 15 15 / 0.08), 0 8px 14px -10px rgb(16 15 15 / 0.32);
+    transition: transform 0.55s cubic-bezier(.3, 1.15, .5, 1), opacity 0.4s ease, box-shadow 0.4s ease;
 }
-.photo-prev:hover, .photo-next:hover { background: var(--fn-paper-2); }
-.photo-prev:focus-visible, .photo-next:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 3px; }
-.photo-prev { left: 0.6rem; }
-.photo-next { right: 0.6rem; }
-.hero-photo .fn-scrawl { position: absolute; right: 1.25rem; bottom: -2.1rem; }
+.hero-fan .print:first-child { z-index: 40; }
+.hero-fan .print .frame { position: relative; flex: 1; overflow: hidden; border-radius: 2px; background: var(--fn-paper-2); }
+.hero-fan .print .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-fan .print::after { display: none; }
+.hero-fan .print.top::after { display: block; }
+.hero-fan:hover .print:not(.top),
+.hero-fan:focus-visible .print:not(.top) { transform: translate(var(--hx), var(--hy)) rotate(var(--ha)); }
+.hero-fan:hover .print,
+.hero-fan:focus-visible .print { box-shadow: 0 1px 0 var(--fn-paper-3), 0 2px 4px rgb(16 15 15 / 0.1), 0 12px 20px -12px rgb(16 15 15 / 0.42); }
+.hero-fan .print.out { transform: translate(70%, 6%) rotate(11deg) !important; opacity: 0; }
+.hero-fan .print:nth-child(1) { --tw: 104px; }
+.hero-fan .print:nth-child(2) { --tw: 84px; }
+.hero-fan .print:nth-child(3) { --tw: 96px; }
+.hero-fan .print:nth-child(4) { --tw: 76px; }
+.hero-fan .print:nth-child(5) { --tw: 110px; }
+.hero-fan .print:nth-child(6) { --tw: 88px; }
+.hero-fan .print:nth-child(7) { --tw: 92px; }
+.hero-fan .print:nth-child(8) { --tw: 80px; }
+.hero-fan .print:nth-child(9) { --tw: 100px; }
+.hero-fan .print:nth-child(10) { --tw: 86px; }
+.hero-fan .print:nth-child(11) { --tw: 108px; }
+@media (prefers-reduced-motion: reduce) { .hero-fan .print { transition: none; } }
 
 @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; }
-    .hero-photo-col { max-width: 26rem; }
+    .hero-photo-col { max-width: 30rem; }
 }
 
 /* ---------- Cards ---------- */
-.card-grid { display: grid; gap: 2.25rem 1.75rem; padding-top: 0.75rem; }
+.card-grid { display: grid; gap: 3.25rem 2.5rem; padding-top: 0.75rem; }
 .card-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .card-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .card-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -87,24 +161,89 @@ html { scroll-behavior: smooth; }
 .card-grid > :nth-child(4n + 3) { --r: -0.3deg; --tr: -1.5deg; }
 .card-grid > :nth-child(4n + 4) { --r: 0.4deg;  --tr: 3deg; }
 
+/* Tape length varies from card to card. The cycle is five long so it doesn't line
+   up with the four- or three-column grids, and the tape stays centred on the card. */
+.fn-card::after { width: var(--tw, 84px); }
+.card-grid > :nth-child(5n + 1),
+.methods-grid > :nth-child(5n + 1) { --tw: 98px; }
+.card-grid > :nth-child(5n + 2),
+.methods-grid > :nth-child(5n + 2) { --tw: 68px; }
+.card-grid > :nth-child(5n + 3),
+.methods-grid > :nth-child(5n + 3) { --tw: 112px; }
+.card-grid > :nth-child(5n + 4) { --tw: 76px; }
+.card-grid > :nth-child(5n + 5) { --tw: 90px; }
+
+/* Tape tint: each card's tape takes the Footnote highlighter token closest to its image */
+.fn-card[class*="tint-"]::after { background: color-mix(in srgb, var(--tape) 85%, transparent); }
+.tint-red     { --tape: var(--fn-hl-red); }
+.tint-orange  { --tape: var(--fn-hl-orange); }
+.tint-yellow  { --tape: var(--fn-hl-yellow); }
+.tint-green   { --tape: var(--fn-hl-green); }
+.tint-cyan    { --tape: var(--fn-hl-cyan); }
+.tint-blue    { --tape: var(--fn-hl-blue); }
+.tint-purple  { --tape: var(--fn-hl-purple); }
+.tint-magenta { --tape: var(--fn-hl-magenta); }
+
+/* Hover: the card is stuck by its tape at the top edge, so the bottom edge lifts
+   gently toward you while the tape stays exactly where it was stuck. The card's
+   tilt is an animatable angle (--a) and the tape's rotation is derived from it,
+   so the tape always cancels the card's motion. */
+@property --a { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+
 a.fn-card {
+    --a: var(--r, 0deg);
     display: block;
     text-decoration: none;
-    transition: rotate var(--fn-dur-press) ease, translate var(--fn-dur-press) ease;
+    rotate: var(--a);
+    transform-origin: 50% 0;                  /* the tape's centre */
+    transition: --a 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease, background-size 0.35s ease;
+    /* a bar of the tape colour that grows along the bottom edge on hover and keyboard focus */
+    background-image: linear-gradient(var(--tape, transparent), var(--tape, transparent));
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 100% 0;
+}
+a.fn-card::after {
+    rotate: calc(var(--r, 0deg) + var(--tr, -3deg) - var(--a));
 }
 a.fn-card:hover,
-a.fn-card:focus-visible { rotate: 0deg; translate: 0 -3px; }
+a.fn-card:focus-visible {
+    --a: 0deg;
+    transform: perspective(1000px) rotateX(2.5deg);
+    box-shadow: var(--fn-shadow-lift);
+    background-size: 100% 6px;
+}
 a.fn-card:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 3px; }
 
+
+.card-grid > .fn-card { padding: 0 0 1.6rem; }
+/* a 3px corner radius on the cards and on the hero photo prints. --paper-r makes the paper crease texture
+   follow the corners, and the image, which runs to the card's top edge, is rounded to match (the card itself
+   can't clip, because the tape pokes out above it). */
+.card-grid > .fn-card,
+.method-card.fn-card,
+.hero-fan .print { border-radius: 3px; --paper-r: 3px; }
+.card-grid > .fn-card .card-thumb { border-radius: 3px 3px 0 0; }
+/* Full bleed: the image runs to the card's top, left and right edges; the text sits
+   on the white card beneath with its own side padding. */
+.card-grid > .fn-card > :not(.card-thumb) { margin-left: 1.35rem; margin-right: 1.35rem; }
 .card-thumb {
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    border-radius: 2px;
-    margin-bottom: 1rem;
+    margin: 0 0 1.1rem;
     background: var(--fn-paper-2);
 }
-.card-thumb--square { aspect-ratio: 1; }
+/* Muted colour: the real colours, faded to about half saturation so the whole grid sits in one
+   quiet, printed register. */
+/* Hover and keyboard focus bring the colour back up: saturation goes from 0.5 to 0.8, the same
+   contrast and brightness, eased over 0.4s. */
+.card-thumb img { filter: saturate(0.5) contrast(0.95) brightness(1.04); transition: filter 0.4s ease; }
+a.fn-card:hover .card-thumb img,
+a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) brightness(1.04); }
+.card-thumb--square { aspect-ratio: 3 / 2; }
 .card-thumb--4x3 { aspect-ratio: 4 / 3; }
+/* the wide screenshots start from the bottom-left corner when the card crops them, instead of the centre */
+.card-thumb--bl img { object-position: left bottom; }
 .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .card-meta { margin-bottom: 0.3rem; }
 .card-grid--4 .fn-card h3 { font-size: var(--fn-step-0); }
@@ -170,15 +309,18 @@ a.fn-card:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 3px;
 .case-back:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 3px; }
 
 .case-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; padding-bottom: var(--fn-section-y); }
-.case-gallery img,
-.process-grid img,
-.case-full-img,
-.result-img,
-.method-card > img {
+.process-grid img {
     border-radius: 2px;
     box-shadow: var(--fn-shadow-card);
 }
-.case-gallery img { width: 100%; aspect-ratio: 9 / 7; object-fit: cover; }
+/* white-background screenshots and diagrams: multiply lets the white become the paper */
+.case-gallery img,
+.method-card > img,
+.case-full-img,
+.result-img {
+    mix-blend-mode: multiply;
+}
+.case-gallery img { width: 100%; height: auto; aspect-ratio: 900 / 710; }
 
 .case-section h2 {
     font-size: var(--fn-step-2);
@@ -206,9 +348,9 @@ a.fn-card:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 3px;
 }
 .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-.methods-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; padding-top: 0.75rem; margin-top: 2rem; }
+.methods-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem 2.5rem; padding-top: 0.75rem; margin-top: 2rem; }
 .method-card.fn-card { padding-bottom: 1.5rem; }
-.method-card > img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; margin-bottom: 1rem; }
+.method-card > img { width: 100%; height: auto; margin-bottom: 1rem; }
 
 .case-full-img { width: 100%; margin-top: 2rem; }
 .process-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }

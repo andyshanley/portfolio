@@ -268,17 +268,21 @@ a.fn-card:focus-visible {
 a.fn-card:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 3px; }
 
 
-.card-grid > .fn-card { padding: 0 0 1.6rem; }
+.card-grid > .fn-card,
+.card-grid > .slot > .fn-card { padding: 0 0 1.6rem; }
 /* a 3px corner radius on the cards and on the hero photo prints. --paper-r makes the paper crease texture
    follow the corners, and the image, which runs to the card's top edge, is rounded to match (the card itself
    can't clip, because the tape pokes out above it). */
 .card-grid > .fn-card,
+.card-grid > .slot > .fn-card,
 .method-card.fn-card,
 .hero-fan .print { border-radius: 3px; --paper-r: 3px; }
-.card-grid > .fn-card .card-thumb { border-radius: 3px 3px 0 0; }
+.card-grid > .fn-card .card-thumb,
+.card-grid > .slot > .fn-card .card-thumb { border-radius: 3px 3px 0 0; }
 /* Full bleed: the image runs to the card's top, left and right edges; the text sits
    on the white card beneath with its own side padding. */
-.card-grid > .fn-card > :not(.card-thumb) { margin-left: 1.35rem; margin-right: 1.35rem; }
+.card-grid > .fn-card > :not(.card-thumb),
+.card-grid > .slot > .fn-card > :not(.card-thumb) { margin-left: 1.35rem; margin-right: 1.35rem; }
 .card-thumb {
     aspect-ratio: 16 / 10;
     overflow: hidden;
@@ -434,3 +438,43 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
 @keyframes service-sketch-draw { from { stroke-dashoffset: var(--sketch-length); } to { stroke-dashoffset: 0; } }
 @media (hover: hover) { .services .fn-swatch:hover .service-sketch { transform: translateY(-6px) rotate(-2deg); } }
 @media (prefers-reduced-motion: reduce) { .services .service-sketch { transition: none; transform: none !important; } .services .service-sketch svg > * { animation: none !important; stroke-dashoffset: 0 !important; } }
+
+/* ---------- The Netflix card: there is no case study to open yet ----------
+   The card sits in a slot with its own piece of tape. Clicking it does not navigate: the card lets go of the
+   tape and drops away, and the empty space behind it says why. The tape stays stuck to the page. After a few
+   seconds the card sticks back on. */
+.card-grid > .slot { position: relative; display: flex; }
+.card-grid > .slot > .fn-card { position: relative; z-index: 3; flex: 1; min-width: 0; }
+.card-grid > .slot > .fn-card::after { display: none; }  /* its tape is the separate .tape below */
+.slot .tape {
+    position: absolute; top: -12px; left: 50%; z-index: 6; pointer-events: none;
+    width: var(--tw, 84px); height: 24px; translate: -50% 0; rotate: calc(var(--r, 0deg) + var(--tr, -3deg));
+    background: color-mix(in srgb, var(--tape) 85%, transparent); box-shadow: 0 1px 2px #0002;
+}
+.slot .ghost { position: absolute; inset: 0; z-index: 1; padding: 8px; }
+.slot .ghost-frame {
+    height: 100%; display: grid; place-items: center; padding: 0.75rem; text-align: center; border-radius: 3px;
+    border: 1.5px dashed var(--fn-rule);   /* faint: the same hairline colour as the page's rules */
+}
+.slot .ghost-msg { display: flex; flex-direction: column; align-items: center; gap: 0.55rem; max-width: 100%; opacity: 0; transition: opacity 0.4s ease 0.35s; }
+.slot.is-open .ghost-msg { opacity: 1; }
+.slot .ghost-big { font-family: var(--fn-font-hand); font-size: 2.05rem; line-height: 1; color: var(--fn-pencil); filter: url(#fn-crayon); rotate: -2deg; text-wrap: balance; }
+.slot .ghost-small { font-family: var(--fn-font-hand); font-size: 1.4rem; line-height: 1.1; color: var(--fn-ink-2); text-wrap: balance; }
+
+.slot .drop.is-dropping { animation: netflix-drop 0.8s cubic-bezier(.55, 0, .9, .45) forwards; }
+@keyframes netflix-drop {
+    0%   { translate: 0 0; rotate: 0deg; opacity: 1; }
+    12%  { translate: 0 -2.5%; rotate: -1deg; }
+    100% { translate: 0 135%; rotate: 3deg; opacity: 0; }
+}
+.slot .drop.is-back { animation: netflix-back 0.6s ease-out both; }
+@keyframes netflix-back {
+    0%   { translate: 0 -18%; opacity: 0; }
+    55%  { opacity: 1; }
+    100% { translate: 0 0; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .slot .drop.is-dropping, .slot .drop.is-back { animation: none !important; }
+    .slot .drop.is-dropping { opacity: 0; }
+    .slot .ghost-msg { transition: none; }
+}

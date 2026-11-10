@@ -88,12 +88,20 @@
                 <p class="fn-label">Recent Work</p>
             </div>
             <div class="card-grid card-grid--4">
-                <a href="work.html" class="fn-card fn-paper tint-red">
-                    <div class="card-thumb card-thumb--square card-thumb--bl"><img src="images/netflix-player.jpg" alt="Netflix player showing the Skip Recap button and playback controls over Stranger Things"></div>
-                    <p class="fn-label card-meta">2025</p>
-                    <h3>Netflix</h3>
-                    <p>Player Experience</p>
-                </a>
+                <div class="slot tint-red" id="netflix-slot">
+                    <span class="tape" aria-hidden="true"></span>
+                    <div class="ghost" aria-hidden="true">
+                        <div class="ghost-frame">
+                            <p class="ghost-msg"><span class="ghost-big">No case studies here</span><span class="ghost-small">My Netflix story stays behind the scenes!</span></p>
+                        </div>
+                    </div>
+                    <a href="#" class="fn-card fn-paper tint-red drop" role="button" aria-label="Netflix, Player Experience. No case study yet. Press to find out why.">
+                        <div class="card-thumb card-thumb--square card-thumb--bl"><img src="images/netflix-player.jpg" alt="Netflix player showing the Skip Recap button and playback controls over Stranger Things"></div>
+                        <p class="fn-label card-meta">2025</p>
+                        <h3>Netflix</h3>
+                        <p>Player Experience</p>
+                    </a>
+                </div>
                 <a href="work.html" class="fn-card fn-paper tint-blue">
                     <div class="card-thumb card-thumb--square card-thumb--bl"><img src="images/prime-genai-recaps.jpg" alt="Amazon Prime Video GenAI Recaps on the Details page"></div>
                     <p class="fn-label card-meta">2025</p>
@@ -302,6 +310,8 @@
 
     <script src="highlight-lines.js"></script>
     <script src="services-reveal.js"></script>
+    <script src="netflix-card.js"></script>
+    <p class="fn-sr" id="netflix-live" role="status" aria-live="polite"></p>
     <script src="vendor/footnote.js"></script>
     <script src="hero-photos.js"></script>
     <script src="service-sketches.js"></script>

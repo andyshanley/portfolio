@@ -226,7 +226,7 @@ html { scroll-behavior: smooth; }
 .card-grid > :nth-child(5n + 5) { --tw: 90px; }
 
 /* Tape tint: each card's tape takes the Footnote highlighter token closest to its image */
-.fn-card[class*="tint-"]::after { background: color-mix(in srgb, var(--tape) 85%, transparent); }
+.fn-card[class*="tint-"]::after { background: color-mix(in srgb, var(--tape) 80%, transparent); }
 .tint-red     { --tape: var(--fn-hl-red); }
 .tint-orange  { --tape: var(--fn-hl-orange); }
 .tint-yellow  { --tape: var(--fn-hl-yellow); }
@@ -449,16 +449,16 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
 .slot .tape {
     position: absolute; top: -12px; left: 50%; z-index: 6; pointer-events: none;
     width: var(--tw, 84px); height: 24px; translate: -50% 0; rotate: calc(var(--r, 0deg) + var(--tr, -3deg));
-    background: color-mix(in srgb, var(--tape) 85%, transparent); box-shadow: 0 1px 2px #0002;
+    background: color-mix(in srgb, var(--tape) 80%, transparent); box-shadow: 0 1px 2px #0002;
 }
 .slot .ghost { position: absolute; inset: 0; z-index: 1; padding: 8px; }
 .slot .ghost-frame {
     height: 100%; display: grid; place-items: center; padding: 0.75rem; text-align: center; border-radius: 3px;
     border: 1.5px dashed var(--fn-rule);   /* faint: the same hairline colour as the page's rules */
 }
-.slot .ghost-msg { display: flex; flex-direction: column; align-items: center; gap: 0.55rem; max-width: 100%; opacity: 0; transition: opacity 0.4s ease 0.35s; }
+.slot .ghost-msg { rotate: -2deg; display: flex; flex-direction: column; align-items: center; gap: 0.55rem; max-width: 100%; opacity: 0; transition: opacity 0.4s ease 0.35s; }
 .slot.is-open .ghost-msg { opacity: 1; }
-.slot .ghost-big { font-family: var(--fn-font-hand); font-size: 2.05rem; line-height: 1; color: var(--fn-pencil); filter: url(#fn-crayon); rotate: -2deg; text-wrap: balance; }
+.slot .ghost-big { font-family: var(--fn-font-hand); font-size: 2.05rem; line-height: 1; color: var(--fn-pencil); filter: url(#fn-crayon); text-wrap: balance; }
 .slot .ghost-small { font-family: var(--fn-font-hand); font-size: 1.4rem; line-height: 1.1; color: var(--fn-ink-2); text-wrap: balance; }
 
 .slot .drop.is-dropping { animation: netflix-drop 0.8s cubic-bezier(.55, 0, .9, .45) forwards; }
@@ -478,3 +478,13 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
     .slot .drop.is-dropping { opacity: 0; }
     .slot .ghost-msg { transition: none; }
 }
+
+/* Netflix card drop: clip at the divider beneath Recent Work.
+   Leave the top and sides open for tape, tilted cards, and shadows. */
+.case-studies { clip-path: inset(-100vmax -100vmax 0); }
+
+/* Match the opacity of marker highlights and colored tape. */
+.fn mark::before { opacity: 0.8; }
+
+/* Project years use the existing label scale, reduced by two pixels. */
+.fn .fn-card .card-year { font-size: calc(var(--fn-step--1) - 2px); }

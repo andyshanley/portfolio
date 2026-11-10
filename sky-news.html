@@ -7,248 +7,59 @@
     <title>Sky News for iPad — Andrew Shanley</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Case study page styles */
-        .case-hero {
-            padding: 80px 0 60px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .case-hero-meta {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #999;
-            margin-bottom: 16px;
-        }
-
-        .case-hero h1 {
-            font-size: clamp(32px, 5vw, 56px);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .case-hero-subtitle {
-            font-size: 18px;
-            color: #555;
-            max-width: 640px;
-            line-height: 1.6;
-        }
-
-        /* Slideshow gallery — static grid */
-        .case-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin: 60px 0;
-        }
-
-        .case-gallery img {
-            width: 100%;
-            aspect-ratio: 9 / 7;
-            object-fit: cover;
-            border-radius: 3px;
-        }
-
-        /* Case study sections */
-        .case-section {
-            padding: 64px 0;
-            border-top: 1px solid #eee;
-        }
-
-        .case-section:first-of-type {
-            border-top: none;
-        }
-
-        .case-section-label {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #999;
-            margin-bottom: 24px;
-        }
-
-        .case-section h2 {
-            font-size: clamp(22px, 3vw, 32px);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-
-        .case-section p {
-            font-size: 16px;
-            line-height: 1.75;
-            color: #444;
-            max-width: 720px;
-            margin-bottom: 16px;
-        }
-
-        .case-section p em {
-            font-style: italic;
-        }
-
-        .case-section p strong {
-            color: #111;
-            font-weight: 600;
-        }
-
-        /* Video embed */
-        .video-wrap {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 6px;
-            margin: 40px 0;
-        }
-
-        .video-wrap iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: 0;
-        }
-
-        /* Three column methods grid */
-        .methods-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-top: 40px;
-        }
-
-        .method-card img {
-            width: 100%;
-            aspect-ratio: 3 / 2;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-bottom: 16px;
-        }
-
-        .method-card h3 {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: -0.01em;
-        }
-
-        .method-card p {
-            font-size: 14px;
-            line-height: 1.65;
-            color: #555;
-            max-width: none;
-        }
-
-        /* Full-width image */
-        .case-full-img {
-            width: 100%;
-            border-radius: 6px;
-            margin: 32px 0;
-        }
-
-        /* Process image grid */
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 32px 0;
-        }
-
-        .process-grid img {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
-        .process-grid img.wide {
-            grid-column: span 2;
-            aspect-ratio: 16 / 7;
-        }
-
-        /* Result section */
-        .result-img {
-            width: 100%;
-            max-width: 480px;
-            border-radius: 6px;
-            margin: 32px auto;
-            display: block;
-        }
-
-        /* Back link */
-        .case-nav-bar {
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .case-nav-bar a {
-            font-size: 13px;
-            color: #555;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .case-nav-bar a:hover {
-            color: #111;
-        }
-
-        @media (max-width: 768px) {
-            .case-gallery {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .methods-grid {
-                grid-template-columns: 1fr;
-            }
-            .process-grid {
-                grid-template-columns: 1fr;
-            }
-            .process-grid img.wide {
-                grid-column: span 1;
-                aspect-ratio: 4 / 3;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="fn">
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-inner">
-            <a href="index.html" class="nav-logo">Andrew Shanley</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="work.html" class="active">Work</a></li>
-                <li><a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a></li>
-                <li><a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a></li>
-            </ul>
+    <!-- Footnote shared SVG filters (footnote@1.0.0) -->
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough">
+                <feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" />
+                <feDisplacementMap in="SourceGraphic" scale="5" />
+            </filter>
+            <filter id="fn-paper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" />
+                <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3">
+                    <feDistantLight azimuth="30" elevation="60" />
+                </feDiffuseLighting>
+            </filter>
+            <filter id="fn-crayon">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" />
+                <feComposite in="rough" in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Header -->
+    <header class="fn-top">
+        <div class="fn-wide">
+            <a href="index.html" class="fn-brand">ANDREW SHANLEY</a>
+            <nav class="fn-nav" aria-label="Main">
+                <a href="index.html">Home</a>
+                <a href="work.html" aria-current="page">Work</a>
+                <a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- Back breadcrumb -->
-    <div class="case-nav-bar">
-        <div class="container">
-            <a href="work.html">← Work</a>
-        </div>
-    </div>
-
+    <main>
     <!-- Hero -->
-    <section class="case-hero">
-        <div class="container">
-            <p class="case-hero-meta">Sky · iPad App · 2010–2011</p>
+    <section class="fn-sec page-head">
+        <div class="fn-wide">
+            <a href="work.html" class="fn-label case-back">← Work</a>
+            <p class="fn-label">Sky · iPad App · 2010–2011</p>
             <h1>Sky News for iPad</h1>
-            <p class="case-hero-subtitle">An award-winning news streaming app that put breaking news in your hands — launched shortly after the original iPad in March 2011.</p>
+            <p class="fn-lede">An award-winning news streaming app that put breaking news in your hands — launched shortly after the original iPad in March 2011.</p>
         </div>
     </section>
 
     <!-- Gallery -->
-    <div class="container">
+    <div class="fn-wide">
         <div class="case-gallery">
             <img src="images/sky-news/sky1.jpg" alt="Sky News for iPad screenshot 1">
             <img src="images/sky-news/sky2.jpg" alt="Sky News for iPad screenshot 2">
@@ -263,12 +74,14 @@
     </div>
 
     <!-- Intro -->
-    <section class="case-section">
-        <div class="container">
-            <p class="case-section-label">Overview</p>
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Overview</p>
             <h2>In 2010–11, I designed an award-winning app that put breaking news in your hands</h2>
-            <p>I was responsible for designing the interaction and navigational models surrounding three key content consumption methods: <strong>Top Story Timeline</strong>, <strong>Immersive Stories</strong>, and <strong>Live TV Second Screening</strong>.</p>
-            <p>For this project, I created journeys, screens, states and transitions (communicated using storyboards and animated using Keynote), interface wireframes (focus panel tested), as well as final UI designs.</p>
+            <div class="case-body">
+                <p>I was responsible for designing the interaction and navigational models surrounding three key content consumption methods: <strong>Top Story Timeline</strong>, <strong>Immersive Stories</strong>, and <strong>Live TV Second Screening</strong>.</p>
+                <p>For this project, I created journeys, screens, states and transitions (communicated using storyboards and animated using Keynote), interface wireframes (focus panel tested), as well as final UI designs.</p>
+            </div>
 
             <!-- YouTube embed -->
             <div class="video-wrap">
@@ -278,24 +91,26 @@
     </section>
 
     <!-- Three Key Methods -->
-    <section class="case-section">
-        <div class="container">
-            <p class="case-section-label">Design</p>
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Design</p>
             <h2>Three key content consumption methods</h2>
-            <p>Sky News for iPad was revolutionary for its time due to its immersive, non-linear UI allowing for a completely new way of experiencing breaking news and live video:</p>
+            <div class="case-body">
+                <p>Sky News for iPad was revolutionary for its time due to its immersive, non-linear UI allowing for a completely new way of experiencing breaking news and live video:</p>
+            </div>
 
             <div class="methods-grid">
-                <div class="method-card">
+                <div class="method-card fn-card fn-paper">
                     <img src="images/sky-news/col-timeline.jpg" alt="Top Story Timeline">
                     <h3>Top Story Timeline</h3>
                     <p>Stories are syndicated to the app in real time, meaning Sky customers are able to follow the day's news as each individual story unfolds. Users also have the option to curate their own reading experience by prioritising subjects by topic and importance.</p>
                 </div>
-                <div class="method-card">
+                <div class="method-card fn-card fn-paper">
                     <img src="images/sky-news/col-immersive.jpg" alt="Immersive Stories">
                     <h3>Immersive Stories</h3>
                     <p>Sky customers were able to unravel key moments from the last 24 hours by 'jumping' through to key events as they broke. From there, users are able to serendipitously pivot to related stories based on topics.</p>
                 </div>
-                <div class="method-card">
+                <div class="method-card fn-card fn-paper">
                     <img src="images/sky-news/col-live-tv.jpg" alt="Live TV Second Screening">
                     <h3>Live TV Second Screening</h3>
                     <p>Sky customers could watch live news directly within the Sky News app — in 2011, Sky was first to launch this feature. An intuitive picture-in-picture floating live stream was also designed specifically for customers wanting a lean-back, "second-screen" experience.</p>
@@ -305,19 +120,21 @@
     </section>
 
     <!-- System Journey -->
-    <section class="case-section">
-        <div class="container">
-            <p class="case-section-label">Process</p>
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Process</p>
             <h2>High-level system journey</h2>
             <img src="images/sky-news/system-journey.png" alt="High-level system journey diagram" class="case-full-img">
         </div>
     </section>
 
     <!-- Interactive Prototyping -->
-    <section class="case-section">
-        <div class="container">
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
             <h2>Interactive prototyping: not just the look, but the feel</h2>
-            <p>Many of the screens, states, components and their intended interactions were mimicked using prototyping software (including Apple Keynote's transition tools) in order to gather rapid feedback from a panel of Sky News end-users. This allowed me to quickly finesse animations, keyframes, speed and timing.</p>
+            <div class="case-body">
+                <p>Many of the screens, states, components and their intended interactions were mimicked using prototyping software (including Apple Keynote's transition tools) in order to gather rapid feedback from a panel of Sky News end-users. This allowed me to quickly finesse animations, keyframes, speed and timing.</p>
+            </div>
 
             <div class="process-grid">
                 <img src="images/sky-news/process1.jpg" alt="Prototyping process">
@@ -329,11 +146,13 @@
     </section>
 
     <!-- Shared Space -->
-    <section class="case-section">
-        <div class="container">
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
             <h2>Shared space; shared mindsets</h2>
-            <p>The Sky News for iPad team's war room was made up of Product Managers, Engineers, and Designers, with daily access to stakeholders across the Sky News org. I plastered our walls full of initial sketches, wires, storyboards and test results for daily, constructive reviews.</p>
-            <p><strong>Desirable, viable and feasible.</strong> Many of our best ideas came about due to gaining rapid consensus between those within our shared space. This ensured that what we were shipping was: a) viable — it hit the objectives outlined on our roadmap; b) technically feasible — as engineers and developers were a constant part of my design process; and c) desirable — it tested positively with users. Working lean made the entire process of design inclusive, tactile and progressive.</p>
+            <div class="case-body">
+                <p>The Sky News for iPad team's war room was made up of Product Managers, Engineers, and Designers, with daily access to stakeholders across the Sky News org. I plastered our walls full of initial sketches, wires, storyboards and test results for daily, constructive reviews.</p>
+                <p><strong>Desirable, viable and feasible.</strong> Many of our best ideas came about due to gaining rapid consensus between those within our shared space. This ensured that what we were shipping was: a) viable — it hit the objectives outlined on our roadmap; b) technically feasible — as engineers and developers were a constant part of my design process; and c) desirable — it tested positively with users. Working lean made the entire process of design inclusive, tactile and progressive.</p>
+            </div>
 
             <div class="process-grid">
                 <img src="images/sky-news/process5.png" alt="War room / shared workspace" class="wide">
@@ -344,33 +163,37 @@
     </section>
 
     <!-- The Result -->
-    <section class="case-section">
-        <div class="container">
-            <p class="case-section-label">Outcome</p>
-            <h2>The result: a 5-star chart-topping, award-winning launch</h2>
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Outcome</p>
+            <h2>The result: a <mark class="fn-hl-green" data-fn-split>5-star chart-topping, award-winning</mark> launch</h2>
             <img src="images/sky-news/result.jpg" alt="Sky News for iPad launch result" class="result-img">
         </div>
     </section>
 
     <!-- Contact -->
-    <section class="section contact">
-        <div class="container">
-            <p class="section-label">Get in touch</p>
-            <h2 class="contact-heading">Say hello!</h2>
-            <p class="contact-sub">I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+    <section class="fn-sec contact">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">Get in touch</p>
+                <h2>Say hello!</h2>
+                <p>I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+            </div>
             <div class="contact-actions">
-                <a href="mailto:andy@andrewshanley.co.uk" class="btn btn-outline">andy@andrewshanley.co.uk</a>
-                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="btn btn-outline">LinkedIn</a>
+                <a href="mailto:andy@andrewshanley.co.uk" class="fn-btn fn-btn--glow">andy@andrewshanley.co.uk <span aria-hidden="true">&rarr;</span></a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="fn-btn fn-btn--line">LinkedIn</a>
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
+    <footer>
+        <div class="fn-wide fn-foot">
             <p>&copy; 2025 Andrew Shanley. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="vendor/footnote.js"></script>
 </body>
 </html>

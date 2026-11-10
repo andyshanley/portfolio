@@ -7,177 +7,205 @@
     <title>Work — Andrew Shanley</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="fn">
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-inner">
-            <a href="index.html" class="nav-logo">Andrew Shanley</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="work.html" class="active">Work</a></li>
-                <li><a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a></li>
-                <li><a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a></li>
-            </ul>
+    <!-- Footnote shared SVG filters (footnote@1.0.0) -->
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough">
+                <feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" />
+                <feDisplacementMap in="SourceGraphic" scale="5" />
+            </filter>
+            <filter id="fn-paper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" />
+                <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3">
+                    <feDistantLight azimuth="30" elevation="60" />
+                </feDiffuseLighting>
+            </filter>
+            <filter id="fn-crayon">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" />
+                <feComposite in="rough" in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Header -->
+    <header class="fn-top">
+        <div class="fn-wide">
+            <a href="index.html" class="fn-brand">ANDREW SHANLEY</a>
+            <nav class="fn-nav" aria-label="Main">
+                <a href="index.html">Home</a>
+                <a href="work.html" aria-current="page">Work</a>
+                <a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
+    <main>
     <!-- Page Hero -->
-    <div class="page-hero">
-        <div class="container">
+    <section class="fn-sec page-head">
+        <div class="fn-wide">
+            <p class="fn-label">Case studies</p>
             <h1>Work</h1>
-            <p>Case studies and projects spanning product design, UX strategy, and digital platforms.</p>
+            <p class="fn-lede">Case studies and projects spanning product design, UX strategy, and digital platforms.</p>
         </div>
-    </div>
+    </section>
 
     <!-- Featured Projects -->
-    <section class="featured-section">
-        <div class="container">
-            <p class="section-label">Featured</p>
-            <div class="featured-grid">
-                <a href="#" class="featured-card">
-                    <div class="featured-card-thumb"><img src="images/x-ray.png" alt="Amazon Prime Video X-Ray VOD Experience"></div>
-                    <p class="featured-card-meta">Amazon Prime Video</p>
-                    <h2 class="featured-card-title">X-Ray VOD Experience</h2>
+    <section class="fn-sec featured-section">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">Featured</p>
+            </div>
+            <div class="card-grid card-grid--2">
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb"><img src="images/x-ray.png" alt="Amazon Prime Video X-Ray VOD Experience"></div>
+                    <p class="fn-label card-meta">Amazon Prime Video</p>
+                    <h2 class="card-title">X-Ray VOD Experience</h2>
                 </a>
-                <a href="#" class="featured-card">
-                    <div class="featured-card-thumb"><img src="images/dash.png" alt="Amazon Seller Shipments Dashboard"></div>
-                    <p class="featured-card-meta">Amazon Seller</p>
-                    <h2 class="featured-card-title">Shipments Dashboard</h2>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb"><img src="images/dash.png" alt="Amazon Seller Shipments Dashboard"></div>
+                    <p class="fn-label card-meta">Amazon Seller</p>
+                    <h2 class="card-title">Shipments Dashboard</h2>
                 </a>
-                <a href="#" class="featured-card">
-                    <div class="featured-card-thumb"><img src="images/map2.jpg" alt="Amazon Seller FBA Inbound Research"></div>
-                    <p class="featured-card-meta">Amazon Seller</p>
-                    <h2 class="featured-card-title">FBA Inbound Research &amp; North Star</h2>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb"><img src="images/map2.jpg" alt="Amazon Seller FBA Inbound Research"></div>
+                    <p class="fn-label card-meta">Amazon Seller</p>
+                    <h2 class="card-title">FBA Inbound Research &amp; North Star</h2>
                 </a>
-                <a href="#" class="featured-card">
-                    <div class="featured-card-thumb"><img src="images/voc.png" alt="Amazon Voice of Customer Feedback Dashboard"></div>
-                    <p class="featured-card-meta">Amazon Voice of Customer</p>
-                    <h2 class="featured-card-title">Customer Feedback Dashboard</h2>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb"><img src="images/voc.png" alt="Amazon Voice of Customer Feedback Dashboard"></div>
+                    <p class="fn-label card-meta">Amazon Voice of Customer</p>
+                    <h2 class="card-title">Customer Feedback Dashboard</h2>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- All Work -->
-    <section class="all-work-section">
-        <div class="container">
-            <p class="section-label">All Work</p>
-            <div class="work-grid">
+    <section class="fn-sec all-work-section">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">All Work</p>
+            </div>
+            <div class="card-grid card-grid--3">
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/peacock.png" alt="NBC Peacock"></div>
-                    <p class="work-card-date">May 2019</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/peacock.png" alt="NBC Peacock"></div>
+                    <p class="fn-label card-meta">May 2019</p>
                     <h3>NBC Peacock</h3>
                     <p>Streaming Platform Design Discovery</p>
-                    <span class="work-card-tag">Platform</span>
+                    <span class="work-tag">Platform</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/google-web-health.jpg" alt="Google Web Health Dashboard"></div>
-                    <p class="work-card-date">Mar 2019</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/google-web-health.jpg" alt="Google Web Health Dashboard"></div>
+                    <p class="fn-label card-meta">Mar 2019</p>
                     <h3>Google</h3>
                     <p>Web Health Dashboard &amp; Reporting</p>
-                    <span class="work-card-tag">Analytics</span>
+                    <span class="work-tag">Analytics</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/express-scripts.png" alt="Express Scripts"></div>
-                    <p class="work-card-date">Jan 2019</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/express-scripts.png" alt="Express Scripts"></div>
+                    <p class="fn-label card-meta">Jan 2019</p>
                     <h3>Express Scripts</h3>
                     <p>B2B Platform Discovery</p>
-                    <span class="work-card-tag">Enterprise</span>
+                    <span class="work-tag">Enterprise</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/just-eat.png" alt="Just Eat"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/just-eat.png" alt="Just Eat"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Just Eat</h3>
                     <p>B2C Mobile Discovery</p>
-                    <span class="work-card-tag">Mobile</span>
+                    <span class="work-tag">Mobile</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/rocketrip.jpg" alt="Rocketrip"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/rocketrip.jpg" alt="Rocketrip"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Rocketrip</h3>
                     <p>B2B2C SaaS Product</p>
-                    <span class="work-card-tag">SaaS</span>
+                    <span class="work-tag">SaaS</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/wsj.jpg" alt="Wall Street Journal"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/wsj.jpg" alt="Wall Street Journal"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Wall Street Journal</h3>
                     <p>Product Innovation</p>
-                    <span class="work-card-tag">Media</span>
+                    <span class="work-tag">Media</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/google-chrome.jpg" alt="Google Chrome for Work"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/google-chrome.jpg" alt="Google Chrome for Work"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Google Chrome for Work</h3>
                     <p>B2B Marketing Platform</p>
-                    <span class="work-card-tag">Enterprise</span>
+                    <span class="work-tag">Enterprise</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/google-doubleclick.jpg" alt="Google DoubleClick"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/google-doubleclick.jpg" alt="Google DoubleClick"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Google DoubleClick</h3>
                     <p>B2B Marketing Platform</p>
-                    <span class="work-card-tag">Enterprise</span>
+                    <span class="work-tag">Enterprise</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/viacom-supply-chain.jpg" alt="Viacom Supply Chain"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/viacom-supply-chain.jpg" alt="Viacom Supply Chain"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Viacom Supply Chain</h3>
                     <p>Supply Chain Enterprise Platform</p>
-                    <span class="work-card-tag">Enterprise</span>
+                    <span class="work-tag">Enterprise</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/viacom-greenroom.jpg" alt="Viacom Greenroom"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/viacom-greenroom.jpg" alt="Viacom Greenroom"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Viacom Greenroom</h3>
                     <p>Social Intranet Platform</p>
-                    <span class="work-card-tag">Internal</span>
+                    <span class="work-tag">Internal</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/virgin.png" alt="Virgin.com"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/virgin.png" alt="Virgin.com"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Virgin.com</h3>
                     <p>Content Publishing Platform</p>
-                    <span class="work-card-tag">Publishing</span>
+                    <span class="work-tag">Publishing</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/google-cultural.png" alt="Google Cultural Institute"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/google-cultural.png" alt="Google Cultural Institute"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Google Cultural Institute</h3>
                     <p>Art &amp; Cultural Platform</p>
-                    <span class="work-card-tag">Cultural</span>
+                    <span class="work-tag">Cultural</span>
                 </a>
 
-                <a href="#" class="work-card">
-                    <div class="work-card-thumb"><img src="images/comic-relief.jpg" alt="Comic Relief"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="#" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/comic-relief.jpg" alt="Comic Relief"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Comic Relief</h3>
                     <p>Charity Registration Platform</p>
-                    <span class="work-card-tag">Nonprofit</span>
+                    <span class="work-tag">Nonprofit</span>
                 </a>
 
-                <a href="sky-news.html" class="work-card">
-                    <div class="work-card-thumb"><img src="images/sky-news.png" alt="Sky News"></div>
-                    <p class="work-card-date">Nov 2018</p>
+                <a href="sky-news.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/sky-news.png" alt="Sky News"></div>
+                    <p class="fn-label card-meta">Nov 2018</p>
                     <h3>Sky News</h3>
                     <p>iPad News Streaming App</p>
-                    <span class="work-card-tag">Mobile</span>
+                    <span class="work-tag">Mobile</span>
                 </a>
 
             </div>
@@ -185,24 +213,28 @@
     </section>
 
     <!-- Contact -->
-    <section class="section contact">
-        <div class="container">
-            <p class="section-label">Get in touch</p>
-            <h2 class="contact-heading">Say hello!</h2>
-            <p class="contact-sub">I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+    <section class="fn-sec contact">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">Get in touch</p>
+                <h2>Say hello!</h2>
+                <p>I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+            </div>
             <div class="contact-actions">
-                <a href="mailto:andy@andrewshanley.co.uk" class="btn btn-outline">andy@andrewshanley.co.uk</a>
-                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="btn btn-outline">LinkedIn</a>
+                <a href="mailto:andy@andrewshanley.co.uk" class="fn-btn fn-btn--glow">andy@andrewshanley.co.uk <span aria-hidden="true">&rarr;</span></a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="fn-btn fn-btn--line">LinkedIn</a>
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
+    <footer>
+        <div class="fn-wide fn-foot">
             <p>&copy; 2025 Andrew Shanley. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="vendor/footnote.js"></script>
 </body>
 </html>

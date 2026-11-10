@@ -7,107 +7,123 @@
     <title>Andrew Shanley — UX, Product &amp; Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="fn">
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-inner">
-            <a href="index.html" class="nav-logo">Andrew Shanley</a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="work.html">Work</a></li>
-                <li><a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a></li>
-                <li><a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a></li>
-            </ul>
+    <!-- Footnote shared SVG filters (footnote@1.0.0) -->
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough">
+                <feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" />
+                <feDisplacementMap in="SourceGraphic" scale="5" />
+            </filter>
+            <filter id="fn-paper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" />
+                <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3">
+                    <feDistantLight azimuth="30" elevation="60" />
+                </feDiffuseLighting>
+            </filter>
+            <filter id="fn-crayon">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" />
+                <feComposite in="rough" in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Header -->
+    <header class="fn-top">
+        <div class="fn-wide">
+            <a href="index.html" class="fn-brand">ANDREW SHANLEY</a>
+            <nav class="fn-nav" aria-label="Main">
+                <a href="index.html" aria-current="page">Home</a>
+                <a href="work.html">Work</a>
+                <a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
+    <main>
     <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <h1 class="hero-tagline">UX&nbsp;&bull; Product&nbsp;&bull; Design&nbsp;&bull; Strategy</h1>
-            <p class="hero-bio">I'm a user-centric product designer, systems thinker, and creative strategist specialising in video and live-streaming experiences. I use human-centered design and a lean, collaborative approach to deliver meaningful products at scale.</p>
-            <div class="career-timeline">
-                <span class="career-current">Netflix (2025–present)</span>
-                <span class="career-dot">&bull;</span>
-                <span>Amazon Prime Video (2019–2025)</span>
-                <span class="career-dot">&bull;</span>
-                <span>R/GA</span>
-                <span class="career-dot">&bull;</span>
-                <span>Razorfish</span>
-                <span class="career-dot">&bull;</span>
-                <span>Beyond</span>
-                <span class="career-dot">&bull;</span>
-                <span>Ogilvy</span>
-                <span class="career-dot">&bull;</span>
-                <span>Publicis Sapient</span>
-                <span class="career-dot">&bull;</span>
-                <span>Sky</span>
+    <section class="fn-hero">
+        <div class="fn-hero-sheet fn-paper">
+            <div class="fn-wide">
+                <p class="fn-label">Portfolio</p>
+                <h1>UX &bull; Product &bull; Design &bull; Strategy</h1>
+                <div class="hero-grid">
+                    <div class="hero-copy">
+                        <p class="fn-lede">A US-based, user-centric product designer, systems thinker, and creative strategist with expertise in crafting <mark data-fn-split>video and live-streaming experiences.</mark></p>
+                        <p>I innovate using human-centered design and a lean, collaborative approach to solve complex problems from discovery to delivery across products, platforms, and services.</p>
+                        <p>I joined <a href="https://www.netflix.com" target="_blank">Netflix</a> in 2025, having previously led design at <a href="https://www.primevideo.com" target="_blank">Amazon Prime Video</a> (2019–2025), <a href="https://www.rga.com" target="_blank">R/GA</a>, <a href="https://www.publicissapient.com" target="_blank">Razorfish</a>, <a href="https://www.beyondcollective.co.uk" target="_blank">Beyond</a>, <a href="https://www.ogilvy.com" target="_blank">Ogilvy</a>, <a href="https://www.publicissapient.com" target="_blank">Publicis Sapient</a>, and <a href="https://www.sky.com" target="_blank">Sky</a>.</p>
+                        <p>Away from work, I enjoy the US and Pacific Northwest's vibrant culture, while staying true to my Northern British roots.</p>
+                    </div>
+                    <div class="hero-photo-col">
+                        <div class="hero-photo fn-card fn-paper">
+                            <div class="hero-photo-frame">
+                                <img src="images/comic-relief.jpg" alt="Andrew Shanley">
+                                <button class="photo-prev" aria-label="Previous">&#8249;</button>
+                                <button class="photo-next" aria-label="Next">&#8250;</button>
+                            </div>
+                            <span class="fn-scrawl" aria-hidden="true">hello!</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Recent Case Studies -->
-    <section class="section case-studies">
-        <div class="container">
-            <p class="section-label">Recent Work</p>
-            <div class="case-studies-grid">
-                <a href="work.html" class="case-study-card">
+    <section class="fn-sec case-studies">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">Recent Work</p>
+            </div>
+            <div class="card-grid card-grid--2">
+                <a href="work.html" class="fn-card fn-paper">
                     <div class="card-thumb"><img src="images/x-ray.png" alt="Amazon Prime Video X-Ray VOD Experience"></div>
-                    <div>
-                        <p class="card-meta">Amazon Prime Video</p>
-                        <h3 class="card-title">X-Ray VOD Experience</h3>
-                    </div>
+                    <p class="fn-label card-meta">Amazon Prime Video</p>
+                    <h3>X-Ray VOD Experience</h3>
                 </a>
-                <a href="work.html" class="case-study-card">
+                <a href="work.html" class="fn-card fn-paper">
                     <div class="card-thumb"><img src="images/dash.png" alt="Amazon Seller Shipments Dashboard"></div>
-                    <div>
-                        <p class="card-meta">Amazon Seller</p>
-                        <h3 class="card-title">Shipments Dashboard</h3>
-                    </div>
+                    <p class="fn-label card-meta">Amazon Seller</p>
+                    <h3>Shipments Dashboard</h3>
                 </a>
-                <a href="work.html" class="case-study-card">
+                <a href="work.html" class="fn-card fn-paper">
                     <div class="card-thumb"><img src="images/map2.jpg" alt="Amazon Seller FBA Inbound Research"></div>
-                    <div>
-                        <p class="card-meta">Amazon Seller</p>
-                        <h3 class="card-title">FBA Inbound Research &amp; North Star</h3>
-                    </div>
+                    <p class="fn-label card-meta">Amazon Seller</p>
+                    <h3>FBA Inbound Research &amp; North Star</h3>
                 </a>
-                <a href="work.html" class="case-study-card">
+                <a href="work.html" class="fn-card fn-paper">
                     <div class="card-thumb"><img src="images/voc.png" alt="Amazon Voice of Customer Feedback Dashboard"></div>
-                    <div>
-                        <p class="card-meta">Amazon Voice of Customer</p>
-                        <h3 class="card-title">Customer Feedback Dashboard</h3>
-                    </div>
+                    <p class="fn-label card-meta">Amazon Voice of Customer</p>
+                    <h3>Customer Feedback Dashboard</h3>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Services -->
-    <section class="section services">
-        <div class="container">
-            <div class="services-grid">
-                <div class="service-item">
-                    <div class="service-icon">&#128269;</div>
+    <section class="fn-sec services">
+        <div class="fn-wide">
+            <div class="fn-tray">
+                <div class="fn-swatch">
                     <h3>Product Discovery</h3>
                     <p>Dual-track methodology, ethnographic research, JTBD frameworks, concepting &amp; testing</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">&#9998;</div>
+                <div class="fn-swatch">
                     <h3>Product Design</h3>
                     <p>Sketching, user journeys, information architecture, wireframing, UI design</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">&#9881;</div>
+                <div class="fn-swatch">
                     <h3>Systems Design</h3>
                     <p>Customer discovery, service blueprints, multi-channel touchpoint design</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">&#128161;</div>
+                <div class="fn-swatch">
                     <h3>Ideas &amp; Innovation</h3>
                     <p>Workshop facilitation, design sprints, prototyping, concept testing</p>
                 </div>
@@ -116,127 +132,137 @@
     </section>
 
     <!-- Portfolio -->
-    <section class="section">
-        <div class="container">
-            <p class="section-label">Portfolio</p>
-            <div class="portfolio-grid">
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/peacock.png" alt="NBC Peacock"></div>
-                    <h4>NBC Peacock</h4>
-                    <span>Streaming Platform Design Discovery</span>
+    <section class="fn-sec">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">Portfolio</p>
+            </div>
+            <div class="card-grid card-grid--4">
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/peacock.png" alt="NBC Peacock"></div>
+                    <h3>NBC Peacock</h3>
+                    <p>Streaming Platform Design Discovery</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/google-web-health.jpg" alt="Google Web Health Dashboard"></div>
-                    <h4>Google</h4>
-                    <span>Web Health Dashboard &amp; Reporting</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/google-web-health.jpg" alt="Google Web Health Dashboard"></div>
+                    <h3>Google</h3>
+                    <p>Web Health Dashboard &amp; Reporting</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/express-scripts.png" alt="Express Scripts"></div>
-                    <h4>Express Scripts</h4>
-                    <span>B2B Platform Discovery</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/express-scripts.png" alt="Express Scripts"></div>
+                    <h3>Express Scripts</h3>
+                    <p>B2B Platform Discovery</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/just-eat.png" alt="Just Eat"></div>
-                    <h4>Just Eat</h4>
-                    <span>B2C Mobile Discovery</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/just-eat.png" alt="Just Eat"></div>
+                    <h3>Just Eat</h3>
+                    <p>B2C Mobile Discovery</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/rocketrip.jpg" alt="Rocketrip"></div>
-                    <h4>Rocketrip</h4>
-                    <span>B2B2C SaaS Product</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/rocketrip.jpg" alt="Rocketrip"></div>
+                    <h3>Rocketrip</h3>
+                    <p>B2B2C SaaS Product</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/google-chrome.jpg" alt="Google Chrome for Work"></div>
-                    <h4>Google Chrome for Work</h4>
-                    <span>B2B Marketing Platform</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/google-chrome.jpg" alt="Google Chrome for Work"></div>
+                    <h3>Google Chrome for Work</h3>
+                    <p>B2B Marketing Platform</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/viacom-supply-chain.jpg" alt="Viacom Supply Chain"></div>
-                    <h4>Viacom Supply Chain</h4>
-                    <span>Enterprise Platform Design</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/viacom-supply-chain.jpg" alt="Viacom Supply Chain"></div>
+                    <h3>Viacom Supply Chain</h3>
+                    <p>Enterprise Platform Design</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/virgin.png" alt="Virgin.com"></div>
-                    <h4>Virgin.com</h4>
-                    <span>Content Publishing Platform</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/virgin.png" alt="Virgin.com"></div>
+                    <h3>Virgin.com</h3>
+                    <p>Content Publishing Platform</p>
                 </a>
-                <a href="work.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/google-cultural.png" alt="Google Cultural Institute"></div>
-                    <h4>Google Cultural Institute</h4>
-                    <span>Art &amp; Cultural Platform</span>
+                <a href="work.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/google-cultural.png" alt="Google Cultural Institute"></div>
+                    <h3>Google Cultural Institute</h3>
+                    <p>Art &amp; Cultural Platform</p>
                 </a>
-                <a href="sky-news.html" class="portfolio-card">
-                    <div class="portfolio-thumb"><img src="images/sky-news.png" alt="Sky News"></div>
-                    <h4>Sky News</h4>
-                    <span>iPad News Streaming App</span>
+                <a href="sky-news.html" class="fn-card fn-paper">
+                    <div class="card-thumb card-thumb--square"><img src="images/sky-news.png" alt="Sky News"></div>
+                    <h3>Sky News</h3>
+                    <p>iPad News Streaming App</p>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Writing & Speaking -->
-    <section class="section writing">
-        <div class="container">
-            <p class="section-label">Writing &amp; Speaking</p>
-            <div class="writing-list">
-                <div class="writing-item">
-                    <span class="writing-year">2019</span>
-                    <span class="writing-title">The future of automation in enterprise technology design</span>
-                    <span class="writing-pub">UX Collective</span>
+    <section class="fn-sec writing">
+        <div class="fn-wide">
+            <div class="fn-sheet fn-paper">
+                <div class="fn-sheet-head">
+                    <p class="fn-label">Writing &amp; Speaking</p>
                 </div>
-                <div class="writing-item">
-                    <span class="writing-year">2019</span>
-                    <span class="writing-title">Design team trends for the modern enterprise</span>
-                    <span class="writing-pub">InVision</span>
-                </div>
-                <div class="writing-item">
-                    <span class="writing-year">2018</span>
-                    <span class="writing-title">Building user-centered design practices at scale</span>
-                    <span class="writing-pub">UX Planet</span>
-                </div>
-                <div class="writing-item">
-                    <span class="writing-year">2018</span>
-                    <span class="writing-title">The role of systems thinking in product design</span>
-                    <span class="writing-pub">Smashing Magazine</span>
-                </div>
-                <div class="writing-item">
-                    <span class="writing-year">2017</span>
-                    <span class="writing-title">Human-centered design in the enterprise</span>
-                    <span class="writing-pub">A List Apart</span>
-                </div>
-                <div class="writing-item">
-                    <span class="writing-year">2017</span>
-                    <span class="writing-title">How design sprints transformed our team's approach</span>
-                    <span class="writing-pub">Medium</span>
-                </div>
-                <div class="writing-item">
-                    <span class="writing-year">2016</span>
-                    <span class="writing-title">The rise of the T-shaped designer</span>
-                    <span class="writing-pub">Design Week</span>
+                <div class="writing-list">
+                    <div class="writing-row">
+                        <span class="writing-year">2019</span>
+                        <span class="writing-title">The future of automation in enterprise technology design</span>
+                        <span class="writing-pub">UX Collective</span>
+                    </div>
+                    <div class="writing-row">
+                        <span class="writing-year">2019</span>
+                        <span class="writing-title">Design team trends for the modern enterprise</span>
+                        <span class="writing-pub">InVision</span>
+                    </div>
+                    <div class="writing-row">
+                        <span class="writing-year">2018</span>
+                        <span class="writing-title">Building user-centered design practices at scale</span>
+                        <span class="writing-pub">UX Planet</span>
+                    </div>
+                    <div class="writing-row">
+                        <span class="writing-year">2018</span>
+                        <span class="writing-title">The role of systems thinking in product design</span>
+                        <span class="writing-pub">Smashing Magazine</span>
+                    </div>
+                    <div class="writing-row">
+                        <span class="writing-year">2017</span>
+                        <span class="writing-title">Human-centered design in the enterprise</span>
+                        <span class="writing-pub">A List Apart</span>
+                    </div>
+                    <div class="writing-row">
+                        <span class="writing-year">2017</span>
+                        <span class="writing-title">How design sprints transformed our team's approach</span>
+                        <span class="writing-pub">Medium</span>
+                    </div>
+                    <div class="writing-row">
+                        <span class="writing-year">2016</span>
+                        <span class="writing-title">The rise of the T-shaped designer</span>
+                        <span class="writing-pub">Design Week</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact -->
-    <section class="section contact">
-        <div class="container">
-            <p class="section-label">Get in touch</p>
-            <h2 class="contact-heading">Say hello!</h2>
-            <p class="contact-sub">I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+    <section class="fn-sec contact">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">Get in touch</p>
+                <h2>Say hello!</h2>
+                <p>I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+            </div>
             <div class="contact-actions">
-                <a href="mailto:andy@andrewshanley.co.uk" class="btn btn-outline">andy@andrewshanley.co.uk</a>
-                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="btn btn-outline">LinkedIn</a>
+                <a href="mailto:andy@andrewshanley.co.uk" class="fn-btn fn-btn--glow">andy@andrewshanley.co.uk <span aria-hidden="true">&rarr;</span></a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="fn-btn fn-btn--line">LinkedIn</a>
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
+    <footer>
+        <div class="fn-wide fn-foot">
             <p>&copy; 2025 Andrew Shanley. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="vendor/footnote.js"></script>
 </body>
 </html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo riffs 2 — demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-sec { padding: 2.5rem 0 3rem; border-top: 1px solid var(--fn-rule); }
+        .demo-sec:first-of-type { border-top: 0; }
+        .demo-head { max-width: 64ch; margin-bottom: 2.5rem; }
+        .demo-head h2 { font-size: var(--fn-step-2); font-weight: 600; margin: 0.3rem 0 0.4rem; }
+        .demo-head p { font-size: var(--fn-step--1); color: var(--fn-text-muted); }
+        .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 5rem; }
+        @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+        .cell h3 { font-size: var(--fn-step-0); font-weight: 600; margin: 0.2rem 0 0.3rem; }
+        .cell p.note { font-size: var(--fn-step--1); color: var(--fn-text-muted); max-width: 40ch; margin-bottom: 4rem; }
+        .stage { position: relative; width: min(21rem, 78%); margin-left: 3rem; padding-bottom: 2.5rem; }
+        .stage.toss-stage { width: 100%; margin-left: 0; padding-bottom: 2rem; }
+
+        .print { padding: 0.9rem 0.9rem 1.1rem; --r: 0.8deg; --tr: -4deg; --tw: 104px; rotate: var(--r); }
+        .print .frame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2px; background: var(--fn-paper-2); }
+        .print .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ---------- fan: the top print is taped down and never moves; the prints behind it spread ---------- */
+        .pile { position: relative; aspect-ratio: 4 / 3.5; cursor: pointer; }
+        .pile:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 8px; }
+        .pile .print { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 0.8rem 0.8rem 1rem; rotate: 0deg; }
+        .pile .print .frame { flex: 1; aspect-ratio: auto; }
+        .pile .print::after { display: none; }
+        .pile .print.top::after { display: block; }
+        .fan .print { transform: rotate(var(--sr)) translate(var(--sx), var(--sy));
+            transition: transform 0.55s cubic-bezier(.3,1.15,.5,1), opacity 0.4s ease; }
+        .fan:hover .print:not(.top), .fan:focus-visible .print:not(.top) { transform: translate(var(--hx), var(--hy)) rotate(var(--ha)); }
+        .fan .print.out { transform: translate(70%, 6%) rotate(11deg) !important; opacity: 0; }
+        .hint { position: absolute; right: -0.6rem; bottom: -0.2rem; }
+
+        /* ---------- toss: a big stack on the left, smaller tossed prints on the right ---------- */
+        .tosswrap { position: relative; aspect-ratio: var(--ar, 1.75); cursor: pointer; }
+        .tosswrap:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 6px; }
+        .toss .print { position: absolute; left: 0; top: 0; width: 58%; aspect-ratio: 4 / 3.5; display: flex; flex-direction: column; padding: 0.75rem 0.75rem 0.95rem; rotate: 0deg;
+            transform: rotate(var(--sr)) translate(var(--sx), var(--sy)); transition: transform 0.55s cubic-bezier(.3,1.1,.5,1); }
+        .toss .print .frame { flex: 1; aspect-ratio: auto; }
+        .toss .print::after { display: none; }
+        .toss .print.top::after { display: block; }
+        .toss .print.tossed { transform: translate(var(--px), var(--py)) rotate(var(--pr)) scale(var(--ps)); }
+        .toss .print.tossed .frame { }
+
+        @media (prefers-reduced-motion: reduce) { .print, .pile .print { transition: none !important; } }
+    </style>
+</head>
+<body class="fn">
+
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough"><feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" /><feDisplacementMap in="SourceGraphic" scale="5" /></filter>
+            <filter id="fn-paper"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" /><feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3"><feDistantLight azimuth="30" elevation="60" /></feDiffuseLighting></filter>
+            <filter id="fn-crayon"><feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" /><feComposite in="rough" in2="SourceGraphic" operator="in" /></filter>
+        </defs>
+    </svg>
+
+    <main>
+        <section class="fn-sec page-head">
+            <div class="fn-wide">
+                <p class="fn-label">Demo</p>
+                <h1>Photo riffs, round two</h1>
+                <p class="fn-lede">Four looser fans where the taped top print never moves, and four toss piles with a big stack on the left and smaller prints on the right. Hover or click each one.</p>
+            </div>
+        </section>
+
+        <section class="demo-sec"><div class="fn-wide">
+            <div class="demo-head"><p class="fn-label">Fans</p><h2>The top print stays stuck</h2>
+                <p>The print with the tape never moves. Hover and the prints behind it spread out, each at its own angle and distance, so it looks scattered rather than arranged. Click to send the top print to the back.</p></div>
+            <div class="grid2">
+                <div class="cell"><h3>F1 · Loose spread</h3><p class="note">Hand-placed and lopsided: different angles and distances, nothing symmetrical.</p>
+                    <div class="stage"><div class="pile fan" id="f1" role="button" tabindex="0" aria-label="Photos of Andrew. Click for the next photo."></div></div></div>
+                <div class="cell"><h3>F2 · Pushed sideways</h3><p class="note">The prints slide out to the right, like a deck pushed across a desk with a thumb.</p>
+                    <div class="stage"><div class="pile fan" id="f2" role="button" tabindex="0" aria-label="Photos of Andrew. Click for the next photo."></div></div></div>
+                <div class="cell"><h3>F3 · Scattered all round</h3><p class="note">Each print drifts off in its own direction, up, down, left and right.</p>
+                    <div class="stage"><div class="pile fan" id="f3" role="button" tabindex="0" aria-label="Photos of Andrew. Click for the next photo."></div></div></div>
+                <div class="cell"><h3>F4 · Different every time</h3><p class="note">The spread is re-rolled each time you hover, so it is never the same twice.</p>
+                    <div class="stage"><div class="pile fan" id="f4" role="button" tabindex="0" aria-label="Photos of Andrew. Click for the next photo."></div></div></div>
+            </div>
+        </div></section>
+
+        <section class="demo-sec"><div class="fn-wide">
+            <div class="demo-head"><p class="fn-label">Toss piles</p><h2>A big stack, with smaller prints tossed beside it</h2>
+                <p>The stack on the left is the main event. Click the top print and it is tossed to the right, where it lands smaller. When the stack runs out, everything resets.</p></div>
+            <div class="grid2">
+                <div class="cell"><h3>T1 · One small pile</h3><p class="note">Everything you toss lands in a single, tidy-ish heap on the right.</p>
+                    <div class="stage toss-stage"><div class="tosswrap toss" id="t1" style="--ar:1.75" role="button" tabindex="0" aria-label="Photos of Andrew. Click to toss the top one."></div><span class="fn-scrawl" style="position:absolute;right:0;bottom:-0.4rem" aria-hidden="true">toss it</span></div></div>
+                <div class="cell"><h3>T2 · Messy heap</h3><p class="note">The tossed prints land at wilder angles and overlap more, like they were thrown.</p>
+                    <div class="stage toss-stage"><div class="tosswrap toss" id="t2" style="--ar:1.75" role="button" tabindex="0" aria-label="Photos of Andrew. Click to toss the top one."></div></div></div>
+                <div class="cell"><h3>T3 · Two small piles</h3><p class="note">Prints alternate between an upper and a lower pile on the right.</p>
+                    <div class="stage toss-stage"><div class="tosswrap toss" id="t3" style="--ar:1.75" role="button" tabindex="0" aria-label="Photos of Andrew. Click to toss the top one."></div></div></div>
+                <div class="cell"><h3>T4 · Scattered landing</h3><p class="note">Each print lands in its own spot on the right, spread out rather than piled.</p>
+                    <div class="stage toss-stage"><div class="tosswrap toss" id="t4" style="--ar:1.75" role="button" tabindex="0" aria-label="Photos of Andrew. Click to toss the top one."></div></div></div>
+            </div>
+        </div></section>
+    </main>
+
+    <script>
+        var photos = ['hero-01.jpg','hero-02.jpg','hero-03.jpg','hero-04.jpg','hero-05.jpg','hero-06.jpg','hero-07.jpg','hero-08.jpg','hero-09.jpg','hero-10.png','hero-11.jpg']
+            .map(function (f) { return 'images/me/' + f; });
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var TINTS = ['tint-purple','tint-cyan','tint-yellow','tint-red','tint-blue','tint-green'];
+        function el(tint, src) {
+            var d = document.createElement('div'); d.className = 'print fn-card fn-paper ' + tint;
+            d.innerHTML = '<div class="frame"><img src="' + src + '" alt=""></div>'; return d;
+        }
+        function rnd(a, b) { return a + Math.random() * (b - a); }
+        var ROT = ['-1.2deg','2.4deg','-3.2deg','3.4deg','-2deg','1.6deg'], XS = ['0px','10px','-12px','14px','-8px','6px'], YS = ['0px','8px','14px','10px','18px','22px'];
+
+        /* fan: queue[0] is the top, taped down. spec = hover placement for the prints behind it. */
+        function makeFan(root, spec, random) {
+            var order = [7, 5, 1, 4, 8], queue = order.map(function (p, i) { var c = el(TINTS[i], photos[p]); root.appendChild(c); return c; }), busy = false;
+            function place(c, i) {
+                var s = spec[i - 1]; if (!s) return;
+                c.style.setProperty('--ha', s.a + 'deg'); c.style.setProperty('--hx', s.x + 'px'); c.style.setProperty('--hy', s.y + 'px');
+            }
+            function reroll() {
+                var sectors = [-27, -9, 9, 27].sort(function () { return Math.random() - 0.5; });
+                spec = sectors.map(function (a) { a += rnd(-7, 7); return { a: a, x: a * 2.3 + rnd(-16, 16), y: rnd(-34, 40) }; });
+                queue.forEach(function (c, i) { if (i > 0) place(c, i); });
+            }
+            function layout() {
+                queue.forEach(function (c, i) {
+                    var k = Math.min(i, 5);
+                    c.classList.toggle('top', i === 0); c.style.zIndex = 40 - i;
+                    c.style.setProperty('--sr', ROT[k]); c.style.setProperty('--sx', XS[k]); c.style.setProperty('--sy', YS[k]);
+                    if (i > 0) place(c, i);
+                });
+            }
+            function next() { if (busy) return; busy = true; var t = queue[0]; t.classList.add('out');
+                setTimeout(function () { queue.push(queue.shift()); t.classList.remove('out'); layout(); busy = false; }, reduce ? 0 : 380); }
+            if (random) { spec = []; reroll(); root.addEventListener('mouseenter', reroll); root.addEventListener('focus', reroll); }
+            layout(); root.addEventListener('click', next);
+            root.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); next(); } });
+        }
+        // F1 loose and lopsided
+        makeFan(document.getElementById('f1'), [
+            { a: -13, x: -26, y: -8 }, { a: 8, x: 34, y: 6 }, { a: -24, x: -52, y: 18 }, { a: 21, x: 62, y: 26 }]);
+        // F2 pushed sideways, uneven spacing
+        makeFan(document.getElementById('f2'), [
+            { a: 3, x: 20, y: -5 }, { a: 9, x: 52, y: 5 }, { a: 7, x: 74, y: -6 }, { a: 17, x: 100, y: 14 }]);
+        // F3 scattered all round
+        makeFan(document.getElementById('f3'), [
+            { a: -9, x: -8, y: -48 }, { a: 12, x: 58, y: -20 }, { a: -16, x: -62, y: 24 }, { a: 6, x: 18, y: 54 }]);
+        // F4 re-rolled on every hover
+        makeFan(document.getElementById('f4'), [], true);
+
+        /* toss: tossed prints land smaller (--ps) beside the big stack. cfg gives landing spots per print. */
+        function makeToss(root, cfg) {
+            var order = [7, 5, 1, 4, 8, 3], cards = order.map(function (p, i) {
+                var c = el(TINTS[i], photos[p]);
+                c.style.setProperty('--px', cfg.px[i]); c.style.setProperty('--py', cfg.py[i]); c.style.setProperty('--pr', cfg.pr[i]); c.style.setProperty('--ps', cfg.ps[i]);
+                root.appendChild(c); return c; });
+            var idx = 0;
+            function layout() {
+                cards.forEach(function (c, i) {
+                    var inStack = i >= idx; c.classList.toggle('tossed', !inStack);
+                    c.style.zIndex = inStack ? 40 - (i - idx) : 10 + i;
+                    var k = Math.max(0, Math.min(i - idx, 5));
+                    c.style.setProperty('--sr', ROT[k]); c.style.setProperty('--sx', XS[k]); c.style.setProperty('--sy', YS[k]);
+                    c.classList.toggle('top', i === idx);
+                });
+            }
+            function next() { idx++; if (idx >= cards.length) idx = 0; layout(); }
+            layout(); root.addEventListener('click', next);
+            root.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); } });
+        }
+        // positions are % of one print's own size; scale shrinks each print as it lands
+        makeToss(document.getElementById('t1'), {   // one small heap
+            px: ['94%','98%','92%','99%','95%','97%'], py: ['10%','16%','6%','14%','12%','8%'],
+            pr: ['6deg','-5deg','9deg','-7deg','4deg','-3deg'], ps: ['.6','.6','.6','.6','.6','.6'] });
+        makeToss(document.getElementById('t2'), {   // messy, wild angles, more overlap
+            px: ['90%','104%','86%','100%','94%','108%'], py: ['0%','24%','10%','-6%','30%','12%'],
+            pr: ['17deg','-21deg','28deg','-14deg','9deg','-26deg'], ps: ['.58','.52','.6','.5','.56','.5'] });
+        makeToss(document.getElementById('t3'), {   // two small piles, alternating up and down
+            px: ['96%','96%','100%','100%','94%','98%'], py: ['-16%','38%','-12%','42%','-20%','36%'],
+            pr: ['5deg','-6deg','-8deg','7deg','10deg','-4deg'], ps: ['.5','.5','.5','.5','.5','.5'] });
+        makeToss(document.getElementById('t4'), {   // each lands in its own spot
+            px: ['80%','108%','82%','110%','94%','96%'], py: ['-20%','-14%','8%','12%','-2%','34%'],
+            pr: ['-6deg','7deg','5deg','-8deg','3deg','-4deg'], ps: ['.46','.46','.46','.46','.46','.46'] });
+    </script>
+</body>
+</html>

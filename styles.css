@@ -43,7 +43,7 @@ html { scroll-behavior: smooth; }
 /* ---------- Hero ---------- */
 /* The bullets in the title are set as small, mid-height dots in a quiet tone, so they
    punctuate the words instead of competing with them. */
-.fn-hero h1 { margin-bottom: 2.25rem; }
+.fn-hero h1 { margin-bottom: 3rem; }
 .title-dot {
     display: inline-block;
     font-size: 0.55em;
@@ -62,10 +62,10 @@ html { scroll-behavior: smooth; }
     gap: clamp(2rem, 5vw, 4rem);
     align-items: start;
 }
-.hero-copy { max-width: 56ch; }
+.hero-copy { max-width: 68ch; }
 .hero-copy p { color: var(--fn-text-soft); }
 .hero-copy p + p { margin-top: 1rem; }
-.hero-copy .fn-lede { font-size: var(--fn-step-1); }
+.fn-hero .hero-copy .fn-lede { font-size: var(--fn-step-1); max-width: 52ch; }
 /* Footnote rounds the bottom-right corner of every highlighter stroke quite hard (20px by 30px).
    A tighter radius keeps the hand-drawn feel but leaves the stroke's end much squarer. */
 .fn mark::before {
@@ -89,7 +89,7 @@ html { scroll-behavior: smooth; }
    blue, so the text reads clearly on the marker, and a little space either side so the pen stroke doesn't
    touch the neighbouring words. The same space on both sides. It keeps the underline the other links have,
    in the same dark red. */
-.hero-copy a.link-mark { --link-ink: color-mix(in srgb, var(--fn-pencil) 45%, var(--fn-ink)); color: var(--link-ink); margin: 0 0.2em; }
+.hero-copy a.link-mark { --link-ink: color-mix(in srgb, var(--fn-pencil) 45%, var(--fn-ink)); color: var(--link-ink); margin: 0; }
 /* like the other links, it goes to the page's black ink on hover and keyboard focus */
 .hero-copy a.link-mark:hover,
 .hero-copy a.link-mark:focus-visible { color: var(--fn-ink); }
@@ -109,7 +109,7 @@ html { scroll-behavior: smooth; }
    one stuck down with tape, so it never moves on hover; only the prints behind it slide out to the
    right, each at its own slightly different angle and distance. Clicking sends the top print to the
    back. The spread for each position is set in hero-photos.js, since it follows the order of the stack. */
-.hero-fan { position: relative; width: min(21rem, 78%); aspect-ratio: 4 / 3.5; cursor: pointer; }
+.hero-fan { position: relative; left: -20px; top: -20px; width: min(21rem, 78%); aspect-ratio: 4 / 3.5; cursor: pointer; }
 .hero-fan:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 8px; }
 .hero-fan .print {
     --sr: 0deg; --sx: 0px; --sy: 0px;
@@ -126,7 +126,7 @@ html { scroll-behavior: smooth; }
 .hero-fan .print .frame { position: relative; flex: 1; overflow: hidden; border-radius: 2px; background: var(--fn-paper-2); }
 .hero-fan .print .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hero-fan .print::after { display: none; }
-.hero-fan .print.top::after { display: block; }
+.hero-fan .print.top::after { display: none; }
 .hero-fan:hover .print:not(.top),
 .hero-fan:focus-visible .print:not(.top) { transform: translate(var(--hx), var(--hy)) rotate(var(--ha)); }
 .hero-fan:hover .print,
@@ -302,7 +302,7 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
 .card-thumb--bl img { object-position: left bottom; }
 .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .card-meta { margin-bottom: 0.3rem; }
-.card-grid--4 .fn-card h3 { font-size: var(--fn-step-0); }
+.card-grid--4 .fn-card h3 { font-size: 20px; }
 
 .work-tag {
     display: inline-block;
@@ -454,7 +454,7 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
 .slot .ghost { position: absolute; inset: 0; z-index: 1; padding: 8px; }
 .slot .ghost-frame {
     height: 100%; display: grid; place-items: center; padding: 0.75rem; text-align: center; border-radius: 3px;
-    border: 1.5px dashed var(--fn-rule);   /* faint: the same hairline colour as the page's rules */
+    border: none;
 }
 .slot .ghost-msg { rotate: -2deg; display: flex; flex-direction: column; align-items: center; gap: 0.55rem; max-width: 100%; opacity: 0; transition: opacity 0.4s ease 0.35s; }
 .slot.is-open .ghost-msg { opacity: 1; }
@@ -488,3 +488,906 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
 
 /* Project years use the existing label scale, reduced by two pixels. */
 .fn .fn-card .card-year { font-size: calc(var(--fn-step--1) - 2px); }
+
+/* BEGIN paper-edge trial */
+/* A colored sheet appears beneath project cards on hover or keyboard focus.
+   Kept in one block so this experiment can be reverted cleanly. */
+.card-grid a.fn-card::after,
+.card-grid .slot > .tape { display: none; }
+.card-grid a.fn-card {
+    transform-origin: center;
+    background-image: none;
+    transition: rotate .35s ease, transform .35s ease, box-shadow .35s ease;
+}
+.card-grid a.fn-card:is(:hover, :focus-visible) {
+    --a: var(--r, 0deg);
+    rotate: -1.5deg;
+    transform: translate(-3px, -6px);
+    background-size: 100% 0;
+    box-shadow: 8px 8px 0 var(--tape, var(--fn-hl-yellow)), var(--fn-shadow-lift);
+}
+.card-grid .slot.is-open > .fn-card {
+    box-shadow: var(--fn-shadow-card);
+}
+@media (prefers-reduced-motion: reduce) {
+    .card-grid a.fn-card { transition: none; }
+    .card-grid a.fn-card:is(:hover, :focus-visible) {
+        rotate: var(--r, 0deg);
+        transform: none;
+    }
+}
+/* END paper-edge trial */
+
+/* Keep project cards straight at rest; the paper-edge trial adds hover rotation. */
+.card-grid > .fn-card,
+.card-grid > .slot,
+.card-grid > .slot > .fn-card { --r: 0deg; }
+.card-grid a.fn-card { rotate: 0deg; }
+
+/* Project hover: colored paper edge plus a marker stroke beneath the heading. */
+.card-grid a.fn-card:is(:hover, :focus-visible) { rotate: 0deg; }
+.card-grid a.fn-card :is(h2, h3) {
+    width: fit-content;
+    max-width: calc(100% - 2.7rem);
+    background-image: linear-gradient(color-mix(in srgb, var(--tape, var(--fn-hl-yellow)) 80%, transparent), color-mix(in srgb, var(--tape, var(--fn-hl-yellow)) 80%, transparent));
+    background-repeat: no-repeat;
+    background-position: left 85%;
+    background-size: 0% 75%;
+    transition: background-size .35s ease;
+}
+.card-grid a.fn-card:is(:hover, :focus-visible) :is(h2, h3) {
+    background-size: 100% 75%;
+}
+@media (prefers-reduced-motion: reduce) {
+    .card-grid a.fn-card :is(h2, h3) { transition: none; }
+}
+
+/* Netflix reveal uses the same serif title and subtitle treatment as its card. */
+.slot .ghost-msg { rotate: 0deg; gap: .85rem; }
+.slot .ghost-big {
+    font-family: var(--fn-font-display);
+    font-size: var(--fn-step-0);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--fn-ink);
+    filter: none;
+    background: transparent;
+    padding: 0 .12em;
+    text-wrap: balance;
+}
+.slot .ghost-small {
+    font-family: var(--fn-font-body);
+    font-size: var(--fn-step--1);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--fn-text-card);
+}
+
+/* Let the backing paper peek out before interaction. */
+.card-grid a.fn-card:not(:hover):not(:focus-visible) {
+    box-shadow: 4px 4px 0 #e5e5e5, 0 2px 4px rgba(16, 15, 15, .06), 0 10px 18px -12px rgba(16, 15, 15, .22);
+}
+.card-grid .slot.is-open > .fn-card:not(:hover):not(:focus-visible) {
+    box-shadow: 0 2px 4px rgba(16, 15, 15, .06), 0 10px 18px -12px rgba(16, 15, 15, .22);
+}
+
+/* Connected card thickness: diagonal joins replace the offset backing sheet. */
+.card-grid a.fn-card { --card-depth: 4px; --card-edge: #e5e5e5; }
+.card-grid a.fn-card::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: calc(100% + var(--card-depth));
+    height: calc(100% + var(--card-depth));
+    translate: none;
+    rotate: 0deg;
+    border-radius: 0;
+    background: var(--card-edge);
+    box-shadow: none;
+    pointer-events: none;
+    z-index: -2;
+    clip-path: polygon(
+        calc(100% - var(--card-depth)) 0,
+        100% var(--card-depth),
+        100% 100%,
+        var(--card-depth) 100%,
+        0 calc(100% - var(--card-depth)),
+        calc(100% - var(--card-depth)) calc(100% - var(--card-depth))
+    );
+    transition: width .35s ease, height .35s ease, background-color .35s ease;
+}
+.card-grid a.fn-card:not(:hover):not(:focus-visible) {
+    box-shadow: 0 2px 4px rgba(16, 15, 15, .06), 0 10px 18px -12px rgba(16, 15, 15, .22);
+}
+.card-grid a.fn-card:is(:hover, :focus-visible) {
+    --card-depth: 8px;
+    --card-edge: var(--tape, var(--fn-hl-yellow));
+    box-shadow: var(--fn-shadow-lift);
+}
+.card-grid .slot.is-open > .fn-card::after { display: none; }
+@media (prefers-reduced-motion: reduce) {
+    .card-grid a.fn-card::after { transition: none; }
+}
+
+/* Rounded accent-colored thickness at rest and on interaction. */
+.card-grid a.fn-card::after { display: none; }
+.card-grid a.fn-card:not(:hover):not(:focus-visible) {
+    box-shadow: 1px 1px 0 var(--tape, var(--fn-hl-yellow)),
+        2px 2px 0 var(--tape, var(--fn-hl-yellow)),
+        3px 3px 0 var(--tape, var(--fn-hl-yellow)),
+        4px 4px 0 var(--tape, var(--fn-hl-yellow)),
+        0 2px 4px rgba(16, 15, 15, .06), 0 10px 18px -12px rgba(16, 15, 15, .22);
+}
+.card-grid a.fn-card:is(:hover, :focus-visible) {
+    box-shadow: 1px 1px 0 var(--tape, var(--fn-hl-yellow)),
+        2px 2px 0 var(--tape, var(--fn-hl-yellow)),
+        3px 3px 0 var(--tape, var(--fn-hl-yellow)),
+        4px 4px 0 var(--tape, var(--fn-hl-yellow)),
+        5px 5px 0 var(--tape, var(--fn-hl-yellow)),
+        6px 6px 0 var(--tape, var(--fn-hl-yellow)),
+        7px 7px 0 var(--tape, var(--fn-hl-yellow)),
+        8px 8px 0 var(--tape, var(--fn-hl-yellow)),
+        var(--fn-shadow-lift);
+}
+.card-grid .slot.is-open > .fn-card { box-shadow: 0 2px 4px rgba(16, 15, 15, .06), 0 10px 18px -12px rgba(16, 15, 15, .22); }
+
+/* Show colored card thickness only during hover or keyboard focus. */
+.card-grid a.fn-card:not(:hover):not(:focus-visible) {
+    box-shadow: 0 2px 4px rgba(16, 15, 15, .06), 0 10px 18px -12px rgba(16, 15, 15, .22);
+}
+
+/* Hero photo prints without tape. */
+.hero-fan .print::after { display: none; }
+
+/* Scale continuously with the viewport, up to 1280px. */
+:root { --fn-page-max: 1280px; }
+
+/* A modest, fluid increase for hero copy on the wider layout. */
+.hero-copy {
+    font-size: clamp(1rem, calc(.903846rem + .42735vw), 1.1875rem);
+}
+.fn-hero .hero-copy .fn-lede {
+    font-size: clamp(1.2rem, calc(1.046154rem + .68376vw), 1.5rem);
+}
+
+/* Scale the shared type ramp for the wider layout, preserving mobile minima. */
+:root {
+    --fn-step-6: clamp(2.99rem, 2.415rem + 3.612vw, 5.4rem);
+    --fn-step-close: clamp(2.6rem, 1.68rem + 4.2vw, 5.25rem);
+    --fn-step-4: clamp(2.07rem, 1.848rem + 1.6275vw, 3.2rem);
+    --fn-step-2: clamp(1.44rem, 1.386rem + .609vw, 1.89rem);
+    --fn-step-1: clamp(1.2rem, 1.1865rem + .3675vw, 1.5rem);
+    --fn-step-0: clamp(1rem, 1.008rem + .231vw, 1.1875rem);
+    --fn-step--1: clamp(.83rem, .84rem + .168vw, .97rem);
+}
+
+/* Larger card layouts advance their titles by one type-scale step too. */
+.card-grid--3 .fn-card h3,
+.card-grid--2 .fn-card h3,
+.card-grid--2 .fn-card .card-title { font-size: 20px; }
+
+/* Card type harmony: quiet metadata and a tighter title/description group. */
+.fn .card-grid .fn-card .card-year {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    color: #777570;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+.card-grid .fn-card :is(h3, .card-title) {
+    line-height: 1.25;
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+.card-grid .fn-card h3 + p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.card-grid > .fn-card,
+.card-grid > .slot > .fn-card { padding-bottom: 24px; }
+
+/* Liquid swell: the accent blooms behind project cards on hover and focus. */
+.card-grid a.fn-card::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: -22px;
+    width: auto;
+    height: auto;
+    translate: none;
+    rotate: 0deg;
+    z-index: -2;
+    pointer-events: none;
+    clip-path: none;
+    background: var(--tape, var(--fn-hl-yellow));
+    border-radius: 42% 35% 39% 28%;
+    box-shadow: none;
+    opacity: 0;
+    transform: scale(.7);
+    transition: opacity .35s ease, transform .65s cubic-bezier(.15, 1.5, .35, 1);
+}
+.card-grid a.fn-card:is(:hover, :focus-visible) {
+    box-shadow: var(--fn-shadow-lift);
+}
+.card-grid a.fn-card:is(:hover, :focus-visible)::after {
+    opacity: .8;
+    transform: scale(1.05) rotate(3deg);
+    animation: card-liquid-swell 4s ease-in-out infinite;
+}
+@keyframes card-liquid-swell {
+    0%, 100% { border-radius: 42% 35% 39% 28%; rotate: -2deg; }
+    50% { border-radius: 30% 43% 24% 40%; rotate: 2deg; }
+}
+.card-grid .slot.is-open > .fn-card::after { display: none; }
+@media (prefers-reduced-motion: reduce) {
+    .card-grid a.fn-card::after {
+        transition: none;
+        animation: none !important;
+    }
+}
+
+/* Open project layout: no paper surface; the liquid sits behind the caption. */
+.card-grid a.fn-card,
+.card-grid a.fn-card:not(:hover):not(:focus-visible),
+.card-grid a.fn-card:is(:hover, :focus-visible),
+.card-grid .slot.is-open > .fn-card {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+.card-grid a.fn-card::before { display: none; }
+.fn .card-grid a.fn-card .card-thumb {
+    border-radius: 10px;
+    transition: border-radius .3s ease;
+}
+.fn .card-grid a.fn-card:is(:hover, :focus-visible) .card-thumb { border-radius: 20px; }
+@media (prefers-reduced-motion: reduce) {
+    .card-grid a.fn-card .card-thumb { transition: none; }
+}
+.card-grid a.fn-card::after {
+    inset: -22px;
+    width: auto;
+    height: auto;
+    z-index: -1;
+}
+
+/* Dark ink keeps project text clear over the liquid accent. */
+.fn .card-grid a.fn-card:is(:hover, :focus-visible) :is(h2, h3, p, .card-year, .work-tag) {
+    color: var(--fn-ink);
+}
+
+/* Keep project text free of separate background highlights in every state. */
+.card-grid a.fn-card > :is(h2, h3, p, .work-tag),
+.card-grid a.fn-card:is(:hover, :focus-visible) > :is(h2, h3, p, .work-tag) {
+    background-color: transparent;
+    background-image: none;
+}
+
+/* Netflix keeps its red hover swell; the revealed message gets a grey swell. */
+.card-grid #netflix-slot { isolation: isolate; }
+#netflix-slot::before {
+    content: "";
+    position: absolute;
+    inset: -22px;
+    z-index: -1;
+    pointer-events: none;
+    background: #e5e5e5;
+    border-radius: 42% 35% 39% 28%;
+    opacity: 0;
+    transform: scale(.7);
+    transition: opacity .35s ease, transform .65s cubic-bezier(.15, 1.5, .35, 1);
+}
+#netflix-slot.is-open::before {
+    opacity: .8;
+    transform: scale(1.05) rotate(3deg);
+    animation: card-liquid-swell 4s ease-in-out infinite;
+}
+/* Fade the card's red swell away during its drop instead of hiding abruptly. */
+.card-grid #netflix-slot.is-open > .fn-card::after {
+    display: block;
+    opacity: 0;
+    animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    #netflix-slot::before { transition: none; animation: none !important; }
+}
+
+/* Override the legacy Netflix tape-hiding rule for its new liquid pseudo-element. */
+.card-grid #netflix-slot > .fn-card::after { display: block; }
+#netflix-slot .ghost { pointer-events: none; }
+
+/* Service icons share the project-card liquid swell on hover and focus. */
+.services .fn-swatch .service-sketch::before {
+    border-radius: 42% 35% 39% 28%;
+    transform: scale(.85) rotate(-5deg);
+    transition: opacity .48s ease, transform .65s cubic-bezier(.15, 1.5, .35, 1);
+}
+.services .fn-swatch:is(:hover, :focus-visible, :focus-within) .service-sketch::before {
+    opacity: .8;
+    transform: scale(1.288) rotate(3deg);
+    animation: card-liquid-swell 4s ease-in-out infinite;
+    transition: opacity .48s ease, transform .65s cubic-bezier(.15, 1.5, .35, 1);
+}
+.services .fn-swatch:focus-visible { outline: 2px solid var(--fn-print); outline-offset: 8px; }
+.services .fn-swatch:focus-within .service-sketch { transform: translateY(-6px) rotate(-2deg); }
+.services.is-resting .fn-swatch:focus-within .from-to mark { color: var(--fn-ink); }
+.services.is-resting .fn-swatch:focus-within .from-to mark::before {
+    opacity: .8;
+    clip-path: inset(-40% -30% -40% -30%);
+    transition: opacity .1s ease, clip-path .48s var(--fn-ease-pen);
+}
+.services.is-resting .fn-swatch:focus-within .from-to mark::after { opacity: .1; }
+@media (prefers-reduced-motion: reduce) {
+    .services .fn-swatch .service-sketch::before { transition: none; animation: none !important; }
+}
+
+/* Gentle liquid movement belongs to the highlight, never the lettering. */
+.hero-copy mark::before {
+    transform-origin: center;
+    animation: text-highlight-swell 4.5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+.hero-copy mark.fn-is-drawn::before { animation-play-state: running; }
+.services.is-revealed:not(.is-resting) .from-to mark::before,
+.services .fn-swatch:is(:hover, :focus-within) .from-to mark::before {
+    transform-origin: center;
+    animation: text-highlight-swell 4.5s ease-in-out infinite;
+}
+@keyframes text-highlight-swell {
+    0%, 100% { transform: scale(1, 1) rotate(-.3deg); }
+    50% { transform: scale(1.025, 1.08) rotate(.3deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy mark::before,
+    .services .from-to mark::before { animation: none !important; }
+}
+
+/* Text highlights share the smooth organic edges of the icon swells. */
+.fn .hero-copy mark::before,
+.fn .services .from-to mark::before {
+    filter: none;
+    background-image: none;
+    box-shadow: none;
+    border-radius: 24% 20% 25% 18% / 28% 32% 25% 30%;
+}
+.fn .hero-copy mark::after,
+.fn .services .from-to mark::after { content: none; }
+@keyframes text-highlight-swell {
+    0%, 100% {
+        transform: scale(1, 1) rotate(-.3deg);
+        border-radius: 24% 20% 25% 18% / 28% 32% 25% 30%;
+    }
+    50% {
+        transform: scale(1.025, 1.08) rotate(.3deg);
+        border-radius: 19% 26% 17% 25% / 32% 25% 30% 26%;
+    }
+}
+
+/* Intro highlights wipe in sequentially: yellow first, then Netflix red. */
+.hero-copy.hero-color-intro mark::before {
+    clip-path: inset(-40% 100% -40% -30%);
+    animation: none;
+}
+.hero-copy.hero-color-intro.is-color-visible mark::before {
+    animation: hero-color-wipe .6s var(--fn-ease-pen) both,
+               text-highlight-swell 4.5s ease-in-out infinite;
+    animation-delay: .15s, .75s;
+    animation-play-state: running;
+}
+.hero-copy.hero-color-intro.is-color-visible .fn-hl-red::before {
+    animation-delay: .9s, 1.5s;
+}
+@keyframes hero-color-wipe {
+    from { clip-path: inset(-40% 100% -40% -30%); }
+    to { clip-path: inset(-40% -30% -40% -30%); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro mark::before {
+        animation: none !important;
+        clip-path: inset(-40% -30% -40% -30%);
+    }
+}
+
+/* Subtle TV-style pointer tilt layered onto the existing hover lift. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .card-grid a.fn-card:is(:hover, :focus-visible) {
+        transform: translate(calc(-3px + var(--pointer-x, 0px)), calc(-6px + var(--pointer-y, 0px))) scale(1.02);
+    }
+    .card-grid a.fn-card.is-pointer-tilting {
+        transition: transform .18s ease-out, box-shadow .35s ease;
+    }
+    .card-grid .slot.is-open > a.fn-card {
+        transform: none;
+    }
+}
+
+/* Keep an active card's decorative swell below neighboring project cards. */
+.card-grid { isolation: isolate; }
+.card-grid > .fn-card,
+.card-grid > .slot { position: relative; z-index: 2; }
+.card-grid > .fn-card:is(:hover, :focus-visible),
+.card-grid > .slot:has(> .fn-card:is(:hover, :focus-visible)),
+.card-grid > .slot.is-open { z-index: 1; }
+
+/* BEGIN alignment trial */
+/* Remove this block to restore the previous project/service alignment. */
+.card-grid > .fn-card > :not(.card-thumb),
+.card-grid > .slot > .fn-card > :not(.card-thumb) {
+    margin-left: 0;
+    margin-right: 0;
+}
+.card-grid a.fn-card :is(h2, h3) { max-width: 100%; }
+.services .fn-tray { column-gap: 2.5rem; }
+.services .service-sketch { margin-bottom: .65rem; }
+/* Account for each drawing's whitespace inside its 240-unit SVG canvas. */
+.services .fn-swatch:nth-child(1) .service-sketch svg { translate: -24px 0; }
+.services .fn-swatch:nth-child(2) .service-sketch svg { translate: -27px 0; }
+.services .fn-swatch:nth-child(3) .service-sketch svg { translate: -13px 0; }
+.services .fn-swatch:nth-child(4) .service-sketch svg { translate: -16px 0; }
+/* Move each highlight with its drawing so the color stays centered behind it. */
+.services .fn-swatch:nth-child(1) .service-sketch::before { left: -10px; }
+.services .fn-swatch:nth-child(2) .service-sketch::before { left: -13px; }
+.services .fn-swatch:nth-child(3) .service-sketch::before { left: 1px; }
+.services .fn-swatch:nth-child(4) .service-sketch::before { left: -2px; }
+/* END alignment trial */
+
+/* Hero direction: frameless photo, liquid halo, and a visible next-photo ticket. */
+.hero-gallery {
+    position: relative;
+    isolation: isolate;
+    width: min(22.05rem, 81.9%);
+    left: 10px;
+    top: 8px;
+    padding-bottom: 12px;
+}
+.hero-gallery::before {
+    content: "";
+    position: absolute;
+    inset: -22px -22px 5px;
+    z-index: -1;
+    background: var(--fn-hl-yellow);
+    opacity: .75;
+    border-radius: 42% 35% 39% 28%;
+    animation: card-liquid-swell 4s ease-in-out infinite;
+    pointer-events: none;
+}
+.hero-gallery .hero-fan { width: 100%; left: 0; top: 0; aspect-ratio: 4 / 3.5; }
+.hero-gallery .hero-fan .print {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 16px;
+    box-shadow: none;
+    transform: none !important;
+    rotate: 0deg;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s ease;
+    pointer-events: none;
+}
+.hero-gallery .hero-fan .print::before,
+.hero-gallery .hero-fan .print::after { display: none; }
+.hero-gallery .hero-fan .print.top { opacity: 1; visibility: visible; }
+.hero-gallery .hero-fan.is-changing .print.top { opacity: 0; }
+.hero-gallery .hero-fan .print .frame { border-radius: 16px; }
+.hero-next-ticket {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: fit-content;
+    margin: -18px -12px 0 auto;
+    z-index: 50;
+    padding: 14px 22px;
+    background: var(--fn-hl-yellow);
+    border: 0;
+    border-radius: 25% 20% 30% 18%;
+    color: var(--fn-ink);
+    font: 500 12px/1.5 var(--fn-font-mono);
+    cursor: pointer;
+    transition: transform .25s ease, background-color .25s ease;
+}
+.hero-next-ticket:hover { transform: translateY(-3px); background: color-mix(in srgb, var(--fn-hl-yellow) 94%, var(--fn-ink)); }
+.hero-next-ticket:focus-visible { outline: 2px solid var(--fn-print); outline-offset: 5px; }
+.hero-photo-count { white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+    .hero-gallery::before { animation: none; }
+    .hero-gallery .hero-fan .print,
+    .hero-next-ticket { transition: none; }
+    .hero-next-ticket:hover { transform: none; }
+}
+
+/* Hero gallery shares the project-image hover treatment. */
+.hero-gallery::before {
+    transform: scale(1);
+    transition: transform .65s cubic-bezier(.15, 1.5, .35, 1);
+}
+.hero-gallery:is(:hover, :focus-within)::before {
+    transform: scale(1.1) rotate(3deg);
+}
+.hero-gallery .hero-fan .print { border-radius: 10px; }
+.hero-gallery .hero-fan .print .frame {
+    border-radius: 10px;
+    transition: border-radius .3s ease;
+}
+.hero-gallery:is(:hover, :focus-within) .hero-fan .print,
+.hero-gallery:is(:hover, :focus-within) .hero-fan .print .frame { border-radius: 20px; }
+@media (prefers-reduced-motion: reduce) {
+    .hero-gallery::before,
+    .hero-gallery .hero-fan .print .frame { transition: none; }
+    .hero-gallery:is(:hover, :focus-within)::before { transform: none; }
+}
+
+/* Hero photos share the project cards' lift and opposite-cursor movement. */
+.hero-gallery .hero-fan { transition: transform .35s ease; transform-origin: center; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .hero-gallery .hero-fan:is(:hover, :focus-visible) {
+        transform: translate(calc(-3px + var(--pointer-x, 0px)), calc(-6px + var(--pointer-y, 0px))) scale(1.02);
+    }
+    .hero-gallery .hero-fan.is-pointer-tilting { transition: transform .18s ease-out; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-gallery .hero-fan { transition: none; }
+}
+
+/* Photo-matched accents stay within the existing highlighter palette. */
+.hero-gallery::before {
+    background-color: var(--hero-accent, var(--fn-hl-yellow));
+    transition: transform .65s cubic-bezier(.15, 1.5, .35, 1), background-color .45s ease;
+}
+.hero-next-ticket { background-color: var(--hero-accent, var(--fn-hl-yellow)); }
+.hero-next-ticket:hover {
+    background-color: color-mix(in srgb, var(--hero-accent, var(--fn-hl-yellow)) 94%, var(--fn-ink));
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-gallery::before { transition: none; }
+}
+
+/* Dark accent ink gives active project titles a stronger color connection. */
+.card-grid .tint-red { --title-accent: #8c2926; }
+.card-grid .tint-orange { --title-accent: #85421b; }
+.card-grid .tint-yellow { --title-accent: #6d5310; }
+.card-grid .tint-green { --title-accent: #46561f; }
+.card-grid .tint-cyan { --title-accent: #1d5b49; }
+.card-grid .tint-blue { --title-accent: #244f78; }
+.card-grid .tint-purple { --title-accent: #62406f; }
+.card-grid .tint-magenta { --title-accent: #843358; }
+.card-grid a.fn-card :is(h2, h3) { transition: color .25s ease; }
+.fn .card-grid a.fn-card[class]:is(:hover, :focus-visible) :is(h2, h3) {
+    color: var(--title-accent, var(--fn-ink));
+}
+@media (prefers-reduced-motion: reduce) {
+    .card-grid a.fn-card :is(h2, h3) { transition: none; }
+}
+
+/* Squircle image corners on hover/focus, with a rounded fallback. */
+.fn .card-grid a.fn-card:is(:hover, :focus-visible) .card-thumb,
+.hero-gallery:is(:hover, :focus-within) .hero-fan .print,
+.hero-gallery:is(:hover, :focus-within) .hero-fan .print .frame {
+    border-radius: 15%;
+}
+@supports (corner-shape: squircle) {
+    .fn .card-grid a.fn-card .card-thumb,
+    .hero-gallery .hero-fan .print,
+    .hero-gallery .hero-fan .print .frame { corner-shape: squircle; }
+    .fn .card-grid a.fn-card:is(:hover, :focus-visible) .card-thumb,
+    .hero-gallery:is(:hover, :focus-within) .hero-fan .print,
+    .hero-gallery:is(:hover, :focus-within) .hero-fan .print .frame {
+        border-radius: 15%;
+    }
+}
+
+/* Resting years carry a small tag in the project's liquid accent. */
+.fn .card-grid a.fn-card > .card-year {
+    position: relative;
+    isolation: isolate;
+    width: fit-content;
+    color: var(--title-accent, var(--fn-ink));
+}
+.fn .card-grid a.fn-card > .card-year::before {
+    content: "";
+    position: absolute;
+    inset: -2px -7px -2px 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--tape, var(--fn-hl-yellow));
+    opacity: .8;
+    border-radius: 5px;
+    transition: opacity .3s ease, background-color .3s ease;
+}
+.fn .card-grid a.fn-card:is(:hover, :focus-visible) > .card-year::before {
+    opacity: 1;
+    background-color: color-mix(in srgb, var(--tape, var(--fn-hl-yellow)) 94%, var(--fn-ink) 6%);
+}
+@media (prefers-reduced-motion: reduce) {
+    .fn .card-grid a.fn-card > .card-year::before { transition: none; }
+}
+
+/* Year tags share the caption's left alignment; padding sits inside the tag. */
+.fn .card-grid a.fn-card > .card-year { padding-left: 7px; }
+
+/* Keep year text in the same accent ink as the active project title. */
+.fn .card-grid a.fn-card[class]:is(:hover, :focus-visible) > .card-year {
+    color: var(--title-accent, var(--fn-ink));
+}
+
+/* Active subtitles share the title and year's dark accent ink. */
+.fn .card-grid a.fn-card[class]:is(:hover, :focus-visible) > h3 + p,
+.fn .card-grid a.fn-card[class]:is(:hover, :focus-visible) > .card-title + p {
+    color: var(--title-accent, var(--fn-ink));
+}
+
+/* Year tags echo the softly swelling intro highlights. */
+.fn .card-grid a.fn-card > .card-year::before {
+    border-radius: 24% 20% 25% 18% / 28% 32% 25% 30%;
+    transform-origin: center;
+    animation: text-highlight-swell 4.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+    .fn .card-grid a.fn-card > .card-year::before { animation: none; }
+}
+
+/* Matching 12px resting squircle corners for hero and project images. */
+.fn .card-grid a.fn-card:not(:hover):not(:focus-visible) .card-thumb,
+.hero-gallery:not(:hover):not(:focus-within) .hero-fan .print,
+.hero-gallery:not(:hover):not(:focus-within) .hero-fan .print .frame {
+    border-radius: 12px;
+}
+
+/* Netflix intro link: no underline, with a quick hover/focus color fade. */
+.hero-copy a.link-mark,
+.hero-copy a.link-mark mark {
+    text-decoration: none;
+    transition: color .15s ease;
+}
+.fn .hero-copy a.link-mark mark::before {
+    transition: background-color .15s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy a.link-mark,
+    .hero-copy a.link-mark mark,
+    .fn .hero-copy a.link-mark mark::before { transition: none; }
+}
+
+/* Netflix gains accent ink only once its red entrance highlight is visible. */
+.hero-copy a.link-mark { --link-ink: #8c2926; color: var(--fn-text-soft); }
+.hero-copy.hero-color-intro.is-color-visible a.link-mark {
+    animation: netflix-intro-ink .12s ease-in-out 1.35s forwards;
+}
+@keyframes netflix-intro-ink {
+    from { color: var(--fn-text-soft); }
+    to { color: #8c2926; }
+}
+.hero-copy a.link-mark:is(:hover, :focus-visible) { color: #8c2926; }
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro.is-color-visible a.link-mark { animation: none; }
+    .hero-copy a.link-mark { color: #8c2926; }
+}
+
+/* Quick, even fades between the Netflix intro's ink and highlight colors. */
+.hero-copy a.link-mark,
+.hero-copy a.link-mark mark { transition: color .12s ease-in-out; }
+.fn .hero-copy a.link-mark mark::before { transition: background-color .12s ease-in-out; }
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy a.link-mark,
+    .hero-copy a.link-mark mark,
+    .fn .hero-copy a.link-mark mark::before { transition: none; }
+}
+
+/* Match intro yellow ink and gallery ticket ink to their accent backgrounds. */
+.hero-copy.hero-color-intro.is-color-visible .fn-lines mark {
+    animation: intro-yellow-ink .12s ease-in-out .6s forwards;
+}
+@keyframes intro-yellow-ink {
+    from { color: var(--fn-text-soft); }
+    to { color: #6d5310; }
+}
+.hero-next-ticket {
+    color: var(--hero-accent-ink, #6d5310);
+    transition: transform .25s ease, color .12s ease-in-out, background-color .12s ease-in-out;
+}
+.hero-next-ticket:is(:hover, :focus-visible) { color: var(--hero-accent-ink, #6d5310); }
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro.is-color-visible .fn-lines mark { animation: none; color: #6d5310; }
+    .hero-next-ticket { transition: none; }
+}
+
+/* Use visible color transitions rather than short entrance color animations. */
+.hero-copy.hero-color-intro .fn-lines mark {
+    color: var(--fn-text-soft);
+    animation: none;
+    transition: color .35s ease-in-out;
+}
+.hero-copy.hero-color-intro.is-color-visible .fn-lines mark {
+    animation: none;
+    color: #6d5310;
+    transition-delay: .6s;
+}
+.hero-copy.hero-color-intro a.link-mark {
+    color: var(--fn-text-soft);
+    animation: none;
+    transition: color .35s ease-in-out;
+}
+.hero-copy.hero-color-intro.is-color-visible a.link-mark {
+    animation: none;
+    color: #8c2926;
+    transition-delay: 1.35s;
+}
+.hero-copy a.link-mark mark { color: inherit; transition: none; }
+.hero-copy.hero-color-intro.is-color-visible a.link-mark:is(:hover, :focus-visible) {
+    color: #76211f;
+    transition-delay: 0s;
+}
+.fn .hero-copy a.link-mark mark::before { transition: background-color .35s ease-in-out; }
+.hero-next-ticket {
+    transition: transform .25s ease, color .35s ease-in-out, background-color .35s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro .fn-lines mark,
+    .hero-copy.hero-color-intro a.link-mark,
+    .fn .hero-copy a.link-mark mark::before,
+    .hero-next-ticket { transition: none; }
+}
+
+/* Green process highlight joins the intro's sequenced color reveals. */
+.hero-copy.hero-color-intro.is-color-visible .fn-hl-green::before {
+    animation-delay: .75s, 1.35s;
+}
+.hero-copy.hero-color-intro.is-color-visible .fn-lines mark.fn-hl-green {
+    color: #46561f;
+    transition-delay: 1.2s;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro .fn-lines mark.fn-hl-green { color: #46561f; }
+}
+
+/* Reflow may rebuild highlight marks; never replay their entrance on resize. */
+.hero-copy.hero-color-intro.is-color-visible.hero-colors-settled mark::before {
+    clip-path: inset(-40% -30% -40% -30%);
+    animation: text-highlight-swell 4.5s ease-in-out infinite;
+    animation-delay: 0s;
+    animation-play-state: running;
+    transition: none;
+}
+.hero-copy.hero-color-intro.is-color-visible.hero-colors-settled .fn-lines mark {
+    color: #6d5310;
+    transition: none;
+}
+.hero-copy.hero-color-intro.is-color-visible.hero-colors-settled .fn-lines mark.fn-hl-green {
+    color: #46561f;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro.is-color-visible.hero-colors-settled mark::before { animation: none; }
+}
+
+/* Scale the gallery ticket proportionally with the 5% larger hero photo. */
+.hero-gallery .hero-next-ticket {
+    padding: 14.7px 23.1px;
+    gap: 1.05rem;
+    font-size: 12.6px;
+}
+
+/* Service icons share the gallery/card lift and pointer response. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .services .fn-swatch:is(:hover, :focus-within) .service-sketch {
+        transform: translate(calc(-3px + var(--pointer-x, 0px)), calc(-6px + var(--pointer-y, 0px))) scale(1.02);
+    }
+    .services .fn-swatch.is-pointer-tilting .service-sketch {
+        transition: transform .18s ease-out;
+    }
+}
+
+/* Pointer movement is local to the service illustration, not its text column. */
+.services .fn-swatch:hover .service-sketch { transform: none; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .services .fn-swatch .service-sketch:is(:hover, .is-pointer-tilting) {
+        transform: translate(calc(-3px + var(--pointer-x, 0px)), calc(-6px + var(--pointer-y, 0px))) scale(1.02);
+    }
+    .services .fn-swatch .service-sketch.is-pointer-tilting { transition: transform .18s ease-out; }
+}
+
+/* Emphasize the outcome words after service arrows. */
+.services .from-to mark { font-weight: 600; }
+
+/* Contact actions use the site's liquid accents instead of boxed buttons. */
+.contact-actions { gap: 1.25rem; }
+.contact-actions .fn-btn {
+    --button-accent: var(--fn-hl-yellow);
+    --button-ink: #6d5310;
+    position: relative;
+    isolation: isolate;
+    justify-content: center;
+    min-height: 48px;
+    max-width: 100%;
+    padding: 14px 24px;
+    border: 0;
+    border-radius: 24% 20% 25% 18% / 28% 32% 25% 30%;
+    background: transparent;
+    color: var(--button-ink);
+    box-shadow: none;
+    font-size: var(--fn-step-0);
+    font-weight: 600;
+    letter-spacing: .02em;
+    overflow-wrap: anywhere;
+    transition: transform .25s ease, color .25s ease;
+}
+.contact-actions .fn-btn--line {
+    --button-accent: var(--fn-hl-blue);
+    --button-ink: #244f78;
+}
+.contact-actions .fn-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--button-accent);
+    opacity: .8;
+    border-radius: inherit;
+    transform-origin: center;
+    transition: transform .45s ease, background-color .25s ease;
+}
+.contact-actions .fn-btn:is(:hover, :focus-visible) {
+    background: transparent;
+    color: var(--button-ink);
+    box-shadow: none;
+    transform: translateY(-3px);
+}
+.contact-actions .fn-btn:is(:hover, :focus-visible)::before {
+    background-color: color-mix(in srgb, var(--button-accent) 96%, var(--fn-ink) 4%);
+    animation: text-highlight-swell 4.5s ease-in-out infinite;
+}
+.contact-actions .fn-btn:focus-visible { outline: 2px solid var(--button-ink); outline-offset: 5px; }
+@media (max-width: 480px) {
+    .contact-actions .fn-btn { font-size: 14px; padding: 13px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .contact-actions .fn-btn,
+    .contact-actions .fn-btn::before { transition: none; animation: none !important; }
+    .contact-actions .fn-btn:is(:hover, :focus-visible) { transform: none; }
+}
+
+/* Netflix intro link shares the other text controls' subtle lift. */
+.hero-copy a.link-mark {
+    display: inline-block;
+    translate: 0 0;
+    transition: color .35s ease-in-out, translate .25s ease;
+}
+.hero-copy a.link-mark:is(:hover, :focus-visible) { translate: 0 -3px; }
+/* Keep inline highlight curves consistent without changing card swell geometry.
+   Text swell animation preserves these measured corners. */
+.fn .hero-copy mark::before,
+.fn .services .from-to mark::before {
+    border-top-left-radius: .65em .5em;
+    border-top-right-radius: .55em .65em;
+    border-bottom-right-radius: .7em .55em;
+    border-bottom-left-radius: .6em .65em;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy a.link-mark { transition: none; }
+    .hero-copy a.link-mark:is(:hover, :focus-visible) { translate: none; }
+}
+
+@keyframes text-highlight-swell {
+    0%, 100% { transform: scale(1, 1) rotate(-.3deg); }
+    50% { transform: scale(1.025, 1.08) rotate(.3deg); }
+}
+
+/* Netflix uses the same 3px / 250ms lift as the other text controls.
+   Keep the entrance color timing separate from the hover movement. */
+.hero-copy.hero-color-intro a.link-mark,
+.hero-copy.hero-color-intro.is-color-visible a.link-mark,
+.hero-copy.hero-color-intro.is-color-visible a.link-mark:is(:hover, :focus-visible) {
+    transition: translate .25s ease, color .35s ease-in-out 1.35s;
+}
+.hero-copy.hero-color-intro.is-color-visible a.link-mark:is(:hover, :focus-visible) {
+    color: #8c2926;
+}
+.hero-copy a.link-mark:is(:hover, :focus-visible) mark { --color: var(--fn-hl-red); }
+@media (prefers-reduced-motion: reduce) {
+    .hero-copy.hero-color-intro a.link-mark,
+    .hero-copy.hero-color-intro.is-color-visible a.link-mark,
+    .hero-copy.hero-color-intro.is-color-visible a.link-mark:is(:hover, :focus-visible) { transition: none; }
+}

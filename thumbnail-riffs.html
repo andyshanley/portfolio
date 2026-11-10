@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muted colour riffs — demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-row { padding: 2.25rem 0 3rem; border-top: 1px solid var(--fn-rule); }
+        .demo-row:first-of-type { border-top: 0; }
+        .demo-head { max-width: 64ch; margin-bottom: 1.5rem; }
+        .demo-head h2 { font-size: var(--fn-step-2); font-weight: 600; margin: 0.3rem 0 0.35rem; }
+        .demo-head p { font-size: var(--fn-step--1); color: var(--fn-text-muted); }
+
+        /* every row sits on the muted colour now in styles.css; each riff replaces the
+           filter and may add an overlay (::after) on top of the image */
+        .card-thumb { position: relative; }
+        .card-thumb::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+
+        /* 2 · Lifted blacks: a faded print, where the darkest tones never quite go black */
+        .r-lift .card-thumb img { filter: saturate(0.55) contrast(0.88) brightness(1.06); }
+        .r-lift .card-thumb::after { background: var(--fn-paper); opacity: 0.14; }
+
+        /* 3 · Warm muted: a touch of warmth, like paper that has aged */
+        .r-warm .card-thumb img { filter: saturate(0.5) sepia(0.22) contrast(0.96) brightness(1.04); }
+
+        /* 4 · Cool muted: pulled slightly toward the Footnote blue */
+        .r-cool .card-thumb img { filter: saturate(0.5) contrast(0.96) brightness(1.04); }
+        .r-cool .card-thumb::after { background: var(--fn-hl-blue); mix-blend-mode: multiply; opacity: 0.35; }
+
+        /* 5 · Very muted: close to monochrome, with only a hint of the original colour left */
+        .r-very .card-thumb img { filter: saturate(0.28) contrast(0.96) brightness(1.05); }
+
+        /* 6 · Muted + project tint: the muted image with a light wash of the tape colour */
+        .r-tint .card-thumb img { filter: saturate(0.5) contrast(0.95) brightness(1.04); }
+        .r-tint .card-thumb::after { background: var(--tape); mix-blend-mode: multiply; opacity: 0.38; }
+
+        /* 7 · Muted + paper grain: the Footnote grain over the image, so it feels printed on the stock */
+        .r-grain .card-thumb img { filter: saturate(0.5) contrast(0.95) brightness(1.05); }
+        .r-grain .card-thumb::after { background-image: var(--fn-grain); mix-blend-mode: multiply; opacity: 0.5; }
+
+        /* 8 · Muted punch: the same fade with firmer contrast, so detail stays crisp */
+        .r-punch .card-thumb img { filter: saturate(0.5) contrast(1.14) brightness(0.99); }
+
+        /* 9 · Muted + soft vignette: the edges darken a little, drawing the eye to the middle */
+        .r-vig .card-thumb img { filter: saturate(0.5) contrast(0.95) brightness(1.05); }
+        .r-vig .card-thumb::after {
+            background: radial-gradient(ellipse at center, transparent 55%, rgb(16 15 15 / 0.28) 100%);
+            mix-blend-mode: multiply;
+        }
+
+        /* 10 · Muted + light leak: a warm glow from one corner, like a sun-struck print */
+        .r-leak .card-thumb img { filter: saturate(0.5) contrast(0.95) brightness(1.03); }
+        .r-leak .card-thumb::after {
+            background: linear-gradient(135deg, rgb(255 190 130 / 0.55), rgb(255 190 130 / 0) 55%);
+            mix-blend-mode: soft-light;
+        }
+    </style>
+</head>
+<body class="fn">
+
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough"><feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" /><feDisplacementMap in="SourceGraphic" scale="5" /></filter>
+            <filter id="fn-paper"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" /><feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3"><feDistantLight azimuth="30" elevation="60" /></feDiffuseLighting></filter>
+            <filter id="fn-crayon"><feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" /><feComposite in="rough" in2="SourceGraphic" operator="in" /></filter>
+        </defs>
+    </svg>
+
+    <main>
+        <section class="fn-sec page-head">
+            <div class="fn-wide">
+                <p class="fn-label">Demo</p>
+                <h1>Muted colour riffs</h1>
+                <p class="fn-lede">Ten variations on the muted look, on the same four cards.</p>
+            </div>
+        </section>
+        <div class="fn-wide" id="rows"></div>
+    </main>
+
+    <script>
+        var items = [
+            { img: 'images/dash.png',          tint: 'cyan',   meta: 'Amazon Seller', title: 'Shipments Dashboard' },
+            { img: 'images/just-eat.png',      tint: 'red',    meta: 'Nov 2018',      title: 'Just Eat' },
+            { img: 'images/google-chrome.jpg', tint: 'orange', meta: 'Nov 2018',      title: 'Google Chrome for Work' },
+            { img: 'images/peacock.png',       tint: 'blue',   meta: 'May 2019',      title: 'NBC Peacock' }
+        ];
+        var rows = [
+            { cls: '', name: '1 · Current', head: 'Muted colour',
+              note: 'The baseline now on the site: real colours at about half saturation.' },
+            { cls: 'r-lift', name: '2', head: 'Lifted blacks',
+              note: 'A faded print. The darkest tones never quite reach black, which softens contrast and gives a vintage feel.' },
+            { cls: 'r-warm', name: '3', head: 'Warm muted',
+              note: 'A touch of warmth on top of the fade, like paper that has aged.' },
+            { cls: 'r-cool', name: '4', head: 'Cool muted',
+              note: 'Pulled slightly toward the Footnote blue for a calmer, cooler register.' },
+            { cls: 'r-very', name: '5', head: 'Very muted',
+              note: 'Close to monochrome, with only a hint of the original colour left. The most uniform of the muted family.' },
+            { cls: 'r-tint', name: '6', head: 'Muted + project tint',
+              note: 'The muted image with a light wash of each project\'s tape colour, so image and tape belong together.' },
+            { cls: 'r-grain', name: '7', head: 'Muted + paper grain',
+              note: 'The Footnote grain laid over the image, so each picture looks printed on the same paper stock.' },
+            { cls: 'r-punch', name: '8', head: 'Muted punch',
+              note: 'The same fade with firmer contrast, so detail stays crisp and the images feel a bit more confident.' },
+            { cls: 'r-vig', name: '9', head: 'Muted + soft vignette',
+              note: 'The edges darken slightly, drawing the eye to the centre and giving each image a gentle, photographic finish.' },
+            { cls: 'r-leak', name: '10', head: 'Muted + light leak',
+              note: 'A warm glow from the top-left corner, like a print caught in the sun. Subtle, and a little different on every image.' }
+        ];
+        var root = document.getElementById('rows');
+        rows.forEach(function (r) {
+            var sec = document.createElement('section');
+            sec.className = 'demo-row ' + r.cls;
+            var cards = items.map(function (it) {
+                return '<div class="fn-card fn-paper tint-' + it.tint + '">' +
+                    '<div class="card-thumb card-thumb--square"><img src="' + it.img + '" alt=""></div>' +
+                    '<p class="fn-label card-meta">' + it.meta + '</p><h3>' + it.title + '</h3></div>';
+            }).join('');
+            sec.innerHTML = '<div class="demo-head"><p class="fn-label">' + r.name + '</p><h2>' + r.head + '</h2><p>' + r.note + '</p></div>' +
+                '<div class="card-grid card-grid--4">' + cards + '</div>';
+            root.appendChild(sec);
+        });
+    </script>
+</body>
+</html>

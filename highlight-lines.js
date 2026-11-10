@@ -83,6 +83,9 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { run(true); });
   var queued = false;
   window.addEventListener('resize', function () {
+    // Resplitting lines creates new marks: keep already-revealed intro colors visible.
+    var intro = document.querySelector('.hero-copy.is-color-visible');
+    if (intro) intro.classList.add('hero-colors-settled');
     if (queued) return;
     queued = true;
     requestAnimationFrame(function () { queued = false; run(false); });

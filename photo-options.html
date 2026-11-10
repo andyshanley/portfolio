@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero photo options — demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-sec { padding: 2.5rem 0 4rem; border-top: 1px solid var(--fn-rule); }
+        .demo-sec:first-of-type { border-top: 0; }
+        .demo-head { max-width: 64ch; margin-bottom: 2.5rem; }
+        .demo-head h2 { font-size: var(--fn-step-2); font-weight: 600; margin: 0.3rem 0 0.4rem; }
+        .demo-head p { font-size: var(--fn-step--1); color: var(--fn-text-muted); }
+        .stage { max-width: 26rem; margin-left: clamp(0rem, 6vw, 5rem); position: relative; }
+
+        /* a taped print, like the hero photo */
+        .print { padding: 0.9rem 0.9rem 1.1rem; --r: 0.8deg; --tr: -4deg; --tw: 104px; }
+        .print .frame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2px; background: var(--fn-paper-2); }
+        .print .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .print { rotate: var(--r); }
+
+        /* B · slideshow */
+        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; }
+        .slide.on { opacity: 1; }
+        .counter { margin-top: 0.7rem; display: flex; justify-content: space-between; }
+
+        /* C · shuffle stack */
+        .stack { position: relative; aspect-ratio: 4 / 3.5; cursor: pointer; }
+        .stack .print { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 0.8rem 0.8rem 1rem;
+            transition: transform 0.4s ease, opacity 0.4s ease; transform: rotate(var(--sr)) translate(var(--sx), var(--sy)); rotate: 0deg; }
+        .stack .print .frame { flex: 1; aspect-ratio: auto; }
+        .stack .print::after { display: none; }
+        .stack .print.top::after { display: block; }
+        .stack .print.out { transform: translate(70%, 6%) rotate(11deg); opacity: 0; }
+        .hint { position: absolute; right: -0.5rem; bottom: -2.4rem; }
+
+        /* D · scrapbook cluster */
+        .cluster { position: relative; width: min(34rem, 100%); aspect-ratio: 1.15; }
+        .cluster .print { position: absolute; width: 52%; padding: 0.55rem 0.55rem 0.7rem; rotate: var(--r);
+            transition: rotate 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease; }
+        .cluster .print:hover { rotate: 0deg; translate: 0 -4px; z-index: 5; box-shadow: var(--fn-shadow-lift); }
+
+        /* E · filmstrip */
+        .strip { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.4rem; }
+        .strip button { width: 2.9rem; height: 2.2rem; padding: 0; border: 0; background: var(--fn-paper-2); cursor: pointer;
+            box-shadow: 0 0 0 1px var(--fn-rule); opacity: 0.55; transition: opacity 0.2s ease; }
+        .strip button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .strip button:hover { opacity: 0.9; }
+        .strip button[aria-current="true"] { opacity: 1; box-shadow: 0 0 0 2px var(--fn-ink); }
+        .strip button:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 2px; }
+    </style>
+</head>
+<body class="fn">
+
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough"><feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" /><feDisplacementMap in="SourceGraphic" scale="5" /></filter>
+            <filter id="fn-paper"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" /><feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3"><feDistantLight azimuth="30" elevation="60" /></feDiffuseLighting></filter>
+            <filter id="fn-crayon"><feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" /><feComposite in="rough" in2="SourceGraphic" operator="in" /></filter>
+        </defs>
+    </svg>
+
+    <main>
+        <section class="fn-sec page-head">
+            <div class="fn-wide">
+                <p class="fn-label">Demo</p>
+                <h1>Hero photo options</h1>
+                <p class="fn-lede">Five ways to show you instead of the Sport Relief image, using your real photos. Click, hover or Tab through each one.</p>
+            </div>
+        </section>
+
+        <!-- A -->
+        <section class="demo-sec"><div class="fn-wide">
+            <div class="demo-head"><p class="fn-label">A</p><h2>One photo</h2>
+                <p>A single taped print, as it is now but with you in it. Calm and simple, with nothing to operate. You choose the one photo that says the most.</p></div>
+            <div class="stage">
+                <div class="print fn-card fn-paper tint-yellow"><div class="frame"><img src="images/me/hero-08.jpg" alt="Andrew presenting at a whiteboard"></div><span class="fn-scrawl" style="position:absolute;right:1.25rem;bottom:-2.1rem" aria-hidden="true">hello!</span></div>
+            </div>
+        </div></section>
+
+        <!-- B -->
+        <section class="demo-sec"><div class="fn-wide">
+            <div class="demo-head"><p class="fn-label">B</p><h2>Slideshow</h2>
+                <p>One print that cross-fades through all 11 photos, with arrows and a counter. It keeps the controls you already have. Use the arrow buttons or the left and right arrow keys.</p></div>
+            <div class="stage">
+                <div class="print fn-card fn-paper tint-cyan" id="b" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Photos of Andrew">
+                    <div class="frame"><button class="photo-prev" aria-label="Previous photo">&#8249;</button><button class="photo-next" aria-label="Next photo">&#8250;</button></div>
+                    <p class="fn-label counter"><span id="b-count">01 / 11</span><span>photos of me</span></p>
+                </div>
+            </div>
+        </div></section>
+
+        <!-- C -->
+        <section class="demo-sec"><div class="fn-wide">
+            <div class="demo-head"><p class="fn-label">C</p><h2>Shuffle stack</h2>
+                <p>A pile of snapshots. Click the top one and it slides off to the back, like shuffling prints on a desk. The most tactile, and it suits the paper-and-tape feel.</p></div>
+            <div class="stage"><div class="stack" id="c" aria-label="Click to see the next photo" role="button" tabindex="0"></div>
+                <span class="fn-scrawl hint" aria-hidden="true">click me</span></div>
+        </div></section>
+
+        <!-- D -->
+        <section class="demo-sec"><div class="fn-wide">
+            <div class="demo-head"><p class="fn-label">D</p><h2>Scrapbook cluster</h2>
+                <p>Four prints overlapping at different angles, each with its own tape. Nothing moves until you hover one, and then it straightens and lifts. Shows more of you at once.</p></div>
+            <div class="stage" style="max-width:34rem">
+                <div class="cluster" id="d"></div>
+            </div>
+        </div></section>
+
+        <!-- E -->
+        <section class="demo-sec"><div class="fn-wide">
+            <div class="demo-head"><p class="fn-label">E</p><h2>Print with filmstrip</h2>
+                <p>One main print with a row of small thumbnails beneath it. Click a thumbnail to swap the main photo. The most browsable of the five, and everything is visible at a glance.</p></div>
+            <div class="stage">
+                <div class="print fn-card fn-paper tint-orange" id="e"><div class="frame"><img alt="Photo of Andrew" src="images/me/hero-01.jpg"></div></div>
+                <div class="strip" id="e-strip"></div>
+            </div>
+        </div></section>
+    </main>
+
+    <script>
+        var photos = ['hero-01.jpg','hero-02.jpg','hero-03.jpg','hero-04.jpg','hero-05.jpg','hero-06.jpg','hero-07.jpg','hero-08.jpg','hero-09.jpg','hero-10.png','hero-11.jpg']
+            .map(function (f) { return 'images/me/' + f; });
+        function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+        /* B · slideshow */
+        (function () {
+            var root = document.getElementById('b'), frame = root.querySelector('.frame'), count = document.getElementById('b-count');
+            var slides = photos.map(function (src, i) {
+                var im = document.createElement('img'); im.className = 'slide' + (i === 0 ? ' on' : ''); im.src = src; im.alt = 'Photo ' + (i + 1) + ' of Andrew';
+                frame.insertBefore(im, frame.firstChild); return im; }).reverse();
+            var cur = 0;
+            function show(n) { slides[cur].classList.remove('on'); cur = (n + slides.length) % slides.length; slides[cur].classList.add('on'); count.textContent = pad(cur + 1) + ' / ' + slides.length; }
+            root.querySelector('.photo-prev').addEventListener('click', function () { show(cur - 1); });
+            root.querySelector('.photo-next').addEventListener('click', function () { show(cur + 1); });
+            root.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
+        })();
+
+        /* C · shuffle stack */
+        (function () {
+            var root = document.getElementById('c'), order = [0,1,2,3,4,5].map(function (i) { return i; });
+            var rots = ['-1.2deg','2.4deg','-3.2deg','3.4deg','-2deg','1.6deg'], xs = ['0px','10px','-12px','14px','-8px','6px'], ys = ['0px','8px','14px','10px','18px','22px'];
+            var cards = order.map(function (i) {
+                var d = document.createElement('div'); d.className = 'print fn-card fn-paper tint-purple';
+                d.innerHTML = '<div class="frame"><img src="' + photos[[7,5,1,4,8,3][i]] + '" alt=""></div>'; root.appendChild(d); return d; });
+            var queue = cards.slice(), busy = false;
+            function layout() { queue.forEach(function (c, i) {
+                c.classList.toggle('top', i === 0); c.style.zIndex = 20 - i;
+                c.style.setProperty('--sr', rots[i]); c.style.setProperty('--sx', xs[i]); c.style.setProperty('--sy', ys[i]); }); }
+            function next() { if (busy) return; busy = true; var t = queue[0]; t.classList.add('out');
+                setTimeout(function () { queue.push(queue.shift()); t.classList.remove('out'); layout(); busy = false; }, 380); }
+            layout(); root.addEventListener('click', next);
+            root.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); next(); } });
+        })();
+
+        /* D · scrapbook cluster */
+        (function () {
+            var root = document.getElementById('d');
+            var spec = [
+                { p: 5, l: '0%',  t: '2%',  r: '-3.5deg', tw: '88px',  tr: '-6deg' },
+                { p: 1, l: '44%', t: '0%',  r: '2.8deg',  tw: '110px', tr: '3deg'  },
+                { p: 4, l: '6%',  t: '44%', r: '2.2deg',  tw: '72px',  tr: '-2deg' },
+                { p: 8, l: '40%', t: '40%', r: '-2.6deg', tw: '98px',  tr: '5deg'  }
+            ];
+            var tints = ['tint-yellow','tint-cyan','tint-red','tint-green'];
+            spec.forEach(function (s, i) {
+                var d = document.createElement('div'); d.className = 'print fn-card fn-paper ' + tints[i];
+                d.style.left = s.l; d.style.top = s.t; d.style.zIndex = i + 1;
+                d.style.setProperty('--r', s.r); d.style.setProperty('--tw', s.tw); d.style.setProperty('--tr', s.tr);
+                d.innerHTML = '<div class="frame"><img src="' + photos[s.p] + '" alt=""></div>'; root.appendChild(d); });
+        })();
+
+        /* E · filmstrip */
+        (function () {
+            var main = document.querySelector('#e img'), strip = document.getElementById('e-strip');
+            photos.forEach(function (src, i) {
+                var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Show photo ' + (i + 1));
+                b.setAttribute('aria-current', i === 0 ? 'true' : 'false'); b.innerHTML = '<img src="' + src + '" alt="">';
+                b.addEventListener('click', function () { main.src = src; strip.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-current', 'false'); }); b.setAttribute('aria-current', 'true'); });
+                strip.appendChild(b); });
+        })();
+    </script>
+</body>
+</html>

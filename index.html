@@ -7,7 +7,7 @@
     <title>Andrew Shanley — UX, Product &amp; Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="vendor/footnote.css">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -57,12 +57,13 @@
                 <div class="hero-grid">
                     <div class="hero-copy">
                         <p class="fn-lede">A US-based, <mark data-fn-lines data-fn-split>AI-fluent product designer</mark>, systems thinker, and creative strategist with expertise in crafting video and live-streaming experiences.</p>
-                        <p>I innovate using human-centered design and a lean, collaborative approach, with AI woven through discovery, prototyping, and delivery, to solve complex problems across products, platforms, and services.</p>
+                        <p>I innovate using human-centered design and a lean, collaborative approach, with AI woven through <mark class="fn-hl-green" data-fn-lines data-fn-split>discovery, prototyping, and delivery</mark>, to solve complex problems across products, platforms, and services.</p>
                         <p>I joined <a href="https://www.netflix.com" target="_blank" class="link-mark"><mark class="fn-hl-red">Netflix</mark></a> in 2025, having previously led design at <a href="https://www.aboutamazon.com/about-us" target="_blank">Amazon</a> and <a href="https://www.primevideo.com" target="_blank">Prime Video</a> (2019–2025), <a href="https://www.rga.com" target="_blank">R/GA</a>, <a href="https://www.publicissapient.com" target="_blank">Razorfish</a>, <a href="https://www.beyondcollective.co.uk" target="_blank">Beyond</a>, <a href="https://www.ogilvy.com" target="_blank">Ogilvy</a>, <a href="https://www.publicissapient.com" target="_blank">Publicis Sapient</a>, and <a href="https://www.sky.com" target="_blank">Sky</a>.</p>
-                        <p>Away from work, I enjoy the US and Pacific Northwest's vibrant culture, while staying true to my Northern British roots.</p>
+                        <p>Away from work, I enjoy the Pacific Northwest's vibrant culture, while staying true to my Northern British roots.</p>
                     </div>
                     <div class="hero-photo-col">
-                        <div class="hero-fan" id="hero-photos" role="button" tabindex="0" aria-label="Photos of Andrew. Hover to spread them out, click or press Enter for the next photo.">
+                        <div class="hero-gallery">
+                        <div class="hero-fan" id="hero-photos" role="button" tabindex="0" aria-label="Photos of Andrew. Click or press Enter for the next photo.">
                             <div class="print fn-card fn-paper tint-yellow"><div class="frame"><img src="images/me/hero-01.jpg" alt="Andrew laughing beside an Applied Creativity whiteboard sketch" width="500" height="375"></div></div>
                             <div class="print fn-card fn-paper tint-yellow"><div class="frame"><img src="images/me/hero-08.jpg" alt="Andrew presenting at a whiteboard" width="500" height="375" loading="lazy"></div></div>
                             <div class="print fn-card fn-paper tint-purple"><div class="frame"><img src="images/me/hero-06.jpg" alt="Andrew speaking at an event" width="500" height="375" loading="lazy"></div></div>
@@ -74,6 +75,9 @@
                             <div class="print fn-card fn-paper tint-yellow"><div class="frame"><img src="images/me/hero-07.jpg" alt="Andrew speaking on a panel at an event" width="500" height="375" loading="lazy"></div></div>
                             <div class="print fn-card fn-paper tint-cyan"><div class="frame"><img src="images/me/hero-10.png" alt="Andrew writing on a glass wall covered in sticky notes" width="500" height="375" loading="lazy"></div></div>
                             <div class="print fn-card fn-paper tint-purple"><div class="frame"><img src="images/me/hero-03.jpg" alt="Andrew photographing a wall of sticky notes through glass, seen in reflection" width="500" height="375" loading="lazy"></div></div>
+                        </div>
+                        <button class="hero-next-ticket" type="button" aria-controls="hero-photos">Next photo ↗ <span class="hero-photo-count">1 / 11</span></button>
+                        <span class="fn-sr hero-photo-status" role="status" aria-live="polite"></span>
                         </div>
                     </div>
                 </div>
@@ -128,25 +132,25 @@
     <section class="fn-sec services">
         <div class="fn-wide">
             <div class="fn-tray">
-                <div class="fn-swatch">
+                <div class="fn-swatch" tabindex="0">
                     <div class="service-sketch service-sketch--cyan" aria-hidden="true"><svg viewBox="0 0 240 180" focusable="false"><path d="M45 44l89-7 7 98-91 5z"/><path d="M61 60l52-3m-51 17 39-2m-38 17 29-1"/><circle cx="148" cy="99" r="32"/><path d="M171 124l31 34"/><path d="M133 99l11 11 20-24"/></svg></div>
                     <h3>Product Discovery</h3>
-                    <p>Dual-track methodology, ethnographic research, JTBD frameworks, concepting &amp; testing</p>
+                    <p>Dual-track methodology, research, JTBD, opportunity mapping, hypothesis testing</p>
                     <p class="from-to">Evidence <span aria-hidden="true">&rarr;</span><span class="fn-sr"> to </span> <mark class="fn-hl-cyan">insight</mark></p>
                 </div>
-                <div class="fn-swatch">
+                <div class="fn-swatch" tabindex="0">
                     <div class="service-sketch service-sketch--yellow" aria-hidden="true"><svg viewBox="0 0 240 180" focusable="false"><path d="M51 33l145 3-2 128-145-3zM51 56l143 3"/><circle cx="63" cy="45" r="2"/><path d="M65 75l45 1-1 63-45-1zM123 78l54 1m-54 13 42 1m-42 16 53 1m-53 14 32 1"/><path d="M164 140l34-36 10 10-35 35-16 6z"/></svg></div>
                     <h3>Product Design</h3>
-                    <p>Sketching, user journeys, information architecture, wireframing, UI design</p>
+                    <p>Sketching, user journeys, information architecture, wireframing, interaction design</p>
                     <p class="from-to">Sketch <span aria-hidden="true">&rarr;</span><span class="fn-sr"> to </span> <mark class="fn-hl-yellow">experience</mark></p>
                 </div>
-                <div class="fn-swatch">
+                <div class="fn-swatch" tabindex="0">
                     <div class="service-sketch service-sketch--blue" aria-hidden="true"><svg viewBox="0 0 240 180" focusable="false"><path d="M91 72l60 2-1 48-60-1zM24 27l46 1-1 32-45-1zM179 28l43 1-1 33-43-1zM24 140l45 1-1 33-44-1zM179 142l43 1-1 32-43-1z"/><path d="M69 46h50v26m32 24h50V62M90 97H47v43m73-18v35h59"/><circle cx="119" cy="96" r="9"/></svg></div>
                     <h3>Systems Design</h3>
                     <p>Customer discovery, service blueprints, multi-channel touchpoint design</p>
                     <p class="from-to">Connections <span aria-hidden="true">&rarr;</span><span class="fn-sr"> to </span> <mark class="fn-hl-blue">coherence</mark></p>
                 </div>
-                <div class="fn-swatch">
+                <div class="fn-swatch" tabindex="0">
                     <div class="service-sketch service-sketch--orange" aria-hidden="true"><svg viewBox="0 0 240 180" focusable="false"><path d="M92 116c-3-17-22-21-22-49a47 42 0 0 1 94 0c0 25-21 34-23 49zM94 127l45 1m-41 10 36 1m-28 10h20"/><path d="M112 115l-9-38 15 8 14-8-8 38M117 9V0M56 28L43 17m133 11 13-13M47 71H29m156 0h19"/></svg></div>
                     <h3>Ideas &amp; Innovation</h3>
                     <p>Workshop facilitation, design sprints, prototyping, concept testing</p>
@@ -352,6 +356,8 @@
     <p class="fn-sr" id="netflix-live" role="status" aria-live="polite"></p>
     <script src="vendor/footnote.js"></script>
     <script src="hero-photos.js"></script>
+    <script src="hero-highlights.js"></script>
     <script src="service-sketches.js"></script>
+    <script src="card-tilt.js"></script>
 </body>
 </html>

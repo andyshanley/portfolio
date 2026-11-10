@@ -1,68 +1,59 @@
-/* Hero photos: a stack of prints, pushed sideways like a deck across a desk.
-   The top print is taped down and never moves on hover; the prints behind it slide out to the right
-   (CSS: .hero-fan in styles.css), each at its own angle and distance. Clicking, or pressing Enter,
-   Space or the right arrow, sends the top print to the back. */
-(function () {
-  'use strict';
-  var root = document.getElementById('hero-photos');
+// Frameless hero photo with a visible next-photo ticket and live position.
+(() => {
+  const root = document.getElementById('hero-photos');
   if (!root) return;
-  var queue = Array.prototype.slice.call(root.querySelectorAll('.print'));
-  if (queue.length < 2) return;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var busy = false;
-
-  /* resting offsets: the first three prints behind the top one already peek (the rest sit tucked behind them) out a little to the right,
-     and the rest sit tucked behind, so the stack never looks perfectly squared up */
-  var ROT = ['-1deg', '2.4deg', '4.5deg', '7deg', '1.6deg', '-3deg'];
-  var XS = ['0px', '14px', '32px', '48px', '-4px', '4px'];
-  var YS = ['0px', '6px', '2px', '10px', '16px', '20px'];
-
-  /* where each print behind the top one goes when the stack is spread, by its place in the stack.
-     Deliberately uneven in angle, distance and height. */
-  var SPREAD = [
-    { a: 4,  x: 30,  y: -5 },
-    { a: 9,  x: 62,  y: 5 },
-    { a: 12, x: 88,  y: -6 },
-    { a: 17, x: 108, y: 14 },
-    { a: 11, x: 126, y: 4 }
-  ];
-
-  function layout() {
-    queue.forEach(function (c, i) {
-      var k = Math.min(i, 5);
-      c.classList.toggle('top', i === 0);
-      c.style.zIndex = 40 - i;
-      c.style.setProperty('--sr', ROT[k]);
-      c.style.setProperty('--sx', XS[k]);
-      c.style.setProperty('--sy', YS[k]);
-      var s = SPREAD[Math.min(i, SPREAD.length) - 1];
-      if (i > 0 && s) {
-        c.style.setProperty('--ha', s.a + 'deg');
-        c.style.setProperty('--hx', s.x + 'px');
-        c.style.setProperty('--hy', s.y + 'px');
-      }
+  const gallery = root.closest('.hero-gallery');
+  const photos = [...root.querySelectorAll('.print')];
+  const ticket = gallery.querySelector('.hero-next-ticket');
+  const count = gallery.querySelector('.hero-photo-count');
+  const status = gallery.querySelector('.hero-photo-status');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  // Dominant and secondary photo accents, balanced for variety across the gallery.
+  const photoAccents = {
+  "hero-01.jpg": "red",
+  "hero-02.jpg": "orange",
+  "hero-03.jpg": "orange",
+  "hero-04.jpg": "magenta",
+  "hero-05.jpg": "blue",
+  "hero-06.jpg": "green",
+  "hero-07.jpg": "green",
+  "hero-08.jpg": "cyan",
+  "hero-09.jpg": "yellow",
+  "hero-10.png": "blue",
+  "hero-11.jpg": "purple"
+};
+  let current = 0, busy = false;
+  function render(announce) {
+    photos.forEach((photo, i) => {
+      photo.classList.toggle('top', i === current);
+      photo.setAttribute('aria-hidden', String(i !== current));
     });
+    count.textContent = `${current + 1} / ${photos.length}`;
+    const image = photos[current].querySelector('img');
+    const filename = image.getAttribute('src').split('/').pop();
+    const accent = photoAccents[filename] || 'yellow';
+    gallery.style.setProperty('--hero-accent', `var(--fn-hl-${accent})`);
+    const ink = { red: '#8c2926', orange: '#85421b', yellow: '#6d5310', green: '#46561f', cyan: '#1d5b49', blue: '#244f78', purple: '#62406f', magenta: '#843358' };
+    gallery.style.setProperty('--hero-accent-ink', ink[accent] || ink.yellow);
+    const description = image.alt;
+    root.setAttribute('aria-label', `Photo ${current + 1} of ${photos.length}: ${description}. Show next photo.`);
+    if (announce) status.textContent = `Photo ${current + 1} of ${photos.length}: ${description}`;
   }
-
   function next() {
-    if (busy) return;
+    if (busy || photos.length < 2) return;
     busy = true;
-    var top = queue[0];
-    top.classList.add('out');
-    setTimeout(function () {
-      queue.push(queue.shift());
-      top.classList.remove('out');
-      layout();
+    root.classList.add('is-changing');
+    setTimeout(() => {
+      current = (current + 1) % photos.length;
+      render(true);
+      root.classList.remove('is-changing');
       busy = false;
-    }, reduce ? 0 : 380);
+    }, reduced.matches ? 0 : 180);
   }
-
-  layout();
   root.addEventListener('click', next);
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') {
-      e.preventDefault();
-      next();
-    }
+  ticket.addEventListener('click', next);
+  root.addEventListener('keydown', e => {
+    if (['Enter', ' ', 'ArrowRight'].includes(e.key)) { e.preventDefault(); next(); }
   });
+  render(false);
 })();

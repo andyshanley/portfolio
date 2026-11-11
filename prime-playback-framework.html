@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Playback Framework — Andrew Shanley. A north star vision for in-playback experiences across every stream type at Amazon Prime Video.">
+    <title>Playback Framework — Andrew Shanley</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="fn">
+
+    <!-- Footnote shared SVG filters (footnote@1.0.0) -->
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough">
+                <feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" />
+                <feDisplacementMap in="SourceGraphic" scale="5" />
+            </filter>
+            <filter id="fn-paper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" />
+                <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3">
+                    <feDistantLight azimuth="30" elevation="60" />
+                </feDiffuseLighting>
+            </filter>
+            <filter id="fn-crayon">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" />
+                <feComposite in="rough" in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Header -->
+    <header class="fn-top">
+        <div class="fn-wide">
+            <a href="index.html" class="fn-brand">ANDREW SHANLEY</a>
+            <nav class="fn-nav" aria-label="Main">
+                <a href="index.html">Home</a>
+                <a href="work.html" aria-current="page">Work</a>
+                <a href="AndrewShanley_Resume2025.pdf" target="_blank">Resume</a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank">LinkedIn</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+    <!-- Hero -->
+    <section class="fn-hero page-head case-section">
+        <div class="fn-hero-sheet fn-paper">
+            <div class="fn-wide">
+                <a href="work.html" class="fn-label case-back">← Work</a>
+                <p class="fn-label">Amazon Prime Video · Playback · 2023</p>
+                <h1>Playback Framework</h1>
+                <p class="fn-lede">A north star vision for in-playback experiences across every stream type</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Overview</p>
+            <h2>In Q4 2023, I led a north star vision project reimagining the Prime Video playback experience across all stream types (VOD, Live Sports and Linear)</h2>
+            <figure class="case-figure case-figure--small">
+                <img src="images/prime-playback-framework/workshop-01.jpg" alt="Running a workshop with in-person and remote participants">
+                <figcaption>Running workshops with in-person and remote participants</figcaption>
+            </figure>
+            <dl class="case-facts">
+                <div><dt>My role</dt><dd>Design Lead</dd></div>
+                <div><dt>Partners</dt><dd>Design (x2), Research, Product, Engineering</dd></div>
+                <div><dt>Stakeholders</dt><dd>VP Design, VP Product, VP Sports</dd></div>
+                <div><dt>Timeframe</dt><dd>2 months to develop the framework</dd></div>
+                <div><dt>Launch</dt><dd>First shipped with X-Ray for Live Sports, November 2024</dd></div>
+            </dl>
+            <div class="case-body">
+                <p>Through workshopping, design ideation, close partnerships and user testing, a new framework was created that is internally (and lovingly) referred to as playback's "Up, Middle, Down" framework.</p>
+                <p>All Living Room playback experiences from 2024/25 onward are set to launch with the new Playback Framework, including Augmented Content for Live Sports (see X-Ray for Live Sports) and X-Ray for VOD. It also heavily influences other device types and categories, including mobile.</p>
+            </div>
+            <blockquote class="case-quote">
+                <p>"Overall, participants found the new playback framework UI to be simple to understand and navigate."</p>
+                <cite>Research study, November 2023</cite>
+            </blockquote>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Context</p>
+            <h2>The situation</h2>
+            <div class="case-body">
+                <p>X-Ray helps Customers answer quick questions about what they're watching: <em>"Who's that actor on screen?"</em> or <em>"Who's the artist playing the music right now?"</em> On Sports, it answers things like <em>"What's my team's lineup?"</em> and <em>"How much possession has my team had?"</em></p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/background-01.jpg" alt="X-Ray on VOD in the Living Room">
+                <figcaption>X-Ray on VOD in the Living Room: playback pauses and a full-screen takeover shows the content</figcaption>
+            </figure>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/background-02.jpg" alt="X-Ray for Live Sports, launched in 2017">
+                <figcaption>X-Ray on Live Sports launched in 2017, using a sidebar on the opposite side of the screen</figcaption>
+            </figure>
+            <figure class="case-figure case-figure--small">
+                <img src="images/prime-playback-framework/background-03.jpg" alt="X-Ray across mobile and tablet">
+                <figcaption>The same story on tablet and mobile</figcaption>
+            </figure>
+            <div class="case-body">
+                <p>Even though X-Ray is loved by Customers and recognised as a differentiator among streaming services, the experience had barely evolved. VOD hadn't been meaningfully updated in over 12 years, and Sports hadn't received a major update since launch. That led to:</p>
+                <ol class="case-list">
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>Low discovery and engagement:</mark> X-Ray was hard to find, especially for Customers using a remote control.</li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>Inconsistency:</mark> VOD paused the video, Live opened a sidebar on the other side of the screen, and neither behaved like the other.</li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>Feature redundancy and a lack of cohesion:</mark> Replays, Next Up, Related content, Game Stats, Lineups and more all competed for space in playback.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <h2>The opportunity</h2>
+            <div class="case-body">
+                <p>By this point I'd been working in the playback space at Prime Video for around 12 months. In the absence of UX Research support during 2022, I'd run my own user testing on the existing X-Ray experiences, and I'd built close relationships with key leads across Design, Product and Operations, which gave me a good picture of the Voice of the Customer, both anecdotal and data-led.</p>
+                <p>The timing helped too. Prime Video's new Living Room experience (which didn't yet include any updates to Playback) was about to ship, and my org was finalising its Operational Planning (OP) cycle for 2024. I felt it was Playback's turn.</p>
+                <p>During one of my team's offsites in 2023, I presented my data points (with pros and cons) alongside some early concepts.</p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/opportunity-01.jpg" alt="Initial ideas presented at the 2023 design team offsite, mapping playback features to a new layout">
+                <figcaption>Initial ideas presented during the 2023 Design team offsite</figcaption>
+            </figure>
+            <div class="case-body">
+                <p>One of those ideas was a vertical list of cards containing X-Ray content, a more cinematic but still functional experience that lets Customers get quick answers to quick questions by "just clicking up", without needing to pause the video (the VOD experience at the time) or open a sidebar on the other side of the screen (the Live experience).</p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/opportunity-02.jpg" alt="Early concept: a vertical list of X-Ray cards over playback">
+                <figcaption>An early concept: a cinematic vertical list of cards, reached by clicking up</figcaption>
+            </figure>
+            <div class="case-body">
+                <p>The hypothesis I started to form was that by previewing content from the Customer's default focus state (the scrubber), and progressively disclosing more as they click up, we'd increase discovery and encourage engagement. It sparked intrigue. After the offsite, my Director and I presented a version to my VP, who started to get bought into where this was heading.</p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/opportunity-03.jpg" alt="Early north star vision: what the future of playback could look like">
+                <figcaption>Early north star vision, showing the "what this looks like" end-to-end</figcaption>
+            </figure>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/opportunity-04.jpg" alt="A quick prototype stitched together to demonstrate the flow">
+                <figcaption>A quick prototype, strung together to demonstrate the flow during the offsite</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <h2>The task</h2>
+            <div class="case-body">
+                <p>Working with my leadership, we shaped the goal:</p>
+            </div>
+            <blockquote class="case-quote">
+                <p>Create an in-playback framework that solves for these issues, one that is cohesive across all stream types and is extensible to all current and future features.</p>
+            </blockquote>
+            <div class="case-body">
+                <p>My leadership also put me in touch with a couple of key Sports partners who were looking to launch updates to X-Ray for Live Sports for the upcoming European Champions League season. A great fit (and, being a Brit, soccer is my sport!). My next focus was getting the work prioritised into the OP cycle for 2024.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Process</p>
+            <h2>Workshopping the framework</h2>
+            <div class="case-body">
+                <p>I set up a workshop with other designers and colleagues from Research and Sports Product, many of whom represented key features within the playback space, including Game Stats, Instant Replays, Team Lineups and Standings, Next Up, X-Ray for VOD, Related content carousels and more. Partners joined in person and remotely.</p>
+                <p>I came armed with a handful of "How might we…" topics (some I'd aligned on in advance with my Sports partners), such as:</p>
+                <ul class="case-list">
+                    <li><em>How best can we converge feature sets, including Replays?</em></li>
+                    <li><em>How might we make X-Ray more discoverable for those using a remote control?</em></li>
+                </ul>
+                <p>My ideation method of choice is <mark class="fn-hl-orange" data-fn-lines data-fn-split>Idea Speed Dating</mark>: early ideas are written down on sticky notes, then people change seats and add to each other's ideas.</p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/workshop-02.jpg" alt="The whiteboard from the workshop, with playback features as sticky notes">
+                <figcaption>Each yellow sticky note represents a feature in playback; we aligned each one to the framework</figcaption>
+            </figure>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/workshop-03.jpg" alt="Player chrome layout options being sketched">
+                <figcaption>Exploring player chrome layout options…</figcaption>
+            </figure>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/workshop-04.jpg" alt="Converging toward a vertical navigation">
+                <figcaption>…before converging toward a vertical navigation, to "go wide and deep"</figcaption>
+            </figure>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/workshop-05.jpg" alt="The framework we informally and lovingly named Up, Middle, Down">
+                <figcaption>The framework we informally named "Up, Middle, Down"</figcaption>
+            </figure>
+            <div class="case-body">
+                <p>We then used Up, Middle and Down as headers in a closed card sort. Each feature was discussed and placed into its respective space.</p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/workshop-06.jpg" alt="Whiteboarding framework prioritisation and some early light ideation">
+                <figcaption>Whiteboarding framework prioritisation (and some early light ideation)</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Design</p>
+            <h2>The "Up, Middle, Down" framework</h2>
+            <div class="case-body">
+                <p>On a Living Room remote, Customers can perform one of six actions: Up, Down, Left, Right, Back and Select. Up and Down were our options. <mark class="fn-hl-orange" data-fn-lines data-fn-split>The scrubber became the horizon line.</mark></p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/framework-01.jpg" alt="The scrubber is the horizon line">
+                <figcaption>The scrubber is the horizon line. Customers can perform 1 of 6 actions: Up, Down, Left, Right, Back, Select</figcaption>
+            </figure>
+            <div class="methods-grid">
+                <div class="method-card">
+                    <img src="images/prime-playback-framework/framework-02.jpg" alt="Middle: Control">
+                    <h3>Middle (for Controls)</h3>
+                    <p>Instant access to contextual controls and accessibility options, like play, pause, skip, audio, subtitles and more</p>
+                </div>
+                <div class="method-card">
+                    <img src="images/prime-playback-framework/framework-03.jpg" alt="Down: Discover">
+                    <h3>Down (to Discover)</h3>
+                    <p>Customers can navigate down to discover other streams related to their current game or title in playback, like other episodes, concurrent games and related titles</p>
+                </div>
+                <div class="method-card">
+                    <img src="images/prime-playback-framework/framework-04.jpg" alt="Up: Explore">
+                    <h3>Up (to Explore)</h3>
+                    <p>Customers can navigate up to explore content that contextually augments what's being seen on screen, allowing the Customer to explore, interact with the title, the game, and their team</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Validation</p>
+            <h2>Prototype and user testing</h2>
+            <div class="case-body">
+                <p>With a preliminary framework established, I turned to Figma and began exploring how some of the features could work: a handful of very early wireframes that I eventually turned into a click-through prototype of the Soccer CX, using the new framework with dummy data.</p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/prototype-01.jpg" alt="A click-through prototype of the Soccer CX, running on a TV">
+                <figcaption>A click-through wireframe prototype of the Soccer CX using the new framework, with dummy data</figcaption>
+            </figure>
+            <div class="case-body">
+                <p>I worked with the Prime Video Research team to plan user testing. The hypotheses we wanted to validate were:</p>
+            </div>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/prototype-02.jpg" alt="The three hypotheses for the study">
+                <figcaption>Hypotheses: (1) the overall UI is simple and easy to understand; (2) moments are a primary method for Customers to discover live content/information; (3) navigating Up (to Explore) and Down (to Discover) is intuitive and matches the Customer&#39;s mental model</figcaption>
+            </figure>
+            <div class="case-body">
+                <p>The biggest one was the third: that Customers felt comfortable navigating up and around to reach additional content, and that it felt intuitive and matched their mental model when asked to perform key tasks.</p>
+            </div>
+            <figure class="case-figure case-figure--small">
+                <img src="images/prime-playback-framework/testing-01.jpg" alt="In-person moderated user testing">
+                <figcaption>In-person moderated user testing</figcaption>
+            </figure>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/testing-02.jpg" alt="Task success by participant, first set of tasks">
+                <figcaption>Task completion by participant (green = success, yellow = difficulty, red = failure)</figcaption>
+            </figure>
+            <figure class="case-figure">
+                <img src="images/prime-playback-framework/testing-03.jpg" alt="Task success by participant, second set of tasks">
+                <figcaption>More participants, same tasks</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <h2>Results</h2>
+            <div class="case-body">
+                <p>The key takeaway was that <mark class="fn-hl-orange" data-fn-lines data-fn-split>"overall, participants found the new playback UI for Sports to be simple to understand and navigate."</mark></p>
+                <ul class="case-list">
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>91.7% task success rate</mark></li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>7 of the 9 participants</mark> rated the new navigation as "Very Intuitive"</li>
+                    <li>Reaching content using the new Up, Middle, Down framework "just made sense"</li>
+                </ul>
+                <p>Learnings:</p>
+                <ol class="case-list">
+                    <li>Let Customers hold Up/Down to quickly shortcut "getting around the houses"</li>
+                    <li>Reduce cognitive dissonance when entering and exiting a scaled view</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <p class="fn-label">Outcome</p>
+            <h2>Framework outcome</h2>
+            <div class="case-body">
+                <p>The framework for Live Sports ("Project Reign") was <mark class="fn-hl-orange" data-fn-lines data-fn-split>approved for OP1 2024</mark>.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="fn-sec case-section">
+        <div class="fn-wide">
+            <h2>Impact</h2>
+            <div class="case-body">
+                <ul class="case-list">
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>The new CX gained wider adoption</mark> and has been prioritised across other Live Sports and stream types, including VOD, for 2025.</li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>All future Living Room playback design work uses the framework CX.</mark></li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>A lighter tech lift:</mark> the new framework requires <mark class="fn-hl-orange" data-fn-lines data-fn-split>34% fewer components</mark> than the existing CX on new platforms.</li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>Mobile is also set to use an adapted version</mark> of the Playback Framework.</li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>A good thing sells itself:</mark> adjacent orgs are looking to build their products into Playback using the new framework (current partners include Ads and Retail/Shopping).</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="fn-sec contact">
+        <div class="fn-wide">
+            <div class="fn-sec-head">
+                <p class="fn-label">Get in touch</p>
+                <h2>Say hello!</h2>
+                <p>I enjoy meeting new people who have similar and wildly different passions. Always open to a &#9749; and thoughtful &#128172;.</p>
+            </div>
+            <div class="contact-actions">
+                <a href="mailto:andy@andrewshanley.co.uk" class="fn-btn fn-btn--glow">andy@andrewshanley.co.uk <span aria-hidden="true">&rarr;</span></a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="fn-btn fn-btn--line">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="fn-wide fn-foot">
+            <p>&copy; 2025 Andrew Shanley. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="highlight-lines.js"></script>
+    <script src="vendor/footnote.js"></script>
+</body>
+</html>

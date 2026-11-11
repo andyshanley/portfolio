@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Internal style guide and module library. Not published.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Styles and modules — Andrew Shanley</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600;700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/footnote.css">
+    <link rel="stylesheet" href="styles.css">
+<script>
+/* Apply the saved colour before first paint, so the page never flashes the default green. */
+(function () {
+  var names = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'magenta'];
+  var ink = { red: '#8c2926', orange: '#85421b', yellow: '#6d5310', green: '#46561f', cyan: '#1d5b49', blue: '#244f78', purple: '#62406f', magenta: '#843358' };
+  var saved = null;
+  try { saved = localStorage.getItem('sg-tint'); } catch (e) {}
+  if (names.indexOf(saved) < 0) saved = 'green';
+  var root = document.documentElement;
+  root.setAttribute('data-tint', saved);
+  root.style.setProperty('--sg-tint', 'var(--fn-hl-' + saved + ')');
+  root.style.setProperty('--sg-ink', ink[saved]);
+  root.classList.add('sg-pending');
+})();
+</script>
+<noscript><style>.sg-pending [data-tintable] { visibility: visible !important; }</style></noscript>
+<style>
+.sg-layout { display: grid; grid-template-columns: 15rem minmax(0, 1fr); min-height: 100vh; }
+.sg-side { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 1.5rem; border-right: 1px solid var(--fn-rule); background: #fff; }
+.sg-side h1 { font-size: var(--fn-step-1); font-weight: 600; letter-spacing: -0.01em; margin: 0 0 1.5rem; line-height: 1.2; }
+.sg-side nav { display: grid; gap: .15rem; }
+.sg-side nav a { padding: .4rem .6rem; margin-left: -.6rem; border-radius: 6px; font-family: var(--fn-font-mono); font-size: 12px; letter-spacing: .02em; color: var(--fn-ink-2); text-decoration: none; }
+.sg-side nav a:hover { background: #f4f4f3; color: var(--fn-ink); }
+.sg-side nav a[aria-current="location"] { background: color-mix(in srgb, var(--sg-tint, var(--fn-hl-green)) 55%, white); color: var(--sg-ink, #46561f); font-weight: 600; }
+.sg-side nav a:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 1px; }
+.sg-side nav .sg-group { margin: 1rem 0 .25rem; font-family: var(--fn-font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--fn-ink-3); }
+.sg-picker { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--fn-rule); }
+.sg-picker .sg-demo-label { margin-bottom: .75rem; }
+.sg-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
+.sg-chip { aspect-ratio: 1; border-radius: 8px; border: 2px solid transparent; background: var(--c); cursor: pointer; padding: 0; }
+.sg-chip[aria-pressed="true"] { border-color: var(--fn-ink); }
+html[data-tint="red"] .sg-chip[data-tint="red"] { border-color: var(--fn-ink); }
+html[data-tint="orange"] .sg-chip[data-tint="orange"] { border-color: var(--fn-ink); }
+html[data-tint="yellow"] .sg-chip[data-tint="yellow"] { border-color: var(--fn-ink); }
+html[data-tint="green"] .sg-chip[data-tint="green"] { border-color: var(--fn-ink); }
+html[data-tint="cyan"] .sg-chip[data-tint="cyan"] { border-color: var(--fn-ink); }
+html[data-tint="blue"] .sg-chip[data-tint="blue"] { border-color: var(--fn-ink); }
+html[data-tint="purple"] .sg-chip[data-tint="purple"] { border-color: var(--fn-ink); }
+html[data-tint="magenta"] .sg-chip[data-tint="magenta"] { border-color: var(--fn-ink); }
+.sg-pending [data-tintable] { visibility: hidden; }
+.sg-chip:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: 2px; }
+.sg-main .fn-wide { width: auto; margin: 0; padding: 0 clamp(1.5rem, 4vw, 3.5rem); max-width: 80rem; }
+.sg-main { background: #f4f4f2; }
+.sg-main .sg-block:first-child { border-top: 0; }
+.sg-main .sg-block { border-top-color: #e2e2de; }
+.sg-demo { background: #fff; border-color: #c9c9c3; }
+.sg-classes code, .sg-block code { background: #e8e8e4; }
+@media (max-width: 900px) {
+  .sg-layout { grid-template-columns: 1fr; }
+  .sg-side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--fn-rule); }
+  .sg-side nav { grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); }
+}
+.sg-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin-top: 1.5rem; }
+.sg-nav a { font-family: var(--fn-font-mono); font-size: 12px; letter-spacing: .04em; color: var(--fn-ink-2); text-decoration: none; border-bottom: 1px solid var(--fn-rule); }
+.sg-nav a:hover { color: var(--fn-ink); border-color: var(--fn-ink); }
+.sg-block { padding: 4rem 0; border-top: 1px solid var(--fn-rule); }
+.sg-block h2 { font-size: var(--fn-step-2); font-weight: 600; letter-spacing: -0.02em; margin: .5rem 0 .75rem; }
+.sg-block > .fn-wide > p { max-width: 62ch; color: var(--fn-text-soft); }
+.sg-classes { margin-top: .75rem; font-family: var(--fn-font-mono); font-size: 12px; color: var(--fn-ink-2); max-width: none !important; }
+.sg-classes code, .sg-block code { font-family: var(--fn-font-mono); font-size: .92em; background: #f4f4f3; padding: .1em .4em; border-radius: 4px; }
+.sg-demo { margin-top: 2rem; padding: 2rem; border: 1px dashed var(--fn-ink-3); border-radius: 10px; }
+.sg-demo[hidden] { display: none; }
+.sg-main { overflow-anchor: none; }
+.sg-about { margin-top: .75rem; }
+.sg-about summary { cursor: pointer; display: inline-flex; align-items: center; gap: .5rem; font-family: var(--fn-font-mono); font-size: 12px; letter-spacing: .04em; color: var(--fn-ink-2); list-style: none; }
+.sg-about summary::-webkit-details-marker { display: none; }
+.sg-about summary::before { content: "+"; display: inline-grid; place-items: center; width: 18px; height: 18px; border: 1px solid #c9c9c3; border-radius: 50%; font-size: 13px; line-height: 1; color: var(--fn-ink-2); background: #fff; }
+.sg-about[open] summary::before { content: "−"; }
+.sg-about summary:hover { color: var(--fn-ink); }
+.sg-about > p { margin-top: .9rem; max-width: 62ch; }
+.sg-tabs { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: 1.5rem; border-bottom: 1px solid #d6d6d1; }
+.sg-tab { font: 600 12px/1 var(--fn-font-mono); letter-spacing: .05em; text-transform: uppercase; padding: .85rem 1.05rem; border: 0; background: transparent; color: var(--fn-ink-2); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; }
+.sg-tab:hover { color: var(--fn-ink); }
+.sg-tab[aria-selected="true"] { color: var(--sg-ink, #46561f); border-bottom-color: var(--sg-ink, #46561f); }
+.sg-tab:focus-visible { outline: 2px solid var(--fn-ink); outline-offset: -2px; }
+.sg-tabs ~ .sg-demo { margin-top: 1.25rem; }
+.sg-demo-label { display: block; margin-bottom: 1.25rem; font-family: var(--fn-font-mono); font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--fn-ink-2); }
+details.sg-code { margin-top: 1rem; }
+details.sg-code summary { cursor: pointer; font-family: var(--fn-font-mono); font-size: 12px; color: var(--fn-ink-2); }
+details.sg-code pre { margin: .75rem 0 0; padding: 1rem 1.25rem; background: #f4f4f3; border-radius: 8px; overflow-x: auto; font-size: 12px; line-height: 1.55; }
+.sg-sizes { display: grid; gap: 1.5rem; }
+.sg-size-row { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 1.5rem; align-items: baseline; }
+.sg-size-name { font-family: var(--fn-font-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--fn-ink-3); }
+@media (max-width: 700px) { .sg-size-row { grid-template-columns: 1fr; gap: .25rem; } }
+.sg-row { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center; }
+.sg-variations { margin: 1.5rem 0 0; padding: 0; list-style: none; display: grid; gap: .6rem; }
+.sg-variations a { color: var(--fn-ink); }
+.sg-variations span { color: var(--fn-ink-2); }
+</style>
+</head>
+<body class="fn">
+
+    <!-- Footnote shared SVG filters (footnote@1.0.0) -->
+    <svg id="fn-defs" width="0" height="0" aria-hidden="true" style="position: absolute">
+        <defs>
+            <filter id="fn-rough">
+                <feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="4" />
+                <feDisplacementMap in="SourceGraphic" scale="5" />
+            </filter>
+            <filter id="fn-paper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" stitchTiles="stitch" result="noise" />
+                <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="3">
+                    <feDistantLight azimuth="30" elevation="60" />
+                </feDiffuseLighting>
+            </filter>
+            <filter id="fn-crayon">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" stitchTiles="stitch" result="noise" seed="0" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="rough" />
+                <feComposite in="rough" in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg>
+
+    <div class="sg-layout">
+    <aside class="sg-side" aria-label="Style guide menu">
+        <h1>Styles and modules</h1>
+        <nav aria-label="Modules">
+            <span class="sg-group">Modules</span>
+            <a href="#highlights">Highlights</a>
+            <a href="#glance">At a glance</a>
+            <a href="#case-blocks">Case study blocks</a>
+            <a href="#methods">Image sets</a>
+            <a href="#writing">Writing rows</a>
+            <a href="#cards">Case Study Cards</a>
+            <a href="#labels">Labels and links</a>
+            <a href="#buttons">Footnote Buttons</a>
+            <span class="sg-group">Explorations</span>
+            <a href="#glance-variations">At a glance variations</a>
+        </nav>
+        <div class="sg-picker">
+            <span class="sg-demo-label">Colour</span>
+            <div class="sg-chips" role="group" aria-label="Footnote colours"><button type="button" class="sg-chip" data-tint="red" aria-pressed="false" aria-label="Red" title="Red" style="--c: var(--fn-hl-red)"></button><button type="button" class="sg-chip" data-tint="orange" aria-pressed="false" aria-label="Orange" title="Orange" style="--c: var(--fn-hl-orange)"></button><button type="button" class="sg-chip" data-tint="yellow" aria-pressed="false" aria-label="Yellow" title="Yellow" style="--c: var(--fn-hl-yellow)"></button><button type="button" class="sg-chip" data-tint="green" aria-pressed="false" aria-label="Green" title="Green" style="--c: var(--fn-hl-green)"></button><button type="button" class="sg-chip" data-tint="cyan" aria-pressed="false" aria-label="Cyan" title="Cyan" style="--c: var(--fn-hl-cyan)"></button><button type="button" class="sg-chip" data-tint="blue" aria-pressed="false" aria-label="Blue" title="Blue" style="--c: var(--fn-hl-blue)"></button><button type="button" class="sg-chip" data-tint="purple" aria-pressed="false" aria-label="Purple" title="Purple" style="--c: var(--fn-hl-purple)"></button><button type="button" class="sg-chip" data-tint="magenta" aria-pressed="false" aria-label="Magenta" title="Magenta" style="--c: var(--fn-hl-magenta)"></button></div>
+        </div>
+    </aside>
+    <main class="sg-main">
+    <section class="sg-block case-section" id="highlights"><div class="fn-wide">
+        <h2>Highlights</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>The marker-style background behind key words, shown here at the real text sizes used on the site. It follows the homepage style: soft organic edges, a slow swell, dark ink in the highlight's own colour. In case studies, use the project card's colour for every highlight (use the colour picker on the left to preview). Add <code>data-fn-lines data-fn-split</code> so a phrase that wraps gets one stroke per line (needs <code>highlight-lines.js</code>).</p>
+            <p class="sg-classes"><code>mark</code> (yellow) · <code>mark.fn-hl-green</code> <code>-orange</code> <code>-purple</code> <code>-blue</code> <code>-red</code> <code>-cyan</code> <code>-magenta</code></p>
+        </details>
+        <div class="sg-demo"><span class="sg-demo-label">Sizes used on the site, largest to smallest</span>
+        <div data-tintable class="sg-sizes"><div class="sg-size-row"><span class="sg-size-name">Heading<br>step 4</span><p style="font-size:var(--fn-step-4);line-height:1.15;margin:0;color:var(--fn-ink)">Initiatives were <mark class="fn-hl-green" data-fn-lines data-fn-split>prioritized</mark></p></div><div class="sg-size-row"><span class="sg-size-name">Lede<br>step 2</span><p style="font-size:var(--fn-step-2);line-height:1.35;margin:0;color:var(--fn-ink)">An increase in <mark class="fn-hl-green" data-fn-lines data-fn-split>time on task</mark> for Sellers</p></div><div class="sg-size-row"><span class="sg-size-name">Subheading<br>step 1</span><p style="font-size:var(--fn-step-1);line-height:1.5;margin:0;color:var(--fn-ink)">The framework needs <mark class="fn-hl-green" data-fn-lines data-fn-split>34% fewer components</mark> on new platforms.</p></div><div class="sg-size-row"><span class="sg-size-name">Body<br>step 0</span><p style="font-size:var(--fn-step-0);line-height:1.65;margin:0;color:var(--fn-ink)">The IPD launched globally in March 2022 after a <mark class="fn-hl-green" data-fn-lines data-fn-split>successful pilot</mark>.</p></div><div class="sg-size-row"><span class="sg-size-name">Small<br>step -1</span><p style="font-size:var(--fn-step--1);line-height:1.6;margin:0;color:var(--fn-ink)">Participants gave a <mark class="fn-hl-green" data-fn-lines data-fn-split>91.7% task success rate</mark> in testing.</p></div></div>
+        </div>
+    </div></section>
+
+    <section class="sg-block case-section" id="glance"><div class="fn-wide">
+        <h2>At a glance</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>The summary at the top of a case study: the challenge set large, the objective and solution beside it, and the result in a tinted band with a tile per initiative. Pick the colour with a modifier that matches the project card's tint (use the colour picker on the left to preview). Used on the FBA Inbound case study.</p>
+            <p class="sg-classes"><code>.glance</code> · <code>.glance-main</code> · <code>.glance-side</code> · <code>.glance-result</code> · <code>.glance-tiles</code> · <code>.glance-title</code> · <code>.glance-lede</code> · <code>.glance-facts</code> (optional facts row) · colours <code>.glance--green</code> <code>--orange</code> <code>--purple</code> <code>--blue</code> <code>--red</code> <code>--yellow</code> <code>--cyan</code> <code>--magenta</code></p>
+        </details>
+        <div class="sg-tabs" role="tablist" aria-label="At a glance variations">
+            <button type="button" class="sg-tab" role="tab" id="glance-tab0" aria-controls="glance-panel0" aria-selected="true" tabindex="0">Standard</button>
+            <button type="button" class="sg-tab" role="tab" id="glance-tab1" aria-controls="glance-panel1" aria-selected="false" tabindex="-1">With Facts Row</button>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="glance-panel0" aria-labelledby="glance-tab0">
+<div data-tintable>            <div class="glance glance--green">
+                <p class="fn-label glance-name">At a glance</p>
+                <div class="glance-main">
+                    <h3 class="glance-title">The challenge</h3>
+                    <p class="glance-lede">Through reviewing Seller feedback (through Amazon’s internal HMD/How’s My Driving platform) it was found that the end-to-end Seller inbound journey suffered from a severe lack of interoperability, as the UX was incoherently spread across multiple areas of Amazon’s Seller Central platform. This was leading to an increase in <mark class="fn-hl-green" data-fn-lines data-fn-split>time on task</mark> and <mark class="fn-hl-green" data-fn-lines data-fn-split>number of/repetitive steps</mark> to task completion for Amazon’s Selling Partners.</p>
+                </div>
+                <div class="glance-side">
+                    <div>
+                        <h3 class="glance-title">The objective</h3>
+                        <p>Partner with/encourage FBA Inbound product and tech owners to begin adopting a multi-year, vastly-improved Seller-centric “north star” CX into their respective roadmaps starting 2021.</p>
+                    </div>
+                    <div>
+                        <h3 class="glance-title">The solution</h3>
+                        <p>Run an in-depth Seller research study, create an end-to-end Customer journey map, an accompanying data-centric research report, and new “north star” UI designs.</p>
+                    </div>
+                </div>
+                <div class="glance-result">
+                    <h3 class="glance-title">The result</h3>
+                    <p>Multiple Seller-centric initiatives were added to Amazon’s Operational Planning process and prioritized on multiple teams’ roadmaps for 2021 and 2022, including:</p>
+                    <div class="glance-tiles">
+                    <div>A brand-new Inbound Performance Dashboard (see the full case study here)</div>
+                    <div>A refreshed Inbound Shipping Queue</div>
+                    <div>New Shipment Details page features</div>
+                    <div>And many more initiatives…</div>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="glance-panel1" aria-labelledby="glance-tab1" hidden>
+<div data-tintable>            <div class="glance glance--green">
+                <p class="fn-label glance-name">At a glance</p>
+                <dl class="glance-facts">
+                    <div><dt>My role</dt><dd>Design Lead</dd></div>
+                    <div><dt>Partners</dt><dd>Design (x2), Research, Product, Engineering</dd></div>
+                    <div><dt>Timeframe</dt><dd>2 months to develop the framework</dd></div>
+                </dl>
+                <div class="glance-main">
+                    <h3 class="glance-title">The challenge</h3>
+                    <p class="glance-lede">Even though X-Ray is loved by Customers and recognised as a differentiator among streaming services, the experience had barely evolved. VOD hadn’t been meaningfully updated in over 12 years, and Sports hadn’t received a major update since launch. That led to <mark class="fn-hl-green" data-fn-lines data-fn-split>low discovery and engagement</mark>, <mark class="fn-hl-green" data-fn-lines data-fn-split>inconsistency</mark>, and a lack of cohesion.</p>
+                </div>
+                <div class="glance-side">
+                    <div>
+                        <h3 class="glance-title">The objective</h3>
+                        <p>Create an in-playback framework that solves for these issues, one that is cohesive across all stream types and is extensible to all current and future features.</p>
+                    </div>
+                    <div>
+                        <h3 class="glance-title">The solution</h3>
+                        <p>On a Living Room remote, Customers can perform one of six actions: Up, Down, Left, Right, Back and Select. Up and Down were our options. The scrubber became the horizon line.</p>
+                    </div>
+                </div>
+                <div class="glance-result">
+                    <h3 class="glance-title">The result</h3>
+                    <p>The new framework gained wider adoption across the business, including:</p>
+                    <div class="glance-tiles">
+                    <div>Prioritised across other Live Sports and stream types, including VOD</div>
+                    <div>All future Living Room playback design work uses the framework</div>
+                    <div>34% fewer components than the existing experience on new platforms</div>
+                    <div>An adapted version for mobile</div>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+    </div></section>
+
+    <section class="sg-block case-section" id="case-blocks"><div class="fn-wide">
+        <h2>Case study blocks</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>The building blocks of a case study page: figures with captions, a pull-quote, and lists. Side-by-side figures use <code>.case-pair</code>.</p>
+            <p class="sg-classes"><code>.case-figure</code> (<code>--small</code>) · <code>.case-pair</code> · <code>.case-quote</code> · <code>.case-body</code> · <code>.case-list</code></p>
+        </details>
+        <div class="sg-demo"><span class="sg-demo-label">Figure with caption</span>
+            <figure class="case-figure case-figure--small">
+                <img src="images/prime-playback-framework/workshop-01.jpg" alt="Running a workshop">
+                <figcaption>Running workshops with in-person and remote participants</figcaption>
+            </figure>
+        </div>
+        <div class="sg-demo"><span class="sg-demo-label">Pull-quote</span>
+            <blockquote class="case-quote" style="margin:0">
+                <p>"Overall, participants found the new playback framework UI to be simple to understand and navigate."</p>
+                <cite>Research study, November 2023</cite>
+            </blockquote>
+        </div>
+        <div class="sg-demo"><span class="sg-demo-label">List with highlighted lead-ins</span>
+            <div class="case-body" data-tintable>
+                <ol class="case-list">
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>Low discovery and engagement:</mark> X-Ray was hard to find, especially for Customers using a remote control.</li>
+                    <li><mark class="fn-hl-orange" data-fn-lines data-fn-split>Inconsistency:</mark> VOD paused the video, Live opened a sidebar on the other side of the screen.</li>
+                </ol>
+            </div>
+        </div>
+    </div></section>
+
+    <section class="sg-block case-section" id="methods"><div class="fn-wide">
+        <h2>Image sets</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>A set of images, each with a title and a short description, shown one, two, three or four across. Three across is the default; the others add a modifier. They stack on narrow screens.</p>
+            <p class="sg-classes"><code>.methods-grid</code> (<code>--1</code> <code>--2</code> <code>--3</code> <code>--4</code>) · <code>.method-card</code></p>
+        </details>
+        <div class="sg-tabs" role="tablist" aria-label="Image sets variations">
+            <button type="button" class="sg-tab" role="tab" id="methods-tab0" aria-controls="methods-panel0" aria-selected="false" tabindex="-1">1-up</button>
+            <button type="button" class="sg-tab" role="tab" id="methods-tab1" aria-controls="methods-panel1" aria-selected="false" tabindex="-1">2-up</button>
+            <button type="button" class="sg-tab" role="tab" id="methods-tab2" aria-controls="methods-panel2" aria-selected="true" tabindex="0">3-up</button>
+            <button type="button" class="sg-tab" role="tab" id="methods-tab3" aria-controls="methods-panel3" aria-selected="false" tabindex="-1">4-up</button>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="methods-panel0" aria-labelledby="methods-tab0" hidden>
+<div class="methods-grid methods-grid--1" style="margin-top:0">
+                <div class="method-card"><img src="images/prime-playback-framework/framework-01.jpg" alt="The scrubber is the horizon line"><h3>The scrubber</h3><p>The scrubber is the horizon line that organises everything else</p></div>
+            </div>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="methods-panel1" aria-labelledby="methods-tab1" hidden>
+<div class="methods-grid methods-grid--2" style="margin-top:0">
+                <div class="method-card"><img src="images/prime-playback-framework/framework-02.jpg" alt="Middle: Control"><h3>Middle (for Controls)</h3><p>Instant access to contextual controls and accessibility options</p></div>
+                <div class="method-card"><img src="images/prime-playback-framework/framework-03.jpg" alt="Down: Discover"><h3>Down (to Discover)</h3><p>Discover other streams related to the current game or title</p></div>
+            </div>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="methods-panel2" aria-labelledby="methods-tab2">
+<div class="methods-grid methods-grid--3" style="margin-top:0">
+                <div class="method-card"><img src="images/prime-playback-framework/framework-02.jpg" alt="Middle: Control"><h3>Middle (for Controls)</h3><p>Instant access to contextual controls and accessibility options</p></div>
+                <div class="method-card"><img src="images/prime-playback-framework/framework-03.jpg" alt="Down: Discover"><h3>Down (to Discover)</h3><p>Discover other streams related to the current game or title</p></div>
+                <div class="method-card"><img src="images/prime-playback-framework/framework-04.jpg" alt="Up: Explore"><h3>Up (to Explore)</h3><p>Explore content that augments what is on screen</p></div>
+            </div>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="methods-panel3" aria-labelledby="methods-tab3" hidden>
+<div class="methods-grid methods-grid--4" style="margin-top:0">
+                <div class="method-card"><img src="images/prime-playback-framework/framework-01.jpg" alt="The scrubber is the horizon line"><h3>The scrubber</h3><p>The scrubber is the horizon line that organises everything else</p></div>
+                <div class="method-card"><img src="images/prime-playback-framework/framework-02.jpg" alt="Middle: Control"><h3>Middle (for Controls)</h3><p>Instant access to contextual controls and accessibility options</p></div>
+                <div class="method-card"><img src="images/prime-playback-framework/framework-03.jpg" alt="Down: Discover"><h3>Down (to Discover)</h3><p>Discover other streams related to the current game or title</p></div>
+                <div class="method-card"><img src="images/prime-playback-framework/framework-04.jpg" alt="Up: Explore"><h3>Up (to Explore)</h3><p>Explore content that augments what is on screen</p></div>
+            </div>
+        </div>
+    </div></section>
+
+    <section class="sg-block case-section" id="writing"><div class="fn-wide">
+        <h2>Writing rows</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>Writing and speaking list: a tinted date tag, the title, and the publication, divided by hairlines. Tag colour follows the year.</p>
+            <p class="sg-classes"><code>.writing-list</code> · <code>.writing-row</code> · <code>.writing-year.tint-blue</code> <code>-green</code> <code>-orange</code> <code>-purple</code> · <code>.writing-title</code> · <code>.writing-pub</code></p>
+        </details>
+        <div class="sg-demo"><span class="sg-demo-label">Rows</span>
+            <div class="writing-list">
+                <div class="writing-row">
+                    <span class="writing-year tint-blue"><time datetime="2019-11">Nov 2019</time></span>
+                    <span class="writing-title">Contributor: The Innovator’s Guide to New Product Development</span>
+                    <span class="writing-pub">Attest</span>
+                </div>
+                <div class="writing-row">
+                    <span class="writing-year tint-green"><time datetime="2018-04">Apr 2018</time></span>
+                    <span class="writing-title">The Future of UX Design Is Automation</span>
+                    <span class="writing-pub">UX Matters</span>
+                </div>
+            </div>
+        </div>
+    </div></section>
+
+    <section class="sg-block case-section" id="cards"><div class="fn-wide">
+        <h2>Case Study Cards</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>The open project cards used in Recent and Featured Work and All Work: image, tinted year tag, title and subtitle. Hover lifts the card and puts a border around the image in the project colour. Shown in two sizes, in the colour chosen in the sidebar.</p>
+            <p class="sg-classes"><code>.card-grid</code> (<code>--3</code>, <code>--4</code>) · <code>a.fn-card.fn-paper.tint-*</code> · <code>.card-thumb</code> (<code>--4x3</code>, <code>--square</code>, <code>--bl</code>) · <code>.card-year</code></p>
+        </details>
+        <div class="sg-tabs" role="tablist" aria-label="Case Study Cards variations">
+            <button type="button" class="sg-tab" role="tab" id="cards-tab0" aria-controls="cards-panel0" aria-selected="true" tabindex="0">Small: four across</button>
+            <button type="button" class="sg-tab" role="tab" id="cards-tab1" aria-controls="cards-panel1" aria-selected="false" tabindex="-1">Medium: three across</button>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="cards-panel0" aria-labelledby="cards-tab0">
+<div data-tintable>
+            <div class="card-grid card-grid--4">
+                <a href="prime-playback-framework.html" class="fn-card fn-paper tint-green">
+                    <div class="card-thumb card-thumb--square card-thumb--bl"><img src="images/prime-playback-framework.jpg" alt=""></div>
+                    <p class="fn-label card-meta card-year">2023</p>
+                    <h3>Amazon Prime Video</h3>
+                    <p>Playback Framework</p>
+                </a>
+                <a href="#" class="fn-card fn-paper tint-green">
+                    <div class="card-thumb card-thumb--square card-thumb--bl"><img src="images/prime-live-sports.jpg" alt=""></div>
+                    <p class="fn-label card-meta card-year">2024</p>
+                    <h3>Amazon Prime Video</h3>
+                    <p>X-Ray for Live Sports</p>
+                </a>
+                <a href="#" class="fn-card fn-paper tint-green">
+                    <div class="card-thumb card-thumb--square card-thumb--bl"><img src="images/prime-genai-recaps.jpg" alt=""></div>
+                    <p class="fn-label card-meta card-year">2025</p>
+                    <h3>Amazon Prime Video</h3>
+                    <p>GenAI Recaps</p>
+                </a>
+                <a href="amazon-fba-inbound.html" class="fn-card fn-paper tint-green">
+                    <div class="card-thumb card-thumb--square"><img src="images/map2.jpg" alt=""></div>
+                    <p class="fn-label card-meta card-year">2021</p>
+                    <h3>Amazon</h3>
+                    <p>FBA Inbound Research &amp; North Star</p>
+                </a>
+            </div></div>
+        </div>
+        <div class="sg-demo" role="tabpanel" id="cards-panel1" aria-labelledby="cards-tab1" hidden>
+<div data-tintable>
+            <div class="card-grid card-grid--3">
+                <a href="amazon-fba-inbound.html" class="fn-card fn-paper tint-green">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/map2.jpg" alt=""></div>
+                    <p class="fn-label card-meta card-year">2021</p>
+                    <h3>Amazon</h3>
+                    <p>FBA Inbound Research &amp; North Star</p>
+                </a>
+                <a href="#" class="fn-card fn-paper tint-green">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/peacock.png" alt=""></div>
+                    <p class="fn-label card-meta card-year">2019</p>
+                    <h3>NBC Peacock</h3>
+                    <p>Streaming Platform Design Discovery</p>
+                </a>
+                <a href="#" class="fn-card fn-paper tint-green">
+                    <div class="card-thumb card-thumb--4x3"><img src="images/google-web-health.jpg" alt=""></div>
+                    <p class="fn-label card-meta card-year">2018</p>
+                    <h3>Google</h3>
+                    <p>Web Health Dashboard &amp; Reporting</p>
+                </a>
+            </div></div>
+        </div>
+    </div></section>
+
+    <section class="sg-block case-section" id="labels"><div class="fn-wide">
+        <h2>Labels and links</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>Small uppercase mono labels introduce each section. The "All Work →" link sits at the right end of a section title row, above the last card column.</p>
+            <p class="sg-classes"><code>.fn-label</code> · <code>.fn-sec-head.sec-head-row</code> · <code>.section-link</code></p>
+        </details>
+        <div class="sg-demo"><span class="sg-demo-label">Section title row with link</span>
+            <div class="fn-sec-head sec-head-row" style="margin-bottom:0">
+                <p class="fn-label">Recent and Featured Work</p>
+                <a href="work.html" class="section-link">All Work <span aria-hidden="true">&rarr;</span></a>
+            </div>
+        </div>
+    </div></section>
+
+    <section class="sg-block case-section" id="buttons"><div class="fn-wide">
+        <h2>Footnote Buttons</h2>
+        <details class="sg-about"><summary>About this module</summary>
+            <p>The contact buttons: a slowly morphing coloured shape behind the label. Yellow for the main action, blue for the secondary one.</p>
+            <p class="sg-classes"><code>.contact-actions</code> · <code>.fn-btn.fn-btn--glow</code> (yellow) · <code>.fn-btn.fn-btn--line</code> (blue)</p>
+        </details>
+        <div class="sg-demo"><span class="sg-demo-label">Contact actions</span>
+            <div class="contact-actions" style="justify-content:flex-start">
+                <a href="mailto:andy@andrewshanley.co.uk" class="fn-btn fn-btn--glow">andy@andrewshanley.co.uk <span aria-hidden="true">&rarr;</span></a>
+                <a href="https://www.linkedin.com/in/andrewshanley/" target="_blank" class="fn-btn fn-btn--line">LinkedIn</a>
+            </div>
+        </div>
+    </div></section>
+
+    <section class="sg-block" id="glance-variations"><div class="fn-wide">
+        <p class="fn-label">Explorations</p>
+        <h2>At a glance variations</h2>
+        <p>The layouts we looked at on the way to the current "At a glance". The chosen one is sidebar layout with result layout 2 (green band with tiles).</p>
+        <ul class="sg-variations">
+            <li><a href="fba-overview-options.html">Round 1</a> <span>· cards and band, stepper, before and after, editorial table, flow</span></li>
+            <li><a href="fba-overview-options-2.html">Round 2</a> <span>· editorial lede, big numerals, tabs, stepped rows, high-contrast result</span></li>
+            <li><a href="fba-overview-options-3.html">Round 3</a> <span>· five variations of the editorial lede</span></li>
+            <li><a href="fba-overview-options-4.html">Round 4</a> <span>· sidebar layout with five result layouts (layout 2 chosen)</span></li>
+        </ul>
+    </div></section>
+    </main>
+    </div>
+
+    <script src="highlight-lines.js"></script>
+    <script src="vendor/footnote.js"></script>
+    <script src="styles-picker.js?v=3"></script>
+</body>
+</html>

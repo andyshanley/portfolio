@@ -1560,3 +1560,281 @@ a.fn-card:focus-visible .card-thumb img { filter: saturate(0.8) contrast(0.95) b
     .section-link::before { animation: none; }
     .section-link:is(:hover, :focus-visible) { translate: none; }
 }
+
+/* Writing & speaking: out of the paper card, laid out like the rest of the page. Years are small tinted tags
+   (as on the project cards), rows are divided by plain hairlines. */
+.writing-list { border-top: 0; }
+.writing-row {
+    grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--fn-rule);
+}
+.writing-row:last-child { border-bottom: 0; padding-bottom: 1.1rem; }
+.writing-year {
+    --year-ink: var(--fn-ink-2);
+    position: relative;
+    isolation: isolate;
+    justify-self: start;
+    padding: 1px 7px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    color: var(--year-ink);
+}
+.writing-year::before {
+    content: "";
+    position: absolute;
+    inset: -2px 0;
+    z-index: -1;
+    background: var(--tape);
+    opacity: .8;
+    border-radius: 5px;
+}
+.writing-year.tint-blue { --year-ink: #244f78; }
+.writing-year.tint-green { --year-ink: #46561f; }
+.writing-year.tint-orange { --year-ink: #85421b; }
+.writing-year.tint-purple { --year-ink: #62406f; }
+.writing-title { font-size: var(--fn-step-0); line-height: 1.35; }
+@media (max-width: 620px) {
+    .writing-row { grid-template-columns: 5rem minmax(0, 1fr); align-items: baseline; }
+    .writing-pub { grid-column: 2; }
+}
+
+/* Real dates ("Nov 2019") need a wider tag column; titles are now links to the original pieces. */
+.writing-row { grid-template-columns: 6.5rem minmax(0, 1fr) auto; }
+@media (max-width: 620px) { .writing-row { grid-template-columns: 6rem minmax(0, 1fr); } }
+
+/* ---------- Case study: follows the homepage conventions ---------- */
+/* Hero sheet, title spacing and label rhythm come from the homepage hero (see "Work page header" above). */
+.fn-hero.page-head .case-back { margin-bottom: 1.25rem; }
+.fn-hero.page-head .case-back + .fn-label { margin-top: 0; }
+
+/* Images, video and cards share the homepage's 10px corners and flat, shadow-free finish. */
+.process-grid img,
+.video-wrap,
+.method-card > img {
+    border-radius: 10px;
+    box-shadow: none;
+}
+.video-wrap { margin-top: 2.5rem; }
+.process-grid img { background: var(--fn-paper-2); }
+
+/* The three methods are open cards like the homepage's: no paper, tape or shadow. */
+.methods-grid { gap: 3rem clamp(1.25rem, 2.5vw, 2.5rem); padding-top: 0; }
+.method-card { background: transparent; border: 0; box-shadow: none; padding: 0; }
+.method-card > img { margin-bottom: 1rem; }
+.method-card h3 { font-size: 20px; line-height: 1.25; margin-top: 8px; }
+.method-card p { font-size: var(--fn-step--1); color: var(--fn-text-soft); margin-top: .5rem; }
+.case-section .fn-label + h2 { margin-top: .9rem; }
+
+/* Case study header: the label starts at exactly the same height as on the Work page; the back link sits above it. */
+.fn-hero.page-head .fn-wide { position: relative; }
+.fn-hero.page-head .case-back {
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    margin: 0 0 1.1rem;
+}
+
+/* Case-study highlights use the homepage's highlight style: smooth organic edges and the slow swell, no rough
+   marker texture, no pen blob, and dark ink in the highlight's own colour. */
+.fn .case-section mark::before {
+    filter: none;
+    background-image: none;
+    box-shadow: none;
+    border-radius: 24% 20% 25% 18% / 28% 32% 25% 30%;
+    transform-origin: center;
+    animation: text-highlight-swell 4.5s ease-in-out infinite;
+}
+.fn .case-section mark::after { content: none; }
+.case-section mark { color: #6d5310; }
+.case-section mark.fn-hl-green { color: #46561f; }
+.case-section mark.fn-hl-red { color: #8c2926; }
+.case-section mark.fn-hl-orange { color: #85421b; }
+.case-section mark.fn-hl-cyan { color: #1d5b49; }
+.case-section mark.fn-hl-blue { color: #244f78; }
+.case-section mark.fn-hl-purple { color: #62406f; }
+.case-section mark.fn-hl-magenta { color: #843358; }
+@media (prefers-reduced-motion: reduce) {
+    .fn .case-section mark::before { animation: none; }
+}
+
+/* Phrases that used to be bold are now highlighted instead, in the normal weight. */
+.case-body mark { font-weight: inherit; }
+
+/* ---------- Case study building blocks (figures, quotes, facts, lists) ---------- */
+.case-figure { margin: 2.25rem 0 0; }
+.case-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    mix-blend-mode: multiply;
+}
+.case-figure--small img { max-width: min(100%, 560px); }
+.case-figure figcaption {
+    max-width: 62ch;
+    margin-top: .75rem;
+    font-family: var(--fn-font-mono);
+    font-size: 12px;
+    line-height: 1.55;
+    letter-spacing: .02em;
+    color: var(--fn-ink-2);
+}
+.case-section .case-body + .case-figure,
+.case-section .case-figure + .case-body,
+.case-section .case-quote + .case-body { margin-top: 2.25rem; }
+.case-section .case-figure + .case-figure { margin-top: 2.75rem; }
+.case-section .case-body + .methods-grid,
+.case-section .case-figure + .methods-grid { margin-top: 3rem; }
+
+.case-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 1.25rem 2rem;
+    margin: 2.5rem 0;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--fn-rule);
+    border-bottom: 1px solid var(--fn-rule);
+}
+.case-facts dt {
+    font-family: var(--fn-font-mono);
+    font-size: var(--fn-step--1);
+    font-weight: 500;
+    letter-spacing: var(--fn-tracking-label);
+    text-transform: uppercase;
+    color: var(--fn-ink-2);
+}
+.case-facts dd { margin: .35rem 0 0; font-size: var(--fn-step-0); line-height: 1.4; }
+
+.case-quote { margin: 2.25rem 0 0; max-width: 40ch; }
+.case-quote p {
+    font-size: var(--fn-step-2);
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+.case-quote cite {
+    display: block;
+    margin-top: .9rem;
+    font-style: normal;
+    font-family: var(--fn-font-mono);
+    font-size: var(--fn-step--1);
+    letter-spacing: .02em;
+    color: var(--fn-ink-2);
+}
+
+.case-body .case-list { margin: 1.25rem 0 0; padding-left: 1.25rem; }
+.case-body p + .case-list,
+.case-body .case-list + p { margin-top: 1.25rem; }
+.case-body .case-list li {
+    padding-left: .35rem;
+    font-size: var(--fn-step-0);
+    line-height: var(--fn-leading-sheet);
+    color: var(--fn-text-soft);
+}
+.case-body .case-list li + li { margin-top: .75rem; }
+.case-body em { font-style: italic; }
+
+/* Side-by-side figures (tall designs, screenshot sets). A lone last figure runs the full width. */
+.case-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.25rem;
+}
+.case-pair .case-figure { margin-top: 0; }
+.case-pair > .case-figure:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.case-section .case-pair + .case-body,
+.case-section .case-body + .case-pair,
+.case-section .case-pair + .case-pair { margin-top: 2.25rem; }
+.case-body h3 {
+    font-size: var(--fn-step-1);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-top: 2rem;
+}
+.case-section .case-body + h3,
+.case-section h2 + h3 { margin-top: 2rem; }
+@media (max-width: 620px) { .case-pair { grid-template-columns: 1fr; } }
+
+/* ---------- "At a glance" module: the summary at the top of a case study (challenge, objective, solution, result) ----------
+   Repeatable: put the markup from amazon-fba-inbound.html in a case section and pick the colour with
+   glance--green / --orange / --purple / --blue / --red / --yellow / --cyan / --magenta (the project card's tint). */
+.glance { --ink: #46561f; --tint: var(--fn-hl-green); display: grid; grid-template-columns: 1.6fr 1fr; gap: 3rem 4rem; align-items: start; }
+.glance--green   { --ink: #46561f; --tint: var(--fn-hl-green); }
+.glance--orange  { --ink: #85421b; --tint: var(--fn-hl-orange); }
+.glance--purple  { --ink: #62406f; --tint: var(--fn-hl-purple); }
+.glance--blue    { --ink: #244f78; --tint: var(--fn-hl-blue); }
+.glance--red     { --ink: #8c2926; --tint: var(--fn-hl-red); }
+.glance--yellow  { --ink: #6d5310; --tint: var(--fn-hl-yellow); }
+.glance--cyan    { --ink: #1d5b49; --tint: var(--fn-hl-cyan); }
+.glance--magenta { --ink: #843358; --tint: var(--fn-hl-magenta); }
+.glance .glance-name { grid-column: 1 / -1; margin: 0 0 -1.25rem; }
+.glance .glance-title {
+    margin: 0 0 .5rem;
+    font-family: var(--fn-font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--ink);
+}
+.glance p { font-size: var(--fn-step-0); line-height: 1.65; color: var(--fn-text-soft); }
+.glance .glance-lede { font-size: var(--fn-step-2); line-height: 1.35; letter-spacing: -0.012em; color: var(--fn-ink); }
+.glance .glance-lede mark { font-size: inherit; }
+.glance-side { display: grid; gap: 1.75rem; padding-left: 2rem; border-left: 1px solid var(--fn-rule); }
+.glance-result {
+    grid-column: 1 / -1;
+    padding: 2rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--tint) 50%, white);
+}
+.glance-result p { color: var(--fn-ink); }
+.glance-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+.glance-tiles > div { padding: 1.1rem; background: #fff; border-radius: 8px; color: var(--fn-ink); font-size: 15px; line-height: 1.45; }
+.case-section .glance + .case-figure { margin-top: 3rem; }
+@media (max-width: 900px) {
+    .glance { grid-template-columns: 1fr; gap: 1.75rem; }
+    .glance-side { padding-left: 0; border-left: 0; }
+    .glance-tiles { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) { .glance-tiles { grid-template-columns: 1fr; } }
+
+/* The site's reset removes list markers; case-study lists get them back (numbers for ol, dots for ul). */
+.case-body ol.case-list { list-style: decimal outside; }
+.case-body ul.case-list { list-style: disc outside; }
+.case-body .case-list li::marker { color: var(--fn-ink-2); }
+
+/* Image sets: the method cards in 1, 2, 3 or 4 columns (3 is the default .methods-grid). */
+.methods-grid--1 { grid-template-columns: minmax(0, 1fr); }
+.methods-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.methods-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.methods-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .methods-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .methods-grid--3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 620px) { .methods-grid--2, .methods-grid--4 { grid-template-columns: minmax(0, 1fr); } }
+
+/* "At a glance" with a facts row: role, partners, timeframe (and more) sit in a strip under the module label. */
+.glance .glance-facts {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1.25rem 2rem;
+    margin: 0;
+    padding: 0 0 1.5rem;
+    border-bottom: 1px solid var(--fn-rule);
+}
+.glance .glance-facts dt {
+    font-family: var(--fn-font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink);
+}
+.glance .glance-facts dd { margin: .35rem 0 0; font-size: var(--fn-step-0); line-height: 1.4; color: var(--fn-ink); }
